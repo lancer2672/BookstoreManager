@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Admin" FontSize="14"/>
+            <MenuItem Header="Help" VerticalAlignment="Center" FontSize="14"/>
+        </Menu>
+
     </Grid>
 </Window>

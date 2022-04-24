@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BookstoreManager.ViewModels;
+using BookstoreManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
