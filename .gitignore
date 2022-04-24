@@ -192,3 +192,6 @@ bin
 obj
 
 *.js
+BookstoreManager/bin
+BookstoreManager/obj
+BookstoreManager/Models/Db
