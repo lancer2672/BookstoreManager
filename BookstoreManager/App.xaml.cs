@@ -13,5 +13,10 @@ namespace BookstoreManager
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            //Register Syncfusion license
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjI0MjEzQDMyMzAyZTMxMmUzMGtFWUNJaEsydC9CbGpGSE1DdjQxNVVYRkxwNDh0OSt5cmNOcGpOMFdzdEU9");
+        }
     }
 }
