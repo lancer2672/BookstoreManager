@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookstoreManager"
         mc:Ignorable="d"
+        x:Name="mainWindow"
+        DataContext="{StaticResource MainVM}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -12,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="Admin" FontSize="14"/>
+            <MenuItem Header="Admin" FontSize="14" Command="{Binding LoadedWidnowCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
             <MenuItem Header="Help" VerticalAlignment="Center" FontSize="14"/>
         </Menu>
 
