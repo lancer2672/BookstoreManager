@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Models\ViewCustomer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Customers\AddCustomerViewModel.cs" />
     <Compile Include="Views\Customers\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>

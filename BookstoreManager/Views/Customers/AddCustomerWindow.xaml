@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookstoreManager.ViewModels.Customers"
         mc:Ignorable="d"
-        Title="AddCustomerWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        WindowStartupLocation="CenterScreen"
+        Title="AddCustomerWindow" Height="350" Width="460">
+    <Border Padding="20 0 20 20">
+        <StackPanel >
+            <StackPanel.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="MinWidth" Value="300"></Setter>
+                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                </Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Margin" Value="0 20 0 0"></Setter>
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="MinWidth" Value="50"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Tên"></TextBlock>
+                <TextBox Text="{Binding CustomerName}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Số điện thoại"></TextBlock>
+                <TextBox Text="{Binding CustomerPhoneNumber}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Địa chỉ"></TextBlock>
+                <TextBox Text="{Binding CustomerAdress}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Email"></TextBlock>
+                <TextBox Text="{Binding CustomerEmail}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Tổng nợ"></TextBlock>
+                <TextBox Text="{Binding CustomerDebt}" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="0 0 20 0" Content="Thêm" Command="{Binding CAddCustomer}"></Button>
+                <Button Content="Hủy"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
 </Window>

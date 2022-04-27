@@ -22,6 +22,10 @@ namespace BookstoreManager.ViewModels.Customers
         public AddCustomerWindow(ManageCustomerViewModel CustomerVM)
         {
             InitializeComponent();
+            AddCustomerViewModel AddCustomerVM = new AddCustomerViewModel(CustomerVM);
+            this.DataContext = AddCustomerVM;
+           
         }
+       
     }
 }

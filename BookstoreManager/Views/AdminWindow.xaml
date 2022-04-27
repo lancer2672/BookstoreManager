@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:BookstoreManager.Views"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="BookstoreManager.Views.AdminWindow"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+    
         Title="AdminWindow" Height="450" Width="800">
     <Grid>
         <syncfusion:SfNavigationDrawer   DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
-                            
+                           
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
                         <RowDefinition/>

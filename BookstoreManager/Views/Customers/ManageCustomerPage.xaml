@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:BookstoreManager.Views"
       xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
       mc:Ignorable="d" 
+       
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource CustomerVM}"
       Title="ManageCustomerPage">
@@ -24,19 +25,22 @@
                 </Style>
             </StackPanel.Resources>
             <SharedUC:SearchBar ></SharedUC:SearchBar>
-            <Button Content="Thêm"></Button>
+            <Button Content="Thêm" Command="{Binding COpenAddCustomerWindow}"></Button>
             <Button Content="Xóa"></Button>
             <Button Content="Chỉnh sửa"></Button>
         </StackPanel>
-        <ListView Grid.Row="2" >
+        <ListView Grid.Row="2" ItemsSource="{Binding ListCustomer}" >
             <ListView.View>
-            <GridView>
-                
-                <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
-                <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding ho_ten}"/>
-                <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding sdt}"/>
-                <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding dia_chi}"/>
-            </GridView>
+                <GridView>
+
+                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
+                    <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                    <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding Adress}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt}"/>
+
+                </GridView>
             </ListView.View>
         </ListView>
     </Grid>

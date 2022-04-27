@@ -8,9 +8,13 @@ namespace BookstoreManager.Models
 {
     public class ViewCustomer
     {
-        public string TenKhachHang { get;set; }
-        public string DiaChi    { get;set; }
-        public string SDT   { get;set; }
+        public int Id { get; set; }
+        public string Name { get;set; }
+        public string Adress    { get;set; }
+        public string PhoneNumber   { get;set; }
+        public string Email { get; set; }
+        
+        public decimal Debt { get; set; } 
 
     }
 }
