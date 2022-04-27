@@ -24,6 +24,7 @@ namespace BookstoreManager.Models
         private DataProvider()
         {
             DB = new BookstoreManagerEntities();
+           
         }
     }
 

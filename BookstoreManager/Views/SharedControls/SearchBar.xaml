@@ -7,17 +7,17 @@
              xmlns:local="clr-namespace:BookstoreManager.Views.SharedControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel Width="400">
-        <TextBox
+    <DockPanel Width="300">
+        <TextBox Height="20"
             DockPanel.Dock="Left"
-            materialDesign:HintAssist.Hint="Từ khóa"
-            Width="280"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-        <Button
-                Command="{Binding Search}"
-                Style="{StaticResource IconTextBtn}">
+            
+            Width="200"
+             />
+        <Button Height="20"
+                Width="Auto"
+               
+                Command="{Binding Search}">
             <DockPanel>
-                <materialDesign:PackIcon Kind="DatabaseSearch" />
                 <TextBlock Text="Tìm kiếm"/>
             </DockPanel>
         </Button>

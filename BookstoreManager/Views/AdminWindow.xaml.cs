@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 using System.Windows.Shapes;
 
 namespace BookstoreManager.Views
@@ -22,6 +23,17 @@ namespace BookstoreManager.Views
         public AdminWindow()
         {
             InitializeComponent();
+            //Main.Content = Pages.DashboardPage;
+        }
+        private void SfNavigationDrawer_ItemClicked(object sender, Syncfusion.UI.Xaml.NavigationDrawer.NavigationItemClickedEventArgs e)
+        {
+            switch(e.Item.Name)
+            {
+                case "NavCustomer":         
+                    Main.Content = Pages.ManageCustomerPage;
+                    break;
+                  
+            }
         }
     }
 }
