@@ -26,13 +26,16 @@
             </StackPanel.Resources>
             <SharedUC:SearchBar ></SharedUC:SearchBar>
             <Button Content="Thêm" Command="{Binding COpenAddCustomerWindow}"></Button>
-            <Button Content="Xóa"></Button>
+            <Button Content="Xóa" Command="{Binding CDeleteCustomer}" CommandParameter="{Binding ElementName=lv}"></Button>
             <Button Content="Chỉnh sửa"></Button>
         </StackPanel>
-        <ListView Grid.Row="2" ItemsSource="{Binding ListCustomer}" >
+        <ListView Grid.Row="2" 
+                  x:Name="lv"
+                  ItemsSource="{Binding ListCustomer}"  
+                  SelectionMode="Multiple" 
+                  SelectedItem="{Binding SelectedCustomer}">
             <ListView.View>
                 <GridView>
-
                     <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
                     <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>

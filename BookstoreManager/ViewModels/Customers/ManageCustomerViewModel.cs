@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
@@ -14,9 +15,11 @@ namespace BookstoreManager.ViewModels
     public class ManageCustomerViewModel : BaseViewModel
     {
         private ObservableCollection<ViewCustomer> _listCustomer;
-
+        private ViewCustomer _selectedCustomer;
+        
         public ObservableCollection<ViewCustomer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(nameof(ListCustomer)); } }
 
+        public ViewCustomer SelectedCustomer { get => _selectedCustomer; set { _selectedCustomer = value; OnPropertyChanged(nameof(SelectedCustomer)); } }
         public ICommand COpenAddCustomerWindow { get; set; }
         public ICommand CDeleteCustomer { get; set; }
         public ICommand CUpdateCustomer { get; set; }
@@ -24,7 +27,8 @@ namespace BookstoreManager.ViewModels
         {
             ListCustomer = new ObservableCollection<ViewCustomer>();
 
-            COpenAddCustomerWindow = new RelayCommand<ViewCustomer>((p) => { return true; }, (p) => { OpenAddCustomerWindow(); });
+            COpenAddCustomerWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddCustomerWindow(); });
+            CDeleteCustomer = new RelayCommand<ListView>((p) => { return true; }, (p) => { DeleteCustomer(p); });
 
             LoadListCustomer();
         }
@@ -54,6 +58,25 @@ namespace BookstoreManager.ViewModels
         {
             AddCustomerWindow AddWindow = new AddCustomerWindow(this);
             AddWindow.Show();
+        }
+        public void DeleteCustomer(ListView lv)
+        {
+            System.Collections.IList list = lv.SelectedItems;
+            for (int i = 0; i < list.Count; i++)
+            {
+                int id = (list[i] as ViewCustomer).Id;
+                KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).First<KHACHHANG>();
+                if (deletedCustomer == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    DataProvider.Ins.DB.KHACHHANGs.Remove(deletedCustomer);
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+            }
+            LoadListCustomer();
         }
     }
 }
