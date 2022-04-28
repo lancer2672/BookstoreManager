@@ -195,3 +195,5 @@ obj
 BookstoreManager/bin
 BookstoreManager/obj
 BookstoreManager/Models/Db
+
+.vs/
