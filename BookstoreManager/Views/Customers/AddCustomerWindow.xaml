@@ -31,7 +31,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Địa chỉ"></TextBlock>
-                <TextBox Text="{Binding CustomerAdress}"></TextBox>
+                <TextBox Text="{Binding CustomerAddress}"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Email"></TextBlock>

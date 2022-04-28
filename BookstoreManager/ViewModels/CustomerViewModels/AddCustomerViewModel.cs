@@ -13,14 +13,14 @@ namespace BookstoreManager.ViewModels.Customers
     public class AddCustomerViewModel:BaseViewModel
     {
         private string _customerName;
-        private string _customerAdress;
+        private string _customerAddress;
         private string _customerId;
         private string _customerEmail;
         private string _customerPhoneNumber;
         private string _customerDebt;
-
+        private ManageCustomerViewModel _customerViewModel;
         public string CustomerName {  get {   return _customerName;  }  set { _customerName = value;  OnPropertyChanged(nameof(CustomerName)); }  }
-        public string CustomerAdress { get { return _customerAdress; } set { _customerAdress = value; OnPropertyChanged(nameof(CustomerAdress)); } }
+        public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
         public string CustomerEmail { get { return _customerEmail; } set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
         public string CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
@@ -28,7 +28,7 @@ namespace BookstoreManager.ViewModels.Customers
 
         public ICommand CAddCustomer { get; set; }
 
-        private ManageCustomerViewModel _customerViewModel;
+      
         public AddCustomerViewModel(ManageCustomerViewModel CustomerVM)
         {
 
@@ -39,7 +39,7 @@ namespace BookstoreManager.ViewModels.Customers
         public void AddCustomer()
         {
             KHACHHANG newCustomer = new KHACHHANG();
-            newCustomer.DiaChi = CustomerAdress;
+            newCustomer.DiaChi = CustomerAddress;
             newCustomer.HoTen = CustomerName;
             newCustomer.Email = CustomerEmail;
             newCustomer.DienThoai = CustomerPhoneNumber;
@@ -52,7 +52,7 @@ namespace BookstoreManager.ViewModels.Customers
         public void RefreshAddCustomerForm()
         {
             CustomerName = "";
-            CustomerAdress = "";
+            CustomerAddress = "";
             CustomerEmail = "";
             CustomerPhoneNumber = "";
             CustomerDebt = "";

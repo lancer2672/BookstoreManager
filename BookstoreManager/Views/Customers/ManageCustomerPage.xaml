@@ -27,7 +27,7 @@
             <SharedUC:SearchBar ></SharedUC:SearchBar>
             <Button Content="Thêm" Command="{Binding COpenAddCustomerWindow}"></Button>
             <Button Content="Xóa" Command="{Binding CDeleteCustomer}" CommandParameter="{Binding ElementName=lv}"></Button>
-            <Button Content="Chỉnh sửa"></Button>
+            <Button Content="Chỉnh sửa" Command="{Binding COpenUpdateCustomerWindow}" CommandParameter="{Binding ElementName=lv}"></Button>
         </StackPanel>
         <ListView Grid.Row="2" 
                   x:Name="lv"
@@ -39,7 +39,7 @@
                     <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
                     <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                    <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding Adress}"/>
+                    <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding Address}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
                     <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt}"/>
 

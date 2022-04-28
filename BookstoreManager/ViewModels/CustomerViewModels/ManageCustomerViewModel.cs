@@ -9,6 +9,7 @@ using System.Windows.Input;
 using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
 using BookstoreManager.ViewModels.Customers;
+using BookstoreManager.Views.Customers;
 
 namespace BookstoreManager.ViewModels
 {
@@ -16,19 +17,25 @@ namespace BookstoreManager.ViewModels
     {
         private ObservableCollection<ViewCustomer> _listCustomer;
         private ViewCustomer _selectedCustomer;
-        
+        private string _searchKey;
+        public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+
         public ObservableCollection<ViewCustomer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(nameof(ListCustomer)); } }
 
         public ViewCustomer SelectedCustomer { get => _selectedCustomer; set { _selectedCustomer = value; OnPropertyChanged(nameof(SelectedCustomer)); } }
         public ICommand COpenAddCustomerWindow { get; set; }
         public ICommand CDeleteCustomer { get; set; }
-        public ICommand CUpdateCustomer { get; set; }
+        public ICommand COpenUpdateCustomerWindow { get; set; }
+        public ICommand CSearch { get; set; }
         public ManageCustomerViewModel()
         {
             ListCustomer = new ObservableCollection<ViewCustomer>();
 
             COpenAddCustomerWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddCustomerWindow(); });
             CDeleteCustomer = new RelayCommand<ListView>((p) => { return true; }, (p) => { DeleteCustomer(p); });
+            COpenUpdateCustomerWindow = new RelayCommand<ListView>((p) => { return true; }, (p) => { OpenUpdateWindow(p); });
+            CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
+
 
             LoadListCustomer();
         }
@@ -41,13 +48,13 @@ namespace BookstoreManager.ViewModels
         public ObservableCollection<ViewCustomer> GetViewCustomerFromList(List<KHACHHANG> listKHACHHANG)
         {
             ObservableCollection<ViewCustomer> list = new ObservableCollection<ViewCustomer>();
-            int Count = DataProvider.Ins.DB.KHACHHANGs.Count();
+            int Count = listKHACHHANG.Count();
             for (int i = 0; i < Count; i++)
             {
                 ViewCustomer newCustomer = new ViewCustomer();
                 newCustomer.Id = listKHACHHANG[i].MaKhachHang;
                 newCustomer.Name = listKHACHHANG[i].HoTen;
-                newCustomer.Adress = listKHACHHANG[i].DiaChi;
+                newCustomer.Address = listKHACHHANG[i].DiaChi;
                 newCustomer.Email = listKHACHHANG[i].Email;
                 newCustomer.PhoneNumber = listKHACHHANG[i].DienThoai;
                 list.Add(newCustomer);
@@ -77,6 +84,21 @@ namespace BookstoreManager.ViewModels
                 }
             }
             LoadListCustomer();
+        }
+        public void OpenUpdateWindow(ListView lv)
+        {
+            System.Collections.IList list = lv.SelectedItems;
+            if(list.Count != 1)
+            {
+                return;
+            }
+            UpdateCustomerWindow updWindow = new UpdateCustomerWindow(this);
+            updWindow.Show();
+        }
+        public void SearchCustomer()
+        {
+            List<KHACHHANG> listKH = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.HoTen.ToLower().Contains(SearchKey.ToLower())).ToList();
+            ListCustomer = GetViewCustomerFromList(listKH);
         }
     }
 }

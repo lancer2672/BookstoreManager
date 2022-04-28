@@ -10,13 +10,13 @@
     <DockPanel Width="300">
         <TextBox Height="20"
             DockPanel.Dock="Left"
-            
+            Text="{Binding SearchKey}"
             Width="200"
              />
         <Button Height="20"
                 Width="Auto"
                
-                Command="{Binding Search}">
+                Command="{Binding CSearch}">
             <DockPanel>
                 <TextBlock Text="Tìm kiếm"/>
             </DockPanel>

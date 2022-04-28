@@ -142,18 +142,22 @@
     </Compile>
     <Compile Include="Models\ViewCustomer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Customers\AddCustomerViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
     <Compile Include="Views\Customers\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Customers\ManageCustomerViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModels\ManageCustomerViewModel.cs" />
     <Compile Include="ViewModels\Utils\IndexConverter.cs" />
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Customers\ManageCustomerPage.xaml.cs">
       <DependentUpon>ManageCustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customers\UpdateCustomerWindow.xaml.cs">
+      <DependentUpon>UpdateCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages.cs" />
     <Compile Include="Views\SharedControls\SearchBar.xaml.cs">
@@ -192,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customers\ManageCustomerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customers\UpdateCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
