@@ -148,6 +148,12 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
+    <Compile Include="Views\BookViews\BookListPage.xaml.cs">
+      <DependentUpon>BookListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViews\BookTypePage.xaml.cs">
+      <DependentUpon>BookTypePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Customers\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
@@ -164,6 +170,15 @@
       <DependentUpon>UpdateCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages.cs" />
+    <Compile Include="Views\Regulation\RegulationPage.xaml.cs">
+      <DependentUpon>RegulationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\DebtReportPage.xaml.cs">
+      <DependentUpon>DebtReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\InventoryReportPage.xaml.cs">
+      <DependentUpon>InventoryReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SharedControls\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
@@ -191,6 +206,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BookViews\BookListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViews\BookTypePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Customers\AddCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +227,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customers\UpdateCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Regulation\RegulationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Report\DebtReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Report\InventoryReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

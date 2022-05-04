@@ -32,7 +32,22 @@ namespace BookstoreManager.Views
                 case "NavCustomer":         
                     Main.Content = Pages.ManageCustomerPage;
                     break;
-                  
+                case "NavBookList":
+                    Main.Content = Pages.BookListPage;
+                          break;
+                case "NavBookType":
+                    Main.Content = Pages.BookTypePage;
+                    break;
+                case "NavDebtReport":
+                    Main.Content = Pages.DebtReportPage;
+                    break;
+                case "NavInvReport":
+                    Main.Content = Pages.InventoryReportPage;
+                    break;
+                case "NavRegulation":
+                    Main.Content = Pages.RegulationPage;
+                    break;
+
             }
         }
     }
