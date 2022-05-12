@@ -1,5 +1,6 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ namespace BookstoreManager.ViewModels.Customers
         private string _customerPhoneNumber;
         private string _customerDebt;
         private ManageCustomerViewModel _customerViewModel;
+        private SnackbarMessageQueue _myMessageQueue;
+
+        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public string CustomerName {  get {   return _customerName;  }  set { _customerName = value;  OnPropertyChanged(nameof(CustomerName)); }  }
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
@@ -34,7 +38,10 @@ namespace BookstoreManager.ViewModels.Customers
 
             _customerViewModel = CustomerVM;
             CAddCustomer = new RelayCommand<object>((p) => { return true; }, (p) => { AddCustomer(); });
-            
+
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue.DiscardDuplicates = true;
+
         }
         public void AddCustomer()
         {

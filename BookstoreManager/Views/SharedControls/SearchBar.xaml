@@ -3,23 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:BookstoreManager.Views.SharedControl"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel Width="300">
-        <TextBox Height="20"
+             d:DesignHeight="50" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Style/Button.xaml"/>
+    </UserControl.Resources>
+    <DockPanel Width="250">
+        <TextBox 
+            Height="Auto"
+            Margin="0 0 5 0"
+            materialDesign:HintAssist.Hint="Tìm kiếm khách hàng"
             DockPanel.Dock="Left"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             Text="{Binding SearchKey}"
             Width="200"
              />
-        <Button Height="20"
-                Width="Auto"
-               
+        <Button 
+            Width="40"
+                Style="{StaticResource IconBtn}"
                 Command="{Binding CSearch}">
-            <DockPanel>
-                <TextBlock Text="Tìm kiếm"/>
-            </DockPanel>
+            <materialDesign:PackIcon Kind="DatabaseSearch"></materialDesign:PackIcon>
         </Button>
     </DockPanel>
 </UserControl>

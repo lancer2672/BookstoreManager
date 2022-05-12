@@ -24,6 +24,7 @@ namespace BookstoreManager.Views
         {
             InitializeComponent();
             //Main.Content = Pages.DashboardPage;
+            Style = (Style)FindResource("WindowStyle");
         }
         private void SfNavigationDrawer_ItemClicked(object sender, Syncfusion.UI.Xaml.NavigationDrawer.NavigationItemClickedEventArgs e)
         {

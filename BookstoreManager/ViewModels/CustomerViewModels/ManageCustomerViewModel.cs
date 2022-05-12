@@ -12,6 +12,7 @@ using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
 using BookstoreManager.ViewModels.Customers;
 using BookstoreManager.Views.Customers;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using OfficeOpenXml;
 
@@ -22,6 +23,10 @@ namespace BookstoreManager.ViewModels
         private ObservableCollection<ViewCustomer> _listCustomer;
         private ViewCustomer _selectedCustomer;
         private string _searchKey;
+
+        private SnackbarMessageQueue _myMessageQueue;
+
+        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
 
         public ObservableCollection<ViewCustomer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(nameof(ListCustomer)); } }
@@ -44,6 +49,10 @@ namespace BookstoreManager.ViewModels
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
+
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue.DiscardDuplicates = true;
+
             LoadListCustomer();
         }
 
@@ -75,6 +84,7 @@ namespace BookstoreManager.ViewModels
         }
         public void DeleteCustomer(ListView lv)
         {
+            bool Deleted = false;
             System.Collections.IList list = lv.SelectedItems;
             for (int i = 0; i < list.Count; i++)
             {
@@ -86,11 +96,16 @@ namespace BookstoreManager.ViewModels
                 }
                 else
                 {
+                    Deleted = true;
                     DataProvider.Ins.DB.KHACHHANGs.Remove(deletedCustomer);
                     DataProvider.Ins.DB.SaveChanges();
                 }
             }
-            LoadListCustomer();
+            if (Deleted == true)
+            {
+                LoadListCustomer();
+                MyMessageQueue.Enqueue("Xóa khách hàng thành công!");
+            }
         }
         public void OpenUpdateWindow(ListView lv)
         {
@@ -114,10 +129,10 @@ namespace BookstoreManager.ViewModels
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string fileName = dialog.FileName;
-                addImportedCustomer(fileName);
+                AddImportedCustomer(fileName);
             }
         }
-        public void addImportedCustomer(string filename)
+        public void AddImportedCustomer(string filename)
         {
             try
             {
@@ -142,23 +157,24 @@ namespace BookstoreManager.ViewModels
                             
                          
                         };
-                        // add userinfo vào danh sách userlist◘
+                      
                             DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
                             DataProvider.Ins.DB.SaveChanges();
-                        //mymessagequeue.enqueue("thêm dữ liệu từ file excel thành công!");
+
+                        MyMessageQueue.Enqueue("thêm dữ liệu từ file excel thành công!");
 
                     }
                     catch (Exception error)
                     {
-                        //mymessagequeue.enqueue("lỗi. đã xảy ra lỗi khi đọc file excel.");
+                        MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file excel");
+
                     }
                 }
                 LoadListCustomer();
             }
             catch (Exception ee)
             {
-                //mymessagequeue.enqueue("lỗi. đã xảy ra lỗi khi import file excel.");
-               
+                MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file Excel");
             }
         }
         public void ExportFileExcel()
@@ -176,7 +192,7 @@ namespace BookstoreManager.ViewModels
             // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
             if (string.IsNullOrEmpty(filePath))
             {
-                //MyMessageQueue.Enqueue("Lỗi. Đường dẫn báo cáo không hợp lệ.");
+                MyMessageQueue.Enqueue("Lỗi. Đường dẫn không hợp lệ.");
                 return;
             }
 
@@ -187,7 +203,6 @@ namespace BookstoreManager.ViewModels
                     package.Workbook.Properties.Author = "Admin";
                     package.Workbook.Properties.Title = "Danh sách khách hàng";
                     package.Workbook.Worksheets.Add("Sheet 1");
-
                     ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
                     //add sheet
                     workSheet.Name = "Sheet 1";
@@ -239,12 +254,12 @@ namespace BookstoreManager.ViewModels
 
                 }
                 MessageBox.Show("Xuat file thanh cong");
-                //MyMessageQueue.Enqueue("Xuất excel thành công!");
+                MyMessageQueue.Enqueue("Xuất excel thành công!");
             }
             catch (Exception ee)
             {
                 MessageBox.Show("Xuat file khong thanh cong");
-                //MyMessageQueue.Enqueue("Lỗi. Đã xảy ra lỗi khi xuất file excel.");
+                MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
             }
         }
     }

@@ -13,12 +13,11 @@
         <syncfusion:SfNavigationDrawer   DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
-                           
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border Padding="20 10" Background="#F2F2F2">
+                    <Border Padding="10" Background="#F2F2F2">
                         <DockPanel x:Name="Header">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Trang quản lý" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Margin="20 0 0 0"/>

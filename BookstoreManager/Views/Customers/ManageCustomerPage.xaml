@@ -6,32 +6,50 @@
       xmlns:local="clr-namespace:BookstoreManager.Views"
       xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
       mc:Ignorable="d" 
-       
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource CustomerVM}"
       Title="ManageCustomerPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource IconBtn}" TargetType="Button">
+                <Setter Property="Margin" Value="20 0 0 0"></Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+  
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="Danh sách nhân viên"/>
-        <StackPanel  Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="0 0 20 0"></Setter>
-                    <Setter Property="MinWidth" Value="50"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <SharedUC:SearchBar ></SharedUC:SearchBar>
-            <Button Content="Thêm" Command="{Binding COpenAddCustomerWindow}"></Button>
-            <Button Content="Xóa" Command="{Binding CDeleteCustomer}" CommandParameter="{Binding ElementName=lv}"></Button>
-            <Button Content="Chỉnh sửa" Command="{Binding COpenUpdateCustomerWindow}" CommandParameter="{Binding ElementName=lv}"></Button>
+        <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+            <SharedUC:SearchBar></SharedUC:SearchBar>
+            <Button ToolTip="Thêm nhân viên"  
+                    Command="{Binding COpenAddCustomerWindow}">
+                <materialDesign:PackIcon Kind="Add"/>
+            </Button>
+            <Button 
+                    Command="{Binding CDeleteCustomer}" 
+                    CommandParameter="{Binding ElementName=lv}">
+                    <materialDesign:PackIcon Kind="Delete"/>
+            </Button>
+            <Button ToolTip="Chỉnh sửa" 
+                    Command="{Binding COpenUpdateCustomerWindow}" 
+                    CommandParameter="{Binding ElementName=lv}">
+                 <materialDesign:PackIcon Kind="Adjust"/>
+            </Button>
         </StackPanel>
-        <ListView Grid.Row="2" 
+        <ListView Grid.Row="1" 
                   x:Name="lv"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   ItemsSource="{Binding ListCustomer}"  
                   SelectionMode="Multiple" 
                   SelectedItem="{Binding SelectedCustomer}">
@@ -46,10 +64,19 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Nhập liệu từ Excel" Margin="0 0 20 0" Command="{Binding CImportExcel}"></Button>
-            <Button Content="Xuất file Excel" Command="{Binding CExportExcel}"></Button>
-
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource TextBtn}">
+                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Nhập liệu từ Excel" Command="{Binding CImportExcel}"></Button>
+            <Button Content="Xuất Excel" Command="{Binding CExportExcel}"></Button>
         </StackPanel>
+        <materialDesign:Snackbar Grid.Row="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+        </materialDesign:Snackbar>
     </Grid>
 </Page>
