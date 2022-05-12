@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid>
+    <Grid >
         <Grid.Resources>
             <Style BasedOn="{StaticResource IconBtn}" TargetType="Button">
                 <Setter Property="Margin" Value="20 0 0 0"></Setter>
@@ -59,8 +59,7 @@
                     <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
-                    <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt}"/>
-
+                    <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt,Converter={StaticResource UIMoneyConverter}}"/>
                 </GridView>
             </ListView.View>
         </ListView>

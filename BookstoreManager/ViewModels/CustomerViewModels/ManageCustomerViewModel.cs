@@ -73,6 +73,7 @@ namespace BookstoreManager.ViewModels
                 newCustomer.Address = listKHACHHANG[i].DiaChi;
                 newCustomer.Email = listKHACHHANG[i].Email;
                 newCustomer.PhoneNumber = listKHACHHANG[i].DienThoai;
+                newCustomer.Debt = (decimal)listKHACHHANG[i].TongNo;
                 list.Add(newCustomer);
             }
             return list;

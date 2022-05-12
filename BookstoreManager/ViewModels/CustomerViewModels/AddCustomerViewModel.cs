@@ -1,11 +1,13 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using BookstoreManager.Resources.Utils;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 
@@ -37,24 +39,40 @@ namespace BookstoreManager.ViewModels.Customers
         {
 
             _customerViewModel = CustomerVM;
-            CAddCustomer = new RelayCommand<object>((p) => { return true; }, (p) => { AddCustomer(); });
+            CAddCustomer = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddCustomer(p); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
             MyMessageQueue.DiscardDuplicates = true;
 
         }
-        public void AddCustomer()
-        {
-            KHACHHANG newCustomer = new KHACHHANG();
-            newCustomer.DiaChi = CustomerAddress;
-            newCustomer.HoTen = CustomerName;
-            newCustomer.Email = CustomerEmail;
-            newCustomer.DienThoai = CustomerPhoneNumber;
-            newCustomer.TongNo = 0;
-            DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
-            DataProvider.Ins.DB.SaveChanges();
-            _customerViewModel.LoadListCustomer();
-            RefreshAddCustomerForm();
+        public void AddCustomer(StackPanel p)
+        {        
+            if (Validator.IsValid(p))
+            {
+                KHACHHANG newCustomer = new KHACHHANG();
+                newCustomer.DiaChi = CustomerAddress;
+                newCustomer.HoTen = CustomerName;
+                newCustomer.Email = CustomerEmail;
+                newCustomer.DienThoai = CustomerPhoneNumber;
+                newCustomer.TongNo = Decimal.Parse(CustomerDebt);
+                DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
+                try
+                {
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                catch
+                {
+                    _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+                    return;
+                }
+                _customerViewModel.LoadListCustomer();
+                RefreshAddCustomerForm();
+                _customerViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
+            }
+            else
+            {
+                _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+            }
         }
         public void RefreshAddCustomerForm()
         {

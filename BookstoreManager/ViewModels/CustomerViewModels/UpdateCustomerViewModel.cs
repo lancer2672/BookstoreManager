@@ -63,6 +63,7 @@ namespace BookstoreManager.ViewModels.Customers
             DataProvider.Ins.DB.SaveChanges();
             _customerViewModel.LoadListCustomer();
             RefreshAddCustomerForm();
+            MyMessageQueue.Enqueue("Chỉnh sửa khách hàng thành công!");
         }
         public void RefreshAddCustomerForm()
         {

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace BookstoreManager.ViewModels.Utils
+
+namespace BookstoreManager.Resources.Utils
 {
     public class IndexConverter : IValueConverter
     {

@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:Utils="clr-namespace:BookstoreManager.ViewModels.Utils"
+                    xmlns:Utils="clr-namespace:BookstoreManager.Resources.Utils"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Utils:IndexConverter x:Key="IndexConverter"></Utils:IndexConverter>
+    <Utils:UIMoneyConverter x:Key="UIMoneyConverter"></Utils:UIMoneyConverter>
 </ResourceDictionary>

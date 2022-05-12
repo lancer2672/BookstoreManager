@@ -166,6 +166,11 @@
       <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewCustomer.cs" />
+    <Compile Include="Resources\Utils\IndexConverter.cs" />
+    <Compile Include="Resources\Utils\MoneyConverter.cs" />
+    <Compile Include="Resources\Utils\Rules.cs" />
+    <Compile Include="Resources\Utils\UIMoneyConverter.cs" />
+    <Compile Include="Resources\Utils\Validator.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
@@ -180,7 +185,6 @@
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\ManageCustomerViewModel.cs" />
-    <Compile Include="ViewModels\Utils\IndexConverter.cs" />
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
