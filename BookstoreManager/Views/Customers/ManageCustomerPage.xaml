@@ -15,6 +15,7 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Text="Danh sách nhân viên"/>
         <StackPanel  Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
@@ -39,12 +40,16 @@
                     <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
                     <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                    <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding Address}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
                     <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt}"/>
 
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Nhập liệu từ Excel" Margin="0 0 20 0" Command="{Binding CImportExcel}"></Button>
+            <Button Content="Xuất file Excel" Command="{Binding CExportExcel}"></Button>
+
+        </StackPanel>
     </Grid>
 </Page>

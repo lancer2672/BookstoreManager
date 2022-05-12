@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
 using BookstoreManager.ViewModels.Customers;
 using BookstoreManager.Views.Customers;
+using Microsoft.Win32;
+using OfficeOpenXml;
 
 namespace BookstoreManager.ViewModels
 {
@@ -24,6 +28,9 @@ namespace BookstoreManager.ViewModels
 
         public ViewCustomer SelectedCustomer { get => _selectedCustomer; set { _selectedCustomer = value; OnPropertyChanged(nameof(SelectedCustomer)); } }
         public ICommand COpenAddCustomerWindow { get; set; }
+        public ICommand CImportExcel { get; set; }
+        public ICommand CExportExcel { get; set; }
+
         public ICommand CDeleteCustomer { get; set; }
         public ICommand COpenUpdateCustomerWindow { get; set; }
         public ICommand CSearch { get; set; }
@@ -35,8 +42,8 @@ namespace BookstoreManager.ViewModels
             CDeleteCustomer = new RelayCommand<ListView>((p) => { return true; }, (p) => { DeleteCustomer(p); });
             COpenUpdateCustomerWindow = new RelayCommand<ListView>((p) => { return true; }, (p) => { OpenUpdateWindow(p); });
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
-
-
+            CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
+            CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
             LoadListCustomer();
         }
 
@@ -88,7 +95,7 @@ namespace BookstoreManager.ViewModels
         public void OpenUpdateWindow(ListView lv)
         {
             System.Collections.IList list = lv.SelectedItems;
-            if(list.Count != 1)
+            if (list.Count != 1)
             {
                 return;
             }
@@ -99,6 +106,146 @@ namespace BookstoreManager.ViewModels
         {
             List<KHACHHANG> listKH = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.HoTen.ToLower().Contains(SearchKey.ToLower())).ToList();
             ListCustomer = GetViewCustomerFromList(listKH);
+        }
+        public void ImportFileExcel()
+        {
+            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+            dialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = dialog.FileName;
+                addImportedCustomer(fileName);
+            }
+        }
+        public void addImportedCustomer(string filename)
+        {
+            try
+            {
+                var package = new ExcelPackage(new FileInfo(filename));
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+
+                for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
+                {
+                    try
+                    {
+                        // biến j biểu thị cho một column trong file
+                        int j = 1;
+                        bool check = true;
+                        KHACHHANG newCustomer = new KHACHHANG()
+                        {
+                            MaKhachHang = Convert.ToInt32(workSheet.Cells[i, j++].Value),
+                            HoTen = workSheet.Cells[i, j++].Value.ToString(),
+                            DienThoai = workSheet.Cells[i, j++].Value.ToString(),
+                            DiaChi = workSheet.Cells[i, j++].Value.ToString(),
+                            Email = workSheet.Cells[i, j++].Value.ToString(),
+                            TongNo = Convert.ToInt32(workSheet.Cells[i, j++].Value)
+                            
+                         
+                        };
+                        // add userinfo vào danh sách userlist◘
+                            DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
+                            DataProvider.Ins.DB.SaveChanges();
+                        //mymessagequeue.enqueue("thêm dữ liệu từ file excel thành công!");
+
+                    }
+                    catch (Exception error)
+                    {
+                        //mymessagequeue.enqueue("lỗi. đã xảy ra lỗi khi đọc file excel.");
+                    }
+                }
+                LoadListCustomer();
+            }
+            catch (Exception ee)
+            {
+                //mymessagequeue.enqueue("lỗi. đã xảy ra lỗi khi import file excel.");
+               
+            }
+        }
+        public void ExportFileExcel()
+        {
+            string filePath = "";
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "Excel files (*.xls or .xlsx)|.xls;*.xlsx";
+
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                filePath = dialog.FileName;
+            }
+
+            // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
+            if (string.IsNullOrEmpty(filePath))
+            {
+                //MyMessageQueue.Enqueue("Lỗi. Đường dẫn báo cáo không hợp lệ.");
+                return;
+            }
+
+            try
+            {
+                using (ExcelPackage package = new ExcelPackage())
+                {
+                    package.Workbook.Properties.Author = "Admin";
+                    package.Workbook.Properties.Title = "Danh sách khách hàng";
+                    package.Workbook.Worksheets.Add("Sheet 1");
+
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+                    //add sheet
+                    workSheet.Name = "Sheet 1";
+                    workSheet.Cells.Style.Font.Size = 12;
+                    workSheet.Cells.Style.Font.Name = "Calibri";
+                    // Tạo danh sách các column header
+                    string[] arrColumnHeader = {
+                        "Mã khách hàng",
+                        "Họ và tên",
+                        "Số điện thoại",
+                        "Địa chỉ",
+                        "Email",
+                        "Tổng nợ",
+                    };
+
+                    var countColHeader = arrColumnHeader.Count();
+
+                    int colIndex = 1;
+                    int rowIndex = 2;
+
+                    //tạo các header từ column header đã tạo từ bên trên
+                    foreach (var item in arrColumnHeader)
+                    {
+                        var cell = workSheet.Cells[rowIndex, colIndex];
+
+                        //gán giá trị
+                        cell.Value = item;
+
+                        colIndex++;
+                    }
+
+                    foreach (var item in ListCustomer)
+                    {
+                        colIndex = 1;
+                        rowIndex++;
+
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Id;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Name;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.PhoneNumber;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Address;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Email;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Debt;
+
+                    }
+
+                    //Lưu file lại
+                    Byte[] bin = package.GetAsByteArray();
+                    File.WriteAllBytes(filePath, bin);
+
+                }
+                MessageBox.Show("Xuat file thanh cong");
+                //MyMessageQueue.Enqueue("Xuất excel thành công!");
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("Xuat file khong thanh cong");
+                //MyMessageQueue.Enqueue("Lỗi. Đã xảy ra lỗi khi xuất file excel.");
+            }
         }
     }
 }
