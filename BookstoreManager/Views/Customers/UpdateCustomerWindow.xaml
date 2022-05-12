@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BookstoreManager.Views.Customers"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
         
         WindowStartupLocation="CenterScreen"
@@ -19,7 +20,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Border Padding="20 0 20 20">
-        <StackPanel>
+        <StackPanel Name="UpdateCustomerForm">
             <StackPanel.Resources>
                 <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <Setter Property="Width" Value="380"></Setter>
@@ -27,37 +28,99 @@
             </StackPanel.Resources>
             <TextBlock Text="THÔNG TIN KHÁCH HÀNG" Style="{StaticResource PageTitle}"  HorizontalAlignment="Center"></TextBlock>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding CustomerName}" 
-                         materialDesign:HintAssist.Hint="Họ và tên"></TextBox>
+                <TextBox 
+                         Name="CustomerName"
+                         materialDesign:HintAssist.Hint="Họ và tên">
+                    <TextBox.Text>
+                        <Binding  Path="CustomerName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:NameRule></rules:NameRule>
+                                <rules:NonEmptyRule></rules:NonEmptyRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding CustomerPhoneNumber}"
-                         materialDesign:HintAssist.Hint="Số điện thoại"></TextBox>
+                <TextBox 
+                         Name="CustomerPhoneNumber"
+                         materialDesign:HintAssist.Hint="Số điện thoại">
+                    <TextBox.Text>
+                        <Binding  Path="CustomerPhoneNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:PhoneNumberRule></rules:PhoneNumberRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding CustomerAddress}"
-                         materialDesign:HintAssist.Hint="Địa chỉ"></TextBox>
+                <TextBox 
+                        Text ="{Binding CustomerAddress}"
+                         materialDesign:HintAssist.Hint="Địa chỉ">
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding CustomerEmail}"
-                         materialDesign:HintAssist.Hint="Email"></TextBox>
+                <TextBox 
+                         Name="CustomerEmail"
+                         materialDesign:HintAssist.Hint="Email">
+                    <TextBox.Text>
+                        <Binding  Path="CustomerEmail" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:EmailRule></rules:EmailRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding CustomerDebt}"
-                         materialDesign:HintAssist.Hint="Tổng nợ"></TextBox>
+                <TextBox 
+                         Name="CustomerDebt"
+                         materialDesign:HintAssist.Hint="Tổng nợ">
+                    <TextBox.Text>
+                        <Binding  Path="CustomerDebt" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:MoneyRule></rules:MoneyRule>
+                            </Binding.ValidationRules>
+                            <Binding.Converter>
+                                <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </StackPanel>
             <StackPanel Margin="0 20 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                 
                 <Button Margin="0 0 20 0" Content="Cập Nhật" 
-                       Command="{Binding CUpdateCustomer}">
+                       Command="{Binding CUpdateCustomer}" CommandParameter="{Binding ElementName=UpdateCustomerForm}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:CallMethodAction MethodName="Close"
                            TargetObject="{Binding RelativeSource={RelativeSource
                                                   Mode=FindAncestor,
-                                                  AncestorType=Window}}" />
+                                                  AncestorType=Window}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <Button.Style >
+                        <Style TargetType="Button" BasedOn="{StaticResource TextBtn}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerEmail}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerDebt}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Content="Hủy">
                     <i:Interaction.Triggers>

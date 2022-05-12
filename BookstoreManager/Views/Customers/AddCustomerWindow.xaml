@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookstoreManager.ViewModels.Customers"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:rule ="clr-namespace:BookstoreManager.Resources.Utils"
+        xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="AddCustomerWindow" Height="380" Width="500">
@@ -37,8 +37,8 @@
                         <Binding Path="CustomerName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                             <Binding.ValidationRules>
-                                <rule:NameRule></rule:NameRule>
-                                <rule:NonEmptyRule></rule:NonEmptyRule>
+                                <rules:NameRule></rules:NameRule>
+                                <rules:NonEmptyRule></rules:NonEmptyRule>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -52,7 +52,7 @@
                         <Binding Path="CustomerPhoneNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                             <Binding.ValidationRules>
-                                <rule:PhoneNumberRule></rule:PhoneNumberRule>
+                                <rules:PhoneNumberRule></rules:PhoneNumberRule>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -71,7 +71,7 @@
                         <Binding Path="CustomerEmail" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                             <Binding.ValidationRules>
-                                <rule:EmailRule></rule:EmailRule>
+                                <rules:EmailRule></rules:EmailRule>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -85,8 +85,11 @@
                         <Binding Path="CustomerDebt" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                             <Binding.ValidationRules>
-                                <rule:MoneyRule></rule:MoneyRule>
+                                <rules:MoneyRule></rules:MoneyRule>
                             </Binding.ValidationRules>
+                            <Binding.Converter>
+                                <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                            </Binding.Converter>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>

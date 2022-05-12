@@ -19,7 +19,7 @@ namespace BookstoreManager.ViewModels.Customers
         private string _customerId;
         private string _customerEmail;
         private string _customerPhoneNumber;
-        private string _customerDebt;
+        private decimal _customerDebt;
         private ManageCustomerViewModel _customerViewModel;
         private SnackbarMessageQueue _myMessageQueue;
 
@@ -28,7 +28,7 @@ namespace BookstoreManager.ViewModels.Customers
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
         public string CustomerEmail { get { return _customerEmail; } set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
-        public string CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
+        public decimal CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
         public string CustomerPhoneNumber { get { return _customerPhoneNumber; } set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber)); } }
 
         public ICommand CUpdateCustomer { get; set; }
@@ -50,8 +50,7 @@ namespace BookstoreManager.ViewModels.Customers
             CustomerAddress = updCustomer.Address;
             CustomerEmail = updCustomer.Email;
             CustomerPhoneNumber = updCustomer.PhoneNumber;
-            CustomerDebt = updCustomer.Debt.ToString();
-
+            CustomerDebt = updCustomer.Debt;
         }
         public void UpdateCustomer(StackPanel t)
         {         
@@ -61,10 +60,9 @@ namespace BookstoreManager.ViewModels.Customers
                 KHACHHANG updCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == customer.Id).FirstOrDefault();
                 updCustomer.HoTen = CustomerName;
                 updCustomer.DiaChi = CustomerAddress;
-                updCustomer.DienThoai = customer.PhoneNumber;
-                updCustomer.Email = customer.Email;
-                updCustomer.TongNo = (decimal)customer.Debt;
-                MyMessageQueue.Enqueue("Chỉnh sửa khách hàng thành công!");
+                updCustomer.DienThoai = CustomerPhoneNumber;
+                updCustomer.Email = CustomerEmail;
+                updCustomer.TongNo = CustomerDebt;
                 try
                 {
                     DataProvider.Ins.DB.SaveChanges();
@@ -89,7 +87,7 @@ namespace BookstoreManager.ViewModels.Customers
             CustomerAddress = "";
             CustomerEmail = "";
             CustomerPhoneNumber = "";
-            CustomerDebt = "";
+            CustomerDebt = 0;
         }
       
     }
