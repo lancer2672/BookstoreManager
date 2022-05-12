@@ -2,8 +2,9 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="IconBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+    <Style x:Key="IconBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignIconButton}">
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="MinWidth" Value="40" ></Setter>
         <Setter Property="Height" Value="38"/>
         <Style.Resources>
@@ -17,6 +18,33 @@
     <Style x:Key="TextBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Height" Value="36"/>
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Padding" Value="20 0"/>
+    </Style>
+    <Style x:Key="IconTextBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="38"/>
+        <Setter Property="Padding" Value="10 0"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type materialDesign:PackIcon}">
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20"/>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="5 0 0 0"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style x:Key="IconDeleteBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="MinWidth" Value="40" ></Setter>
+        <Setter Property="Height" Value="38"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#ff3838"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

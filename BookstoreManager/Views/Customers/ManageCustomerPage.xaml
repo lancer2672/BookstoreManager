@@ -19,8 +19,9 @@
     </Page.Resources>
     <Grid >
         <Grid.Resources>
-            <Style BasedOn="{StaticResource IconBtn}" TargetType="Button">
+            <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
                 <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                <Setter Property="MinWidth" Value="60"></Setter>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -32,18 +33,31 @@
         <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
             <SharedUC:SearchBar></SharedUC:SearchBar>
             <Button ToolTip="Thêm nhân viên"  
+                    Name="AddBtn"
                     Command="{Binding COpenAddCustomerWindow}">
-                <materialDesign:PackIcon Kind="Add"/>
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Add" />
+                    <TextBlock Text="Thêm"/>
+                </DockPanel>
             </Button>
             <Button 
+                    Style="{StaticResource IconDeleteBtn}"
+                    Margin="20 0 0 0"
+                    Width="60"
                     Command="{Binding CDeleteCustomer}" 
                     CommandParameter="{Binding ElementName=lv}">
-                    <materialDesign:PackIcon Kind="Delete"/>
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Delete" />
+                    <TextBlock Text="Xóa"/>
+                </DockPanel>
             </Button>
-            <Button ToolTip="Chỉnh sửa" 
+            <Button 
                     Command="{Binding COpenUpdateCustomerWindow}" 
                     CommandParameter="{Binding ElementName=lv}">
-                 <materialDesign:PackIcon Kind="Adjust"/>
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Adjust" />
+                    <TextBlock Text="Sửa"/>
+                </DockPanel>
             </Button>
         </StackPanel>
         <ListView Grid.Row="1" 
@@ -69,7 +83,12 @@
                     <Setter Property="Margin" Value="20 0 0 0"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <Button Content="Nhập liệu từ Excel" Command="{Binding CImportExcel}"></Button>
+            <Button  Command="{Binding CImportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Import" />
+                    <TextBlock Text="Nhập liệu từ Excel"/>
+                </DockPanel>
+            </Button>
             <Button Content="Xuất Excel" Command="{Binding CExportExcel}"></Button>
         </StackPanel>
         <materialDesign:Snackbar Grid.Row="2"

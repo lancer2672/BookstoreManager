@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
     
-        Title="AdminWindow" Height="450" Width="800">
-    <Grid>
+        Title="AdminWindow" Height="650" Width="900">
+    <DockPanel>
         <syncfusion:SfNavigationDrawer   DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
@@ -73,5 +73,5 @@
             <syncfusion:NavigationItem Header="Quy định" x:Name="NavRegulation">
             </syncfusion:NavigationItem>
         </syncfusion:SfNavigationDrawer>
-    </Grid>
+    </DockPanel>
 </Window>

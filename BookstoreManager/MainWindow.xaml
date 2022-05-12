@@ -17,6 +17,5 @@
             <MenuItem Header="Admin" FontSize="14" Command="{Binding LoadedWidnowCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
             <MenuItem Header="Help" VerticalAlignment="Center" FontSize="14"/>
         </Menu>
-
     </Grid>
 </Window>
