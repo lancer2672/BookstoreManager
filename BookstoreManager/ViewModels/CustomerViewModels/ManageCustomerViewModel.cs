@@ -120,8 +120,15 @@ namespace BookstoreManager.ViewModels
         }
         public void SearchCustomer()
         {
-            List<KHACHHANG> listKH = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.HoTen.ToLower().Contains(SearchKey.ToLower())).ToList();
-            ListCustomer = GetViewCustomerFromList(listKH);
+            if (SearchKey != "" && SearchKey != null)
+            {
+                List<KHACHHANG> listKH = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.HoTen.ToLower().Contains(SearchKey.ToLower())).ToList();
+                ListCustomer = GetViewCustomerFromList(listKH);
+            }
+            else
+            {
+                LoadListCustomer();
+            }
         }
         public void ImportFileExcel()
         {

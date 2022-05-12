@@ -25,9 +25,8 @@
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-  
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -79,7 +78,7 @@
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <StackPanel.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource TextBtn}">
+                <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
                     <Setter Property="Margin" Value="20 0 0 0"></Setter>
                 </Style>
             </StackPanel.Resources>
@@ -89,7 +88,12 @@
                     <TextBlock Text="Nhập liệu từ Excel"/>
                 </DockPanel>
             </Button>
-            <Button Content="Xuất Excel" Command="{Binding CExportExcel}"></Button>
+            <Button Command="{Binding CExportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Export" />
+                    <TextBlock Text="Xuất Excel"/>
+                </DockPanel>
+            </Button>
         </StackPanel>
         <materialDesign:Snackbar Grid.Row="2"
                 HorizontalAlignment="Stretch"
