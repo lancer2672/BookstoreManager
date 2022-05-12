@@ -20,7 +20,7 @@ namespace BookstoreManager.ViewModels.Customers
         private string _customerId;
         private string _customerEmail;
         private string _customerPhoneNumber;
-        private string _customerDebt;
+        private decimal _customerDebt;
         private ManageCustomerViewModel _customerViewModel;
         private SnackbarMessageQueue _myMessageQueue;
 
@@ -29,7 +29,7 @@ namespace BookstoreManager.ViewModels.Customers
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
         public string CustomerEmail { get { return _customerEmail; } set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
-        public string CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
+        public decimal CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
         public string CustomerPhoneNumber {  get { return _customerPhoneNumber; }  set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber));  } }
 
         public ICommand CAddCustomer { get; set; }
@@ -54,7 +54,7 @@ namespace BookstoreManager.ViewModels.Customers
                 newCustomer.HoTen = CustomerName;
                 newCustomer.Email = CustomerEmail;
                 newCustomer.DienThoai = CustomerPhoneNumber;
-                newCustomer.TongNo = Decimal.Parse(CustomerDebt);
+                newCustomer.TongNo = CustomerDebt;
                 DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
                 try
                 {
@@ -80,7 +80,7 @@ namespace BookstoreManager.ViewModels.Customers
             CustomerAddress = "";
             CustomerEmail = "";
             CustomerPhoneNumber = "";
-            CustomerDebt = "";
+            CustomerDebt = 0;
         }
     }
 }
