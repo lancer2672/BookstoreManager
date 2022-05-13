@@ -21,6 +21,7 @@ namespace BookstoreManager.ViewModels
                 p.Hide();
                 AdminWindow admWindow = new AdminWindow();
                 admWindow.ShowDialog();
+                p.Show();
             });
 
         }

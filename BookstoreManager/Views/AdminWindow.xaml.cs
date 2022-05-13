@@ -48,6 +48,10 @@ namespace BookstoreManager.Views
                 case "NavRegulation":
                     Main.Content = Pages.RegulationPage;
                     break;
+                case "LogOut":
+                    this.Close();
+                    break;
+
 
             }
         }

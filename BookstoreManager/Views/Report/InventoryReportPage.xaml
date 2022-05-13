@@ -4,11 +4,95 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookstoreManager.Views.Report"
+      xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InventoryReportPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"/>
+                <ResourceDictionary Source="../Style/ListView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Thống kê doanh thu"/>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <ComboBox   Grid.Column="1" 
+                                Width="80"
+                                FontSize="14"
+                                Margin="0 10 10 0"
+                                materialDesign:HintAssist.Hint="Năm"
+                                ItemsSource="{Binding DataComboboxYear}" 
+                                SelectedValue="{Binding SelectedYear}"
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"   />
+                    <Button VerticalAlignment="Bottom" Style="{StaticResource TextBtn}" Content="Tạo báo cáo" Command="{Binding LoadDataLv}"/>
+                </StackPanel>
+                <DockPanel Grid.Row="1" Margin="0 0 0 20">
+                    <StackPanel
+                        DockPanel.Dock="Top"
+                        Orientation="Horizontal"
+                        Margin="0 0 0 10">
+                        <RadioButton
+                            x:Name="ListRadBtn"
+                            Style="{StaticResource MaterialDesignTabRadioButton}"
+                            GroupName="RevenueReportDisplayMode"
+                            IsChecked="True"
+                            Content="Danh sách" >
+                        </RadioButton>
+                        <RadioButton
+                            x:Name="ChartRadBtn"
+                            Style="{StaticResource MaterialDesignTabRadioButton}"
+                            GroupName="RevenueReportDisplayMode"
+                            IsChecked="False"
+                            Content="Biểu đồ" />
 
-    <Grid>
-        
-    </Grid>
+                    </StackPanel>
+                    <Border Padding="10">
+                        <Grid>
+                            <Grid >
+                                <Grid>
+                                    <ListView FontSize="14" x:Name="ListViewStatistic"  ItemsSource="{Binding DataListView}" ItemContainerStyle="{StaticResource ListItemContainer}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn
+                                                Header="STT"
+                                                DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                AncestorType={x:Type ListViewItem}}, 
+                                                Converter={StaticResource IndexConverter}}" />
+                                                <GridViewColumn Header="Thời gian" DisplayMemberBinding="{Binding thoi_gian}"></GridViewColumn>
+                                                <GridViewColumn Header="Tiền hóa đơn" DisplayMemberBinding="{Binding tien_hoa_don}"></GridViewColumn>
+                                                <GridViewColumn Header="Tiền nguyên liệu" DisplayMemberBinding="{Binding tien_nguon_hang}"></GridViewColumn>
+                                                <GridViewColumn Header="Tiền lương"  DisplayMemberBinding="{Binding tien_luong}"></GridViewColumn>
+                                                <GridViewColumn Header="Lợi nhuận" DisplayMemberBinding="{Binding tong}">
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=ListRadBtn}" Value="False">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DockPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+
 </Page>
