@@ -88,7 +88,6 @@
                                                 AncestorType={x:Type ListViewItem}}, 
                                                 Converter={StaticResource IndexConverter}}" />
                                                 <GridViewColumn Header="Tên Sách" DisplayMemberBinding="{Binding  BookName}"></GridViewColumn>
-                                                <GridViewColumn Header="Tên Thể Loại" DisplayMemberBinding="{Binding Type}"></GridViewColumn>
                                                 <GridViewColumn Header="Tồn đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
                                                 <GridViewColumn Header="Phát sinh" DisplayMemberBinding="{Binding IncurredQuantity}"></GridViewColumn>
                                                 <GridViewColumn Header="Tồn cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>

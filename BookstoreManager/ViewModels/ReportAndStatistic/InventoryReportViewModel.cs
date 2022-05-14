@@ -63,11 +63,10 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             {
                 InventoryReportItem Item = new InventoryReportItem();
                 Item.Id = book.MaSach;
+                Item.BookName = book.TenSach;
                 Item.FirstQuantity = (int)InvReport.TonDau;
                 Item.IncurredQuantity = (int)InvReport.PhatSinh;
                 Item.EndQuantity = (int)InvReport.TonCuoi;
-                Item.PublishingHouse = book.NhaXuatBan;
-                Item.PublishYear = (int)book.NamXuatBan;
                 Data.Add(Item);
             }
             return Data;
