@@ -8,11 +8,11 @@ namespace BookstoreManager.Models
 {
     public class InventoryReportChartModel
     {
-        public int Value { get; set; }
+        public int Quantity { get; set; }
         public string Month { get; set; }
         public InventoryReportChartModel(int X, int Y)
         {
-            Value = X;
+            Quantity = X;
             Month = "Tháng " + Y.ToString();
         }
     }
