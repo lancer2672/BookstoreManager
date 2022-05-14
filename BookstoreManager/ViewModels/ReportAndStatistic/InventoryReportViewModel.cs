@@ -17,18 +17,24 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private List<int> _listMonth = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         private int _selectedYear;
         private int _selectedMonth;
+        private string _searchKey;
         public List<int> ListMonth { get => _listMonth; }
+        public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+
         public int SelectedMonth { get { return _selectedMonth; } set { _selectedMonth = value; OnPropertyChanged(nameof(SelectedMonth)); } }
         public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; OnPropertyChanged(nameof(SelectedYear)); } }
         public List<int> ListYear { get => _listYear; set { _listYear = value; OnPropertyChanged(nameof(ListYear)); } }
         public ObservableCollection<InventoryReportItem> DataListView { get { return _dataListView; } set { _dataListView = value; OnPropertyChanged(nameof(DataListView)); } }
 
         public ICommand CLoadData { get; set; }
+        public ICommand CSearch { get; set; }
         public InventoryReportViewModel()
         {
             DataListView = new ObservableCollection<InventoryReportItem>();
             ListYear = new List<int>();
             CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
+            CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchBook(); });
+
             LoadData();
         }
         public void LoadData()
@@ -36,38 +42,68 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             LoadDataComboBox();
             LoadDataListView();
         }
+        public void SearchBook()
+        {
+            if (SearchKey != "" && SearchKey != null)
+            {
+                List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+                List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear ).ToList();
+
+                DataListView = GetDataListViewFromDB(InvReport, BookList);
+            }
+            else
+            {
+                LoadDataListView();
+            }
+        }
         public void LoadDataComboBox()
         {
-            List<BAOCAOTON> listBaoCaoTon = DataProvider.Ins.DB.BAOCAOTONs.ToList();
-            foreach (BAOCAOTON item in listBaoCaoTon)
+            BAOCAOTON BaoCaoTon = DataProvider.Ins.DB.BAOCAOTONs.FirstOrDefault();
+            if (BaoCaoTon != null)
             {
-                if(!ListYear.Contains(item.Nam))
+                for (int i = (int)BaoCaoTon.Nam; i <= DateTime.Now.Year; i++)
                 {
-                    ListYear.Add(item.Nam);
+                    ListYear.Add(i);
                 }
+            }
+            else
+            {
+                ListYear.Add(DateTime.Now.Year);
             }
         }
         public void LoadDataListView()
         {
-                BAOCAOTON InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).FirstOrDefault();
-                if (InvReport != null)
-                { 
-                    DataListView = GetDataListViewFromDB(InvReport);
-                }
+            SearchKey = "";
+            List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
+            List<SACH> BookList = DataProvider.Ins.DB.SACHes.ToList();
+            if (InvReport != null)
+            {
+                DataListView = GetDataListViewFromDB(InvReport, BookList);
+            }
+            else
+            {
+
+            }
         }
-        public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(BAOCAOTON InvReport)
+        public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(List<BAOCAOTON> InvReport,List<SACH> BookList)
         {
             ObservableCollection<InventoryReportItem> Data = new ObservableCollection<InventoryReportItem>();
-            List<SACH> BookList = DataProvider.Ins.DB.SACHes.ToList();
-            foreach (SACH book in BookList)
+            foreach (BAOCAOTON item in InvReport)
             {
-                InventoryReportItem Item = new InventoryReportItem();
-                Item.Id = book.MaSach;
-                Item.BookName = book.TenSach;
-                Item.FirstQuantity = (int)InvReport.TonDau;
-                Item.IncurredQuantity = (int)InvReport.PhatSinh;
-                Item.EndQuantity = (int)InvReport.TonCuoi;
-                Data.Add(Item);
+                for (int i = 0; i < BookList.Count; i++)
+                {
+                    if(BookList[i].MaSach == item.MaSach)
+                    {
+                        InventoryReportItem InvItem = new InventoryReportItem();
+                        InvItem.Id = BookList[i].MaSach;
+                        InvItem.BookName = BookList[i].TenSach;
+                        InvItem.FirstQuantity = (int)item.TonDau;
+                        InvItem.IncurredQuantity = (int)item.PhatSinh;
+                        InvItem.EndQuantity = (int)item.TonCuoi;
+                        Data.Add(InvItem);
+                    }
+                }
+                
             }
             return Data;
         }

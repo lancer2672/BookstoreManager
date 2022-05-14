@@ -332,6 +332,7 @@
     <Resource Include="Resources\Imgs\CustomerIcon.png" />
     <Resource Include="Resources\Imgs\LogOutIcon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
