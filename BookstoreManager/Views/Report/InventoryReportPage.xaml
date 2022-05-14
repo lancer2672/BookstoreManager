@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:BookstoreManager.Views.Report"
       xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:UC ="clr-namespace:BookstoreManager.Views.SharedControl"
+     
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InventoryReportPage"
@@ -78,7 +79,7 @@
                             Content="Biểu đồ" />
 
                     </StackPanel>
-                    <Border Padding="10">
+                    <Border>
                         <Grid>
                             <Grid >
                                 <Grid>
@@ -108,10 +109,19 @@
                                     </Style>
                                 </Grid.Style>
                             </Grid>
+
+                           
                         </Grid>
                     </Border>
                 </DockPanel>
+              
             </Grid>
+           
+            <materialDesign:Snackbar
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+            </materialDesign:Snackbar>
         </Grid>
     </DockPanel>
 

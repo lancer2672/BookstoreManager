@@ -1,5 +1,6 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +19,18 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private int _selectedYear;
         private int _selectedMonth;
         private string _searchKey;
-        public List<int> ListMonth { get => _listMonth; }
-        public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+        private ObservableCollection<InventoryReportChartModel> _dataChart;
 
+        private SnackbarMessageQueue _myMessageQueue;
+
+        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
+        public List<int> ListMonth { get => _listMonth; }
+        public List<int> ListYear { get => _listYear; set { _listYear = value; OnPropertyChanged(nameof(ListYear)); } }
         public int SelectedMonth { get { return _selectedMonth; } set { _selectedMonth = value; OnPropertyChanged(nameof(SelectedMonth)); } }
         public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; OnPropertyChanged(nameof(SelectedYear)); } }
-        public List<int> ListYear { get => _listYear; set { _listYear = value; OnPropertyChanged(nameof(ListYear)); } }
+        public ObservableCollection<InventoryReportChartModel> DataChart { get { return _dataChart; } set { _dataChart = value; OnPropertyChanged(nameof(DataChart)); } }
+        public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+
         public ObservableCollection<InventoryReportItem> DataListView { get { return _dataListView; } set { _dataListView = value; OnPropertyChanged(nameof(DataListView)); } }
 
         public ICommand CLoadData { get; set; }
@@ -34,13 +41,12 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             ListYear = new List<int>();
             CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchBook(); });
+            DataChart = new ObservableCollection<InventoryReportChartModel>();
 
-            LoadData();
-        }
-        public void LoadData()
-        {
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue.DiscardDuplicates = true;
+
             LoadDataComboBox();
-            LoadDataListView();
         }
         public void SearchBook()
         {
@@ -76,13 +82,14 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             SearchKey = "";
             List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
             List<SACH> BookList = DataProvider.Ins.DB.SACHes.ToList();
-            if (InvReport != null)
+            if (InvReport.Count !=0 )
             {
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
+                MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
             }
             else
             {
-
+                MyMessageQueue.Enqueue("Lỗi! Không có thông tin");
             }
         }
         public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(List<BAOCAOTON> InvReport,List<SACH> BookList)
