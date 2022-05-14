@@ -62,14 +62,13 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             foreach (SACH book in BookList)
             {
                 InventoryReportItem Item = new InventoryReportItem();
-                THELOAI Type = DataProvider.Ins.DB.THELOAIs.Where(p => p.MaTheLoai == book.MaTheLoai).FirstOrDefault();
-                Item.Type = Type.TenTheLoai; 
                 Item.Id = book.MaSach;
                 Item.FirstQuantity = (int)InvReport.TonDau;
                 Item.IncurredQuantity = (int)InvReport.PhatSinh;
                 Item.EndQuantity = (int)InvReport.TonCuoi;
                 Item.PublishingHouse = book.NhaXuatBan;
                 Item.PublishYear = (int)book.NamXuatBan;
+                Data.Add(Item);
             }
             return Data;
         }
