@@ -169,6 +169,7 @@
     <Compile Include="Models\ViewCustomer.cs" />
     <Compile Include="Resources\Utils\IndexConverter.cs" />
     <Compile Include="Resources\Utils\MoneyConverter.cs" />
+    <Compile Include="Resources\Utils\MonthConverter.cs" />
     <Compile Include="Resources\Utils\Rules.cs" />
     <Compile Include="Resources\Utils\UIMoneyConverter.cs" />
     <Compile Include="Resources\Utils\Validator.cs" />
