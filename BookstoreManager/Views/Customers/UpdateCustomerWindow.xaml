@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         
         WindowStartupLocation="CenterScreen"
-         Title="AddCustomerWindow" Height="380" Width="500">
+         Title="AddCustomerWindow" Height="340" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,7 +23,7 @@
         <StackPanel Name="UpdateCustomerForm">
             <StackPanel.Resources>
                 <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-                    <Setter Property="Width" Value="380"></Setter>
+                    <Setter Property="Width" Value="500"></Setter>
                 </Style>
             </StackPanel.Resources>
             <TextBlock Text="THÔNG TIN KHÁCH HÀNG" Style="{StaticResource PageTitle}"  HorizontalAlignment="Center"></TextBlock>
@@ -54,12 +54,6 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox 
-                        Text ="{Binding CustomerAddress}"
-                         materialDesign:HintAssist.Hint="Địa chỉ">
                 </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
