@@ -12,8 +12,10 @@ namespace BookstoreManager.Models
         public string BookName { get; set; }
         public string Type { get; set; }
         public string PublishingHouse { get; set; }
+        public int FirstQuantity { get; set; }
+        public int IncurredQuantity { get; set; }
+        public int EndQuantity { get; set; }
         public int PublishYear { get; set; }
-        public int Quantity { get; set; }
 
     }
 }
