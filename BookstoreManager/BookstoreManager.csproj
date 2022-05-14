@@ -328,6 +328,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Imgs\CustomerIcon.png" />
+    <Resource Include="Resources\Imgs\LogOutIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
@@ -338,8 +342,6 @@
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
       <LastGenOutput>BookstoreManagerModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Resources\Imgs\CustomerIcon.png" />
-    <Resource Include="Resources\Imgs\LogOutIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />
