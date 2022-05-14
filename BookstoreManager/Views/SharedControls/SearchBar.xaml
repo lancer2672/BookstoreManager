@@ -14,7 +14,7 @@
     <DockPanel Width="300">
         <TextBox 
             Height="Auto"
-            materialDesign:HintAssist.Hint="Tìm kiếm khách hàng"
+            materialDesign:HintAssist.Hint="Tìm kiếm"
             DockPanel.Dock="Left"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             Text="{Binding SearchKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
