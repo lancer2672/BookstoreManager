@@ -31,10 +31,28 @@
                                 Width="80"
                                 FontSize="14"
                                 Margin="0 10 10 0"
+                                materialDesign:HintAssist.Hint="Tháng"
+                                ItemsSource="{Binding ListMonth}" 
+                                SelectedValue="{Binding SelectedMonth}"
+                                
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"   >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource MonthConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox   Grid.Column="1" 
+                                Width="80"
+                                FontSize="14"
+                                Margin="0 10 10 0"
                                 materialDesign:HintAssist.Hint="Năm"
                                 ItemsSource="{Binding ListYear}" 
+                                
                                 SelectedValue="{Binding SelectedYear}"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"   />
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"   >
+                      
+                    </ComboBox>
                     <Button VerticalAlignment="Bottom" Style="{StaticResource TextBtn}" Content="Tạo báo cáo" Command="{Binding CLoadData}"/>
                 </StackPanel>
                 <DockPanel Grid.Row="1" Margin="0 0 0 20">
@@ -71,8 +89,9 @@
                                                 Converter={StaticResource IndexConverter}}" />
                                                 <GridViewColumn Header="Tên Sách" DisplayMemberBinding="{Binding  BookName}"></GridViewColumn>
                                                 <GridViewColumn Header="Tên Thể Loại" DisplayMemberBinding="{Binding Type}"></GridViewColumn>
-                                                <GridViewColumn Header="Nhà Xuất Bản" DisplayMemberBinding="{Binding PublishingHouse}"></GridViewColumn>
-                                                <GridViewColumn Header="Số Lượng Tồn" DisplayMemberBinding="{Binding Quantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Tồn đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Phát sinh" DisplayMemberBinding="{Binding IncurredQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Tồn cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
