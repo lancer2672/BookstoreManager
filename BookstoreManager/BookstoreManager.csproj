@@ -192,11 +192,18 @@
     <Compile Include="Resources\Utils\Rules.cs" />
     <Compile Include="Resources\Utils\UIMoneyConverter.cs" />
     <Compile Include="Resources\Utils\Validator.cs" />
+    <Compile Include="ViewModels\AccountViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\InventoryReportViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\Account\AccountChange.xaml.cs">
+      <DependentUpon>AccountChange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\AccountMain.xaml.cs">
+      <DependentUpon>AccountMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BookViews\BookListPage.xaml.cs">
       <DependentUpon>BookListPage.xaml</DependentUpon>
     </Compile>
@@ -255,6 +262,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ViewModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Account\AccountChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Account\AccountMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -369,6 +384,5 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
- 
   <Import Project="..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets')" />
 </Project>

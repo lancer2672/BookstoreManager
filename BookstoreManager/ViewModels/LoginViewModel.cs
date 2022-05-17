@@ -49,7 +49,6 @@ namespace BookstoreManager.ViewModels
             else
             {
                 MessageBox.Show("Sai tài khoản hoặc mật khẩu", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                MessageBox.Show(Username);
             }           
         }
     }

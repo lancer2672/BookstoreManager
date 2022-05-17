@@ -2,9 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ViewModels ="clr-namespace:BookstoreManager.ViewModels"
                     xmlns:ReporViewModels ="clr-namespace:BookstoreManager.ViewModels.ReportAndStatistic"
-                    xmlns:CustomerViewModels ="clr-namespace:BookstoreManager.ViewModels.Customers" >
+                    xmlns:CustomerViewModels ="clr-namespace:BookstoreManager.ViewModels.Customers" 
+                    xmlns:AccountViewModel ="clr-namespace:BookstoreManager.ViewModels.AccountViewModels">
     <ViewModels:MainViewModel x:Key="MainVM"></ViewModels:MainViewModel>
     <ViewModels:ManageCustomerViewModel x:Key="CustomerVM"></ViewModels:ManageCustomerViewModel>
     <ViewModels:LoginViewModel x:Key="LoginVM"></ViewModels:LoginViewModel>
     <ReporViewModels:InventoryReportViewModel x:Key="InvReportVM"></ReporViewModels:InventoryReportViewModel>
+    <AccountViewModel:AccountViewModel x:Key="AccountVM"></AccountViewModel:AccountViewModel>
 </ResourceDictionary>

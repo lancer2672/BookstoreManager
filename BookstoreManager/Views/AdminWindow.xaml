@@ -37,7 +37,8 @@
                                 BorderThickness="0" 
                                 >
                                 <syncfusion:DropDownMenuGroup>
-                                    <syncfusion:DropDownMenuItem Padding="10 2" Header="Thông tin" FontWeight="Regular">
+                                    <syncfusion:DropDownMenuItem x:Name="AccountInfo" Click="AccountInfo_Click"
+                                        Padding="10 2" Header="Thông tin" FontWeight="Regular">
                                   
                                     </syncfusion:DropDownMenuItem>
                                     <syncfusion:DropDownMenuItem Padding="10 2" Header="Đăng xuất" FontWeight="Regular">
@@ -82,7 +83,7 @@
             </syncfusion:NavigationItem>
             <syncfusion:SfNavigationDrawer.FooterItems >
                 <syncfusion:NavigationItem Header="Log Out" x:Name="LogOut">
-                    <syncfusion:NavigationItem.Icon>
+                    <syncfusion:NavigationItem.Icon >
                         <Image Source="../Resources/Imgs/LogOutIcon.ico"></Image>
                     </syncfusion:NavigationItem.Icon>
                 </syncfusion:NavigationItem>

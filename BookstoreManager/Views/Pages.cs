@@ -1,4 +1,5 @@
-﻿using BookstoreManager.Views.BookViews;
+﻿using BookstoreManager.Views.Account;
+using BookstoreManager.Views.BookViews;
 using BookstoreManager.Views.Regulation;
 using BookstoreManager.Views.Report;
 using System;
@@ -22,6 +23,7 @@ namespace BookstoreManager.Views
         public static Page InventoryReportPage { get => ListPages[4]; }
 
         public static Page RegulationPage { get => ListPages[5]; }
+        public static Page AccountPage { get => ListPages[6]; }
 
         static Pages()
         {
@@ -31,7 +33,7 @@ namespace BookstoreManager.Views
             ListPages.Add(new DebtReportPage());
             ListPages.Add(new InventoryReportPage());
             ListPages.Add(new RegulationPage());
-
+            ListPages.Add(new AccountMain());
         }
     }
 }
