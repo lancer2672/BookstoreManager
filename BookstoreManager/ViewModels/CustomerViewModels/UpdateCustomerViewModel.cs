@@ -74,7 +74,7 @@ namespace BookstoreManager.ViewModels.Customers
                 }
                 _customerViewModel.LoadListCustomer();
                 RefreshUpdateCustomerForm();
-                _customerViewModel.MyMessageQueue.Enqueue("Chỉnh sửa thông tin khách hàng thành công!");
+                _customerViewModel.MyMessageQueue.Enqueue("Chỉnh sửa thông tin thành công!");
             }
             else
             {
