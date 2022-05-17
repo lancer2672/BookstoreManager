@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BookstoreManager"
         mc:Ignorable="d"
         x:Name="mainWindow"
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>

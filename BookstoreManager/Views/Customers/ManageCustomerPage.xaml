@@ -14,6 +14,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/ListView.xaml"></ResourceDictionary>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -61,17 +63,26 @@
         </StackPanel>
         <ListView Grid.Row="1" 
                   x:Name="lv"
+                  ItemContainerStyle="{StaticResource  ListItemContainer}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   ItemsSource="{Binding ListCustomer}"  
                   SelectionMode="Multiple" 
+                  HorizontalAlignment="Stretch"
                   SelectedItem="{Binding SelectedCustomer}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
-                    <GridViewColumn Header="Họ và tên" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="SĐT" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
+                    <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                    <GridViewColumn Header="Email" Width="Auto"  >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Email}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt,Converter={StaticResource UIMoneyConverter}}"/>
                 </GridView>
             </ListView.View>
