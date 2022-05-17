@@ -3,12 +3,102 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BookstoreManager"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:BookstoreManager" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="http://schemas.microsoft.com/expression/2010/interactions" xmlns:i2="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource LoginVM}"
+        Title="Đăng nhập" Height="500" Width="850"
+        x:Name="loginWindow">
         
-        Title="LoginWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Text="ĐĂNG NHẬP" FontWeight="Bold" FontSize="30" />
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Text="Quản lý nhà sách" Foreground="{DynamicResource PrimaryHueDarkBrush}" FontWeight="DemiBold" FontSize="25" FontFamily="Lucida Handwriting" >
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Margin="40 0 40 0" Grid.Row="1" VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="materialDesign:PackIcon">
+                        <Setter Property="Width" Value="35"/>
+                        <Setter Property="Height" Value="35"/>
+                        <Setter Property="Margin" Value="0 0 10 0"/>
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+                    </Style>
+                </StackPanel.Resources>
+                <DockPanel Margin="0 0 0 30">
+                    <materialDesign:PackIcon Kind="Account" />
+                    <TextBox x:Name="usernameTxb"
+                            materialDesign:HintAssist.Hint="Tên đăng nhập" FontSize="16" 
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                            Text="{Binding Username}"/>
+                </DockPanel>
+                <DockPanel >
+                    <materialDesign:PackIcon Kind="Lock" />
+                    <PasswordBox 
+                            x:Name="passwordTxb"
+                            materialDesign:HintAssist.Hint="Mật khẩu" FontSize="16"
+                            Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
+                                   CommandParameter="{Binding ElementName=passwordTxb}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Margin="0 0 40 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="Height" Value="40"/>
+
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="loginBtn" 
+                        Margin="0 0 20 0"
+                         Command="{Binding LoginCommand}"
+                         CommandParameter="{Binding ElementName=loginWindow}">
+                    Đăng nhập
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i1:CallMethodAction MethodName="Close"
+                                                TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                            
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="exitBtn"                  
+                    Background="{DynamicResource SecondaryHueMidBrush}">
+                    Thoát
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i1:CallMethodAction MethodName="Close"
+                                                TargetObject="{Binding RelativeSource={RelativeSource
+                                                  Mode=FindAncestor,
+                                                  AncestorType=Window}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
