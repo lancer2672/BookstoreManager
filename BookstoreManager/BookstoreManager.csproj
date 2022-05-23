@@ -183,6 +183,7 @@
     <Compile Include="Models\Db\THELOAI.cs">
       <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DebtReportItem.cs" />
     <Compile Include="Models\InventoryReportChartModel.cs" />
     <Compile Include="Models\InventoryReportItem.cs" />
     <Compile Include="Models\ViewCustomer.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\ReportAndStatistic\DebtReportViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\InventoryReportViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Views\Account\AccountChange.xaml.cs">

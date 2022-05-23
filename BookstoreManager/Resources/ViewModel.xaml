@@ -8,5 +8,6 @@
     <ViewModels:ManageCustomerViewModel x:Key="CustomerVM"></ViewModels:ManageCustomerViewModel>
     <ViewModels:LoginViewModel x:Key="LoginVM"></ViewModels:LoginViewModel>
     <ReporViewModels:InventoryReportViewModel x:Key="InvReportVM"></ReporViewModels:InventoryReportViewModel>
+    <ReporViewModels:DebtReportViewModel x:Key="DebtReportVM"></ReporViewModels:DebtReportViewModel>
     <AccountViewModel:AccountViewModel x:Key="AccountVM"></AccountViewModel:AccountViewModel>
 </ResourceDictionary>
