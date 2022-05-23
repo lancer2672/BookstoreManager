@@ -21,7 +21,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Thống kê doanh thu"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Báo Cáo Tồn"/>
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
@@ -151,7 +151,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
+                                
                             </Grid>
+
                             <materialDesign:Snackbar
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
@@ -160,10 +162,29 @@
                         </Grid>
                     </Border>
                 </DockPanel>
-
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                            <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button ToolTip="Nhập liệu từ file Excel" Command="{Binding CImportExcel}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Import" />
+                            <TextBlock Text="Import Excel"/>
+                        </DockPanel>
+                    </Button>
+                    <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Export" />
+                            <TextBlock Text="Export Excel"/>
+                        </DockPanel>
+                    </Button>
+                </StackPanel>
 
             </Grid>
         </Grid>
+  
     </DockPanel>
 
 </Page>

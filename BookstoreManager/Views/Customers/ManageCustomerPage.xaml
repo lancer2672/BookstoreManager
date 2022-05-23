@@ -19,7 +19,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Khách Hàng"></TextBlock>
+    <Grid Grid.Row="1">
         <Grid.Resources>
             <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
                 <Setter Property="Margin" Value="20 0 0 0"></Setter>
@@ -27,6 +34,7 @@
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
+         
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -93,16 +101,16 @@
                     <Setter Property="Margin" Value="20 0 0 0"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <Button  Command="{Binding CImportExcel}">
+            <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
                 <DockPanel>
                     <materialDesign:PackIcon Kind="Import" />
-                    <TextBlock Text="Nhập liệu từ Excel"/>
+                    <TextBlock Text="Import Excel"/>
                 </DockPanel>
             </Button>
-            <Button Command="{Binding CExportExcel}">
+            <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
                 <DockPanel>
                     <materialDesign:PackIcon Kind="Export" />
-                    <TextBlock Text="Xuất Excel"/>
+                    <TextBlock Text="Export Excel"/>
                 </DockPanel>
             </Button>
         </StackPanel>
@@ -111,5 +119,6 @@
                 VerticalAlignment="Bottom"
                 MessageQueue="{Binding MyMessageQueue}">
         </materialDesign:Snackbar>
+    </Grid>
     </Grid>
 </Page>

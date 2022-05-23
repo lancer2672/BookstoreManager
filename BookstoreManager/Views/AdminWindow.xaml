@@ -14,41 +14,9 @@
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border Padding="10" Background="#F2F2F2">
-                        <DockPanel x:Name="Header">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Trang quản lý" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Margin="20 0 0 0"/>
-                            </StackPanel>
-                            <syncfusion:DropDownButtonAdv 
-                                Label=""
-                                FontWeight="DemiBold"
-                                x:Name="AccountNavBtn" 
-                                SizeMode="Small" 
-                                IconHeight="25"
-                            
-                                IconWidth="25"
-                                HorizontalAlignment="Right" 
-                                VerticalAlignment="Center"
-                                Padding="10 3"
-                                Background="White" 
-                                BorderThickness="0" 
-                                >
-                                <syncfusion:DropDownMenuGroup>
-                                    <syncfusion:DropDownMenuItem x:Name="AccountInfo" Click="AccountInfo_Click"
-                                        Padding="10 2" Header="Thông tin" FontWeight="Regular">
-                                  
-                                    </syncfusion:DropDownMenuItem>
-                                    <syncfusion:DropDownMenuItem Padding="10 2" Header="Đăng xuất" FontWeight="Regular">
-                                     
-                                    </syncfusion:DropDownMenuItem>
-
-                                </syncfusion:DropDownMenuGroup>
-                            </syncfusion:DropDownButtonAdv>
-                        </DockPanel>
-                    </Border>
                     <Frame Padding="10 10" Grid.Row="1" x:Name="Main" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
                 </Grid>
             </syncfusion:SfNavigationDrawer.ContentView>

@@ -18,7 +18,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Thống kê doanh thu"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Báo Cáo Nợ"/>
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
