@@ -197,6 +197,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\RegulationViewModels\RegulationViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\DebtReportViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\InventoryReportViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -366,7 +367,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Imgs\CustomerIcon.png" />
     <Resource Include="Resources\Imgs\LogOutIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -380,6 +380,14 @@
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
       <LastGenOutput>BookstoreManagerModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Imgs\Debt.png" />
+    <Resource Include="Resources\Imgs\Inventory.png" />
+    <Resource Include="Resources\Imgs\Regulation.png" />
+    <Resource Include="Resources\Imgs\Statistic.png" />
+    <Resource Include="Resources\Imgs\BookCase.png" />
+    <Resource Include="Resources\Imgs\BookStore.png" />
+    <Resource Include="Resources\Imgs\OpenBook.png" />
+    <Resource Include="Resources\Imgs\Customer.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

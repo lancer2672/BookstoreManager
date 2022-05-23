@@ -53,14 +53,12 @@ namespace BookstoreManager.Views
                     mainWindow.Show();
                     this.Close();
                     break;
-
+                case "NavAccount":
+                    Main.Content = Pages.AccountPage;
+                    break;
 
             }
         }
 
-        private void AccountInfo_Click(object sender, RoutedEventArgs e)
-        {
-            Main.Content = Pages.AccountPage;
-        }
     }
 }

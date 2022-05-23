@@ -3,11 +3,13 @@
                     xmlns:ViewModels ="clr-namespace:BookstoreManager.ViewModels"
                     xmlns:ReporViewModels ="clr-namespace:BookstoreManager.ViewModels.ReportAndStatistic"
                     xmlns:CustomerViewModels ="clr-namespace:BookstoreManager.ViewModels.Customers" 
-                    xmlns:AccountViewModel ="clr-namespace:BookstoreManager.ViewModels.AccountViewModels">
+                    xmlns:AccountViewModel ="clr-namespace:BookstoreManager.ViewModels.AccountViewModels"
+                    xmlns:RegulationViewModel ="clr-namespace:BookstoreManager.ViewModels.RegulationViewModels">
     <ViewModels:MainViewModel x:Key="MainVM"></ViewModels:MainViewModel>
     <ViewModels:ManageCustomerViewModel x:Key="CustomerVM"></ViewModels:ManageCustomerViewModel>
     <ViewModels:LoginViewModel x:Key="LoginVM"></ViewModels:LoginViewModel>
     <ReporViewModels:InventoryReportViewModel x:Key="InvReportVM"></ReporViewModels:InventoryReportViewModel>
     <ReporViewModels:DebtReportViewModel x:Key="DebtReportVM"></ReporViewModels:DebtReportViewModel>
     <AccountViewModel:AccountViewModel x:Key="AccountVM"></AccountViewModel:AccountViewModel>
+    <RegulationViewModel:RegulationViewModel x:Key="RegulationVM"></RegulationViewModel:RegulationViewModel>
 </ResourceDictionary>

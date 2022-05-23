@@ -71,4 +71,20 @@ namespace BookstoreManager.Resources.Utils
             return ValidationResult.ValidResult;
         }
     }
+    public class PositiveNumberRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            try
+            {
+                decimal val = Convert.ToDecimal(value);
+                if (val < 0) return new ValidationResult(false, "Giá trị phải lớn hơn 0");
+                return ValidationResult.ValidResult;
+            }
+            catch
+            {
+                return new ValidationResult(false, "Dữ liệu phải là kiểu số");
+            }
+        }
+    }
 }

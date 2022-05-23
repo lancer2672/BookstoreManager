@@ -72,7 +72,7 @@
 
                     </Style>
                 </StackPanel.Resources>
-                <Button x:Name="loginBtn" 
+                <Button  x:Name="loginBtn" 
                         Margin="0 0 20 0"
                          Command="{Binding LoginCommand}"
                          CommandParameter="{Binding ElementName=loginWindow}">
@@ -86,6 +86,7 @@
                             
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    
                 </Button>
                 <Button x:Name="exitBtn"                  
                     Background="{DynamicResource SecondaryHueMidBrush}">
