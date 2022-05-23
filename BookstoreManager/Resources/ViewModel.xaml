@@ -4,7 +4,7 @@
                     xmlns:ReporViewModels ="clr-namespace:BookstoreManager.ViewModels.ReportAndStatistic"
                     xmlns:CustomerViewModels ="clr-namespace:BookstoreManager.ViewModels.Customers" 
                     xmlns:AccountViewModel ="clr-namespace:BookstoreManager.ViewModels.AccountViewModels"
-                    xmlns:RegulationViewModel ="clr-namespace:BookstoreManager.ViewModels.RegulationViewModels">
+                    xmlns:RegulationViewModel ="clr-namespace:BookstoreManager.ViewModels.RegulationViewModels"
                     xmlns:BookViewModels ="clr-namespace:BookstoreManager.ViewModels.BookViewModels"
               >
     <ViewModels:MainViewModel x:Key="MainVM"></ViewModels:MainViewModel>
