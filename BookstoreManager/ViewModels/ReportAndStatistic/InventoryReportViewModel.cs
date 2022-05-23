@@ -107,7 +107,9 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             }
             else
             {
-                MyMessageQueue.Enqueue("Lỗi! Không có thông tin");
+                MyMessageQueue.Enqueue("Không có thông tin");
+                DataListView.Clear();
+                Title = "Báo Cáo Tồn";
             }
         }
         public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(List<BAOCAOTON> InvReport,List<SACH> BookList)

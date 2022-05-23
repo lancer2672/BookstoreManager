@@ -28,11 +28,15 @@
         <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Khách Hàng"></TextBlock>
     <Grid Grid.Row="1">
         <Grid.Resources>
-            <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
-                <Setter Property="Margin" Value="30 0 0 0"></Setter>
-                <Setter Property="MinWidth" Value="80"></Setter>
-            </Style>
-        </Grid.Resources>
+                <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                    <Setter Property="MinWidth" Value="80"></Setter>
+                </Style>
+                <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                    <Setter Property="MinWidth" Value="80"></Setter>
+                </Style>
+            </Grid.Resources>
         <Grid.RowDefinitions>
          
             <RowDefinition Height="Auto"></RowDefinition>
@@ -62,9 +66,8 @@
                 </Button>
                 <Button 
                     ToolTip="Xóa khách hàng"
-                    Style="{StaticResource IconDeleteBtn}"
-                    Margin="20 0 0 0"
                     Width="70"
+                    Style="{StaticResource DeleteBtn}"
                     Command="{Binding CDeleteCustomer}" 
                     CommandParameter="{Binding ElementName=lv}">
                 <DockPanel>
