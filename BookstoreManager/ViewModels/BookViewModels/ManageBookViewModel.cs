@@ -36,12 +36,33 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public ICommand COpenAddBookWindow { get; set; }
         public ICommand COpenUpdateBookWindow { get; set; }
 
+        public string FindCategory(int matheloai, List<THELOAI> listTHELOAI)
+        {
+            string category = "";
+            foreach (var item in listTHELOAI)
+            {
+                if (matheloai == item.MaTheLoai)
+                {
+                    category = item.TenTheLoai;
+                    break;
+                }
+            }
+            return category;
+        }
         public ObservableCollection<ViewBook> GetViewBookFromList(List<SACH> listSACH)
         {
             ObservableCollection<ViewBook> list = new ObservableCollection<ViewBook>();
             foreach (SACH book in listSACH)
             {
-
+                ViewBook newViewBook = new ViewBook();
+                newViewBook.Id = book.MaSach;
+                newViewBook.TitleBook = book.TenSach;
+                newViewBook.Category = FindCategory((int)book.MaTheLoai, ListTHELOAI);
+                newViewBook.PublishCompany = book.NhaXuatBan;
+                newViewBook.PublishYear = (int)book.NamXuatBan;
+                newViewBook.InventoryNumber = (int)book.SoLuongTon;
+                newViewBook.Price = (decimal)book.GiaNhap;
+                list.Add(newViewBook);
             }
             return list;
         }

@@ -14,6 +14,7 @@ namespace BookstoreManager.Models
         public string NameAuthor { get; set; }
         public string PublishCompany { get; set; }
         public int PublishYear { get; set; }
+        public int InventoryNumber { get; set; }
         public decimal Price { get; set; }
     }
 }

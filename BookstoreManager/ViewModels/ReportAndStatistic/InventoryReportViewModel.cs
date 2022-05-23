@@ -55,7 +55,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             DataListView = new ObservableCollection<InventoryReportItem>();
             DataChart = new ObservableCollection<InventoryReportChartModel>();
 
-            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
+            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(true); });
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchBook(); });
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
@@ -76,7 +76,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             }
             else
             {
-                LoadDataListView();
+                LoadDataListView(false);
             }
         }
         public void LoadDataComboBox()
@@ -94,7 +94,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 ListYear.Add(DateTime.Now.Year);
             }
         }
-        public void LoadDataListView()
+        public void LoadDataListView(bool IsNotify)
         {
             SearchKey = "";
             List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
@@ -102,12 +102,18 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             if (InvReport.Count !=0 )
             {
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
+                if(IsNotify)
+                {
                 MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                }
                 Title = "Báo Cáo Tồn Tháng " + SelectedMonth.ToString() + " Năm " + SelectedYear.ToString();
             }
             else
             {
-                MyMessageQueue.Enqueue("Không có thông tin");
+                if (IsNotify)
+                {
+                    MyMessageQueue.Enqueue("Không có thông tin");
+                }
                 DataListView.Clear();
                 Title = "Báo Cáo Tồn";
             }
@@ -138,6 +144,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 }
             }
             return Data;
+
         }
 
         public void LoadDataChart()
@@ -207,7 +214,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
 
                     }
                 }
-                LoadDataListView();
+                LoadDataListView(false);
             }
             catch (Exception ee)
             {
