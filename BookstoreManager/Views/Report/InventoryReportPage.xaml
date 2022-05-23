@@ -21,7 +21,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Báo Cáo Tồn"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="{Binding Title}"/>
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
