@@ -48,7 +48,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchCustomer(); });
             DataChart = new ObservableCollection<InventoryReportChartModel>();
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2500));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadDataComboBox();
@@ -106,8 +106,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 {
                     if (CustomerList[i].MaKhachHang == item.MaKhachHang)
                     {
-                        //int Indentity = (int)CustomerList[i].MaTheLoai;
-                        //THELOAI Type = DataProvider.Ins.DB.THELOAIs.Where(p => p.MaTheLoai == Indentity).SingleOrDefault();
+                     
                         DebtReportItem debtItem = new DebtReportItem();
                         debtItem.Id = CustomerList[i].MaKhachHang;
                         debtItem.CustomerName = CustomerList[i].HoTen;

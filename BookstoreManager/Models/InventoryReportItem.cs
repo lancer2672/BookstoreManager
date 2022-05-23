@@ -9,6 +9,7 @@ namespace BookstoreManager.Models
     public class InventoryReportItem
     {
         public int BookId { get; set; }
+        public int ReportId { get; set; }
         public string BookName { get; set; }
         public string Type { get; set; }
         public int FirstQuantity { get; set; }

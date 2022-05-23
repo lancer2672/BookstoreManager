@@ -111,13 +111,13 @@
                                 <chart:SfChart Visibility="{Binding IsVisible}" 
                                                Palette="Metro" 
                                                Grid.Row="1" FontSize="20" 
-                                               Header="BIỂU ĐỒ THỂ HIỆN SỐ LƯỢNG SÁCH TỒN TRONG KHO" HorizontalAlignment="Left" 
+                                               Header="BIỂU ĐỒ THỂ HIỆN SỐ TIỀN NỢ CỦA KHÁCH HÀNG" HorizontalAlignment="Left" 
                                                VerticalAlignment="Bottom" >
                                     <chart:SfChart.PrimaryAxis>
                                         <chart:CategoryAxis  FontSize="14"></chart:CategoryAxis>
                                     </chart:SfChart.PrimaryAxis>
                                     <chart:SfChart.SecondaryAxis>
-                                        <chart:NumericalAxis Header="Đơn vị( Quyển )" FontSize="11"></chart:NumericalAxis>
+                                        <chart:NumericalAxis Header="Đơn vị( VNĐ )" FontSize="11"></chart:NumericalAxis>
                                     </chart:SfChart.SecondaryAxis>
                                     <chart:SfChart.Legend>
 

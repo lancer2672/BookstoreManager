@@ -58,7 +58,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2500));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadDataComboBox();
@@ -120,6 +120,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                         THELOAI Type = DataProvider.Ins.DB.THELOAIs.Where(p => p.MaTheLoai == Indentity).SingleOrDefault();
                         InventoryReportItem InvItem = new InventoryReportItem();
                         InvItem.BookId = BookList[i].MaSach;
+                        InvItem.ReportId = item.MaBaoCao;
                         InvItem.BookName = BookList[i].TenSach;
                         InvItem.Type = Type.TenTheLoai;
                         InvItem.FirstQuantity = (int)item.TonDau;
@@ -189,7 +190,6 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                             TonCuoi = Convert.ToInt32(workSheet.Cells[i, j++].Value)
 
                         };
-
                         DataProvider.Ins.DB.BAOCAOTONs.Add(newReport);
                         DataProvider.Ins.DB.SaveChanges();
 

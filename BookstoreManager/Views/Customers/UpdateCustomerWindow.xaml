@@ -116,7 +116,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Hủy">
+                <Button Content="Hủy" Style="{StaticResource TextBtn}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:CallMethodAction MethodName="Close"

@@ -29,7 +29,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal">
                     <UC:SearchBar></UC:SearchBar>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
@@ -57,7 +57,7 @@
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"   >
 
                     </ComboBox>
-                    <Button VerticalAlignment="Bottom" Style="{StaticResource TextBtn}" Content="Tạo báo cáo" Command="{Binding CLoadData}"/>
+                    <Button VerticalAlignment="Bottom" Style="{StaticResource IconTextBtn}" Content="Tạo báo cáo" Command="{Binding CLoadData}"/>
                 </StackPanel>
                 <DockPanel Grid.Row="1" Margin="0 0 0 20">
                     <StackPanel

@@ -29,8 +29,8 @@
     <Grid Grid.Row="1">
         <Grid.Resources>
             <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
-                <Setter Property="Margin" Value="20 0 0 0"></Setter>
-                <Setter Property="MinWidth" Value="60"></Setter>
+                <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                <Setter Property="MinWidth" Value="80"></Setter>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -43,31 +43,36 @@
             <SharedUC:SearchBar></SharedUC:SearchBar>
             <Button ToolTip="Thêm nhân viên"  
                     Name="AddBtn"
+                    Width="70"
                     Command="{Binding COpenAddCustomerWindow}">
                 <DockPanel>
                     <materialDesign:PackIcon Kind="Add" />
                     <TextBlock Text="Thêm"/>
                 </DockPanel>
             </Button>
-            <Button 
+                <Button 
+                     Width="70"
+                    ToolTip="Chỉnh sửa thông tin"
+                    Command="{Binding COpenUpdateCustomerWindow}" 
+                    CommandParameter="{Binding ElementName=lv}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="SquareEditOutline" />
+                        <TextBlock Text="Sửa"/>
+                    </DockPanel>
+                </Button>
+                <Button 
+                    ToolTip="Xóa khách hàng"
                     Style="{StaticResource IconDeleteBtn}"
                     Margin="20 0 0 0"
-                    Width="60"
+                    Width="70"
                     Command="{Binding CDeleteCustomer}" 
                     CommandParameter="{Binding ElementName=lv}">
                 <DockPanel>
-                    <materialDesign:PackIcon Kind="Delete" />
+                    <materialDesign:PackIcon Kind="TrashCanOutline" />
                     <TextBlock Text="Xóa"/>
                 </DockPanel>
             </Button>
-            <Button 
-                    Command="{Binding COpenUpdateCustomerWindow}" 
-                    CommandParameter="{Binding ElementName=lv}">
-                <DockPanel>
-                    <materialDesign:PackIcon Kind="Adjust" />
-                    <TextBlock Text="Sửa"/>
-                </DockPanel>
-            </Button>
+          
         </StackPanel>
         <ListView Grid.Row="1" 
                   x:Name="lv"
@@ -98,7 +103,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
-                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
                 </Style>
             </StackPanel.Resources>
             <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
