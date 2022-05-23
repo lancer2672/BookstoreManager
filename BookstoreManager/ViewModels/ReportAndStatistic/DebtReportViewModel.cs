@@ -15,6 +15,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
     public class DebtReportViewModel : BaseViewModel
     {
         private ObservableCollection<DebtReportItem> _dataListView;
+        private string _title;
         private List<int> _listYear;
         private List<int> _listMonth = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         private int _selectedYear;
@@ -24,6 +25,8 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private Visibility _isVisible;
 
         private SnackbarMessageQueue _myMessageQueue;
+
+        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
 
         public Visibility IsVisible { get { return _isVisible; } set { _isVisible = value; OnPropertyChanged(nameof(IsVisible)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
@@ -42,6 +45,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         {
             IsVisible = Visibility.Hidden;
 
+            Title = "Báo Cáo Nợ";
             DataListView = new ObservableCollection<DebtReportItem>();
             ListYear = new List<int>();
             CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
@@ -91,6 +95,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             {
                 DataListView = GetDataListViewFromDB(InvReport, CustomerList);
                 MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                Title = "Báo Cáo Nợ Tháng " + SelectedMonth.ToString() + " Năm " + SelectedYear.ToString();
             }
             else
             {
