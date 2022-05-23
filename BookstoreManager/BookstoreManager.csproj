@@ -186,6 +186,7 @@
     <Compile Include="Models\DebtReportItem.cs" />
     <Compile Include="Models\InventoryReportChartModel.cs" />
     <Compile Include="Models\InventoryReportItem.cs" />
+    <Compile Include="Models\ViewBook.cs" />
     <Compile Include="Models\ViewCustomer.cs" />
     <Compile Include="Resources\Utils\IndexConverter.cs" />
     <Compile Include="Resources\Utils\MoneyConverter.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Resources\Utils\Validator.cs" />
     <Compile Include="ViewModels\AccountViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookViewModels\ManageBookViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\DebtReportViewModel.cs" />
