@@ -245,7 +245,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 using (ExcelPackage package = new ExcelPackage())
                 {
                     package.Workbook.Properties.Author = "Admin";
-                    package.Workbook.Properties.Title = "Danh sách khách hàng";
+                    package.Workbook.Properties.Title = "Báo cáo tồn";
                     package.Workbook.Worksheets.Add("Sheet 1");
                     ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
                     //add sheet
