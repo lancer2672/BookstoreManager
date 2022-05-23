@@ -21,7 +21,7 @@ namespace BookstoreManager
     {
         public LoginWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

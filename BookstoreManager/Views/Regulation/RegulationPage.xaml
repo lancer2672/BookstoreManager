@@ -3,12 +3,195 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BookstoreManager.Views.Regulation"
+      xmlns:SharedUC ="clr-namespace:BookstoreManager.Views"
+      xmlns:local="clr-namespace:BookstoreManager.Views.Regulation" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:rule="clr-namespace:BookstoreManager.Resources.Utils"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
+      DataContext="{StaticResource RegulationVM}"
       Title="RegulationPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/ListView.xaml"></ResourceDictionary>
 
-    <Grid>
-        
-    </Grid>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <DockPanel>
+        <Grid>
+            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Rectangle >
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{StaticResource Primary400}" Offset="0.3" />
+                            <GradientStop Color="{StaticResource Accent400}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <StackPanel VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="200"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Background="Gainsboro" Grid.Row="0" Width="150" Height="150" CornerRadius="100">
+                            <!--<Image Width="90" Height="90" Source="../../Resources/Assets/Images/rules.png"/>-->
+                                
+                            </Border>
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="30 0">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#1c1c1c"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Margin="0 0 0 15" Text="Thay đổi quy định" FontSize="30" TextAlignment="Center" FontWeight="Medium"></TextBlock>
+                            <TextBlock Text="Chỉnh sửa các quy định, tham số  của hiệu sách" TextAlignment="Center" TextWrapping="Wrap" FontSize="18"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2">
+                            <materialDesign:PackIcon Kind="ArrowRightDropCircle" Foreground="#1c1c1c" HorizontalAlignment="Center" Width="80" Height="80"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel x:Name="regulationChangeForm" >
+                    <DockPanel Margin="0 0 0 30" >
+                        <materialDesign:PackIcon Kind="FileDocumentBoxOutline" Width="30" Height="30" VerticalAlignment="Bottom" Margin="0 0 5 0"/>
+                        <TextBlock Text="Quy định của hiệu sách" FontSize="25" FontWeight="Medium"/>
+                    </DockPanel>
+                    <StackPanel Margin="20 0 ">
+                        <Label Content="Số lượng nhập tối thiểu" FontSize="18" FontWeight="Medium"></Label>
+                        <TextBox x:Name="txbMinImport" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="MinImport" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:NonEmptyRule/>
+                                        <rule:PositiveNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="20 0">
+                        <Label Content="Số lượng tồn tối đa cho phép nhập sách" FontSize="18" FontWeight="Medium"></Label>
+                        <TextBox x:Name="txbMaxInventory" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="MaxInventory" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:NonEmptyRule/>
+                                        <rule:PositiveNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel  Margin="20 0">
+                        <Label Content="Tổng nợ tối đa" FontSize="18" FontWeight="Medium"></Label>
+                        <TextBox x:Name="txbMaxDebt" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="MaxDebt" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:NonEmptyRule/>
+                                        <rule:PositiveNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="20 0" >
+                        <Label Content="Lượng tồn tối thiểu sau khi bán sách" FontSize="18" FontWeight="Medium"></Label>
+                        <TextBox x:Name="txbMinInventory"  Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="MinInventory" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:NonEmptyRule/>
+                                        <rule:PositiveNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="20 0">
+                        <Label Content="Tỉ lệ giá bán" FontSize="18" FontWeight="Medium"></Label>
+                            <DockPanel>
+                                <StackPanel>
+                                    <TextBox x:Name="txbSaleRatio" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                                        <TextBox.Text>
+                                            <Binding Path="SaleRatio" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                                <Binding.ValidationRules>
+                                                    <rule:NonEmptyRule/>
+                                                    <rule:PositiveNumberRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="%" FontSize="15"></TextBlock>
+                                </StackPanel>
+                                
+                            </DockPanel>
+                                
+                            
+                            
+                        
+                    </StackPanel>
+                    <StackPanel Margin="20 0">
+                        <Label Content="Cho phép vượt tổng nợ" FontSize="18" FontWeight="Medium"></Label>
+                        <TextBox x:Name="txbDebtAvailable" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
+                            <TextBox.Text>
+                                <Binding Path="DebtAvailable" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:NonEmptyRule/>
+                                        <rule:PositiveNumberRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <Button x:Name="saveRegulationChangeBtn" Margin="0 15 20 0" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Bottom" 
+                                Content="Cập nhật" 
+                                Command="{Binding SaveRegulationChange}"
+                                    CommandParameter="{Binding ElementName=regulationChangeForm}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button" >
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbMinImport}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbMaxInventory}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbMaxDebt}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbMinInventory}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbSaleRatio}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txbDebtAvailable}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+        <materialDesign:Snackbar
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+        </materialDesign:Snackbar>
+        </Grid>
+    </DockPanel>
+    
 </Page>

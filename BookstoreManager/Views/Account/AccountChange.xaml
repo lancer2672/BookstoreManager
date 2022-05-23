@@ -4,9 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookstoreManager.Views.Account" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:rule="clr-namespace:BookstoreManager.Resources.Utils" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:SharedUC ="clr-namespace:BookstoreManager.Views"
         mc:Ignorable="d"
         DataContext="{StaticResource AccountVM}"
         Title="AccountChange" Height="510" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/ListView.xaml"></ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Border Padding="20">
         <StackPanel>
             <TextBlock Text="Chỉnh sửa thông tin cá nhân" Style="{StaticResource PageTitle}"/>
@@ -123,9 +133,9 @@
                                                   AncestorType=Window}}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <Button.Style>
-                        <Style TargetType="Button" >
-                            <!--BasedOn="{StaticResource PrimaryBtn}"-->
+                    <Button.Style >
+                        <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                            
                             <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
                                 <MultiDataTrigger>
