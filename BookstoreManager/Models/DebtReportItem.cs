@@ -10,7 +10,6 @@ namespace BookstoreManager.Models
     {
         public int Id { get; set; }
         public string CustomerName { get; set; }
-
         public string PhoneNumber { get; set; }
         public int FirstQuantity { get; set; }
         public int IncurredQuantity { get; set; }

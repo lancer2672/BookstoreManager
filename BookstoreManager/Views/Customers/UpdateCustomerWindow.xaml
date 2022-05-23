@@ -89,7 +89,7 @@
             </StackPanel>
             <StackPanel Margin="0 20 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                 
-                <Button Margin="0 0 20 0" Content="Cập Nhật" 
+                <Button Margin="0 0 20 0" Content="Lưu" 
                        Command="{Binding CUpdateCustomer}" CommandParameter="{Binding ElementName=UpdateCustomerForm}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
@@ -116,7 +116,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Hủy">
+                <Button Content="Hủy" Style="{StaticResource TextBtn}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:CallMethodAction MethodName="Close"

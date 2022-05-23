@@ -14,7 +14,7 @@
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Frame Padding="10 10" Grid.Row="1" x:Name="Main" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>

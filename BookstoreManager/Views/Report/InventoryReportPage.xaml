@@ -21,7 +21,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="Thống kê doanh thu"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTitle}" Text="{Binding Title}"/>
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
@@ -29,7 +29,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal">
                     <UC:SearchBar></UC:SearchBar>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
@@ -57,7 +57,7 @@
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"   >
 
                     </ComboBox>
-                    <Button VerticalAlignment="Bottom" Style="{StaticResource TextBtn}" Content="Tạo báo cáo" Command="{Binding CLoadData}"/>
+                    <Button VerticalAlignment="Bottom" Style="{StaticResource IconTextBtn}" Content="Tạo báo cáo" Command="{Binding CLoadData}"/>
                 </StackPanel>
                 <DockPanel Grid.Row="1" Margin="0 0 0 20">
                     <StackPanel
@@ -151,19 +151,40 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
+                                
                             </Grid>
-                            <materialDesign:Snackbar
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom"
-                MessageQueue="{Binding MyMessageQueue}">
-                            </materialDesign:Snackbar>
+
+                         
                         </Grid>
                     </Border>
                 </DockPanel>
-
-
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                            <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Import" />
+                            <TextBlock Text="Import Excel"/>
+                        </DockPanel>
+                    </Button>
+                    <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Export" />
+                            <TextBlock Text="Export Excel"/>
+                        </DockPanel>
+                    </Button>
+                </StackPanel>
+                <materialDesign:Snackbar Grid.Row="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+                </materialDesign:Snackbar>
             </Grid>
         </Grid>
+  
     </DockPanel>
 
 </Page>

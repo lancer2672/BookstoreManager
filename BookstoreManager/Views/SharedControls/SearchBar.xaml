@@ -9,7 +9,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="600">
     <UserControl.Resources>
-        <ResourceDictionary Source="../Style/TextBox.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/TextBox.xaml"/>
+                <ResourceDictionary Source="../Style/Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel Width="300">
         <TextBox 
@@ -17,16 +22,15 @@
             materialDesign:HintAssist.Hint="Tìm kiếm"
             DockPanel.Dock="Left"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding SearchKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Width="300"
-           
+            Text="{Binding SearchKey}"
+            Width="190"
              >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName ="TextChanged">
-                    <i:InvokeCommandAction Command="{Binding CSearch}"></i:InvokeCommandAction>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
         </TextBox>
+        <Button Width="100"  Style="{StaticResource IconTextBtn }" Command="{Binding CSearch}">
+            <DockPanel>
+                <materialDesign:PackIcon Kind="Search" />
+                <TextBlock Text="Tìm kiếm"/>
+            </DockPanel>
+        </Button>
     </DockPanel>
 </UserControl>
