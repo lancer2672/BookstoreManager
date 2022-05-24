@@ -1,13 +1,12 @@
-﻿<UserControl x:Class="BookstoreManager.Views.SharedControl.SearchBar"
+﻿<UserControl x:Class="BookstoreManager.Views.SharedControls.SearchBarCombobox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookstoreManager.Views.SharedControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:BookstoreManager.Views.SharedControl"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="600">
+             d:DesignHeight="50" d:DesignWidth="520">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Width="300">
+    <StackPanel Orientation="Horizontal" Width="460">
         <TextBox 
             Height="Auto"
             materialDesign:HintAssist.Hint="Tìm kiếm"
@@ -26,11 +25,15 @@
             Width="190"
              >
         </TextBox>
+        
         <Button Width="100"  Style="{StaticResource IconTextBtn }" Command="{Binding CSearch}">
             <DockPanel>
                 <materialDesign:PackIcon Kind="Search" />
                 <TextBlock Text="Tìm kiếm"/>
             </DockPanel>
         </Button>
-    </DockPanel>
+        <ComboBox Width="100"   FontSize="14"
+                  SelectedIndex="{Binding SearchTypeSelected}" ItemsSource="{Binding SearchCombobox}" 
+                  Margin="10 0 10 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+    </StackPanel>
 </UserControl>

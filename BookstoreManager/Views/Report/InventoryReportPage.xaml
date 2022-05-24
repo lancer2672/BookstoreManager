@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:BookstoreManager.Views.Report"
       xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:UC ="clr-namespace:BookstoreManager.Views.SharedControl"
+      xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
       xmlns:chart ="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -16,6 +17,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/Button.xaml"/>
+                
                 <ResourceDictionary Source="../Style/ListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -30,7 +32,8 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal">
-                    <UC:SearchBar></UC:SearchBar>
+                    <!--<UC:SearchBar></UC:SearchBar>-->
+                    <UC2:SearchBarCombobox></UC2:SearchBarCombobox>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
                                 FontSize="14"

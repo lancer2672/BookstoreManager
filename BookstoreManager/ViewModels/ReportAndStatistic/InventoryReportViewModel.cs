@@ -14,6 +14,10 @@ using System.Windows.Input;
 
 namespace BookstoreManager.ViewModels.ReportAndStatistic
 {
+    public enum SearchType{
+        TENSACH,
+        THELOAI,
+    }
     public class InventoryReportViewModel : BaseViewModel
     {
         private ObservableCollection<InventoryReportItem> _dataListView;
@@ -25,10 +29,13 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private string _searchKey;
         private ObservableCollection<InventoryReportChartModel> _dataChart;
         private Visibility _isVisible;
-
+        public int _searchTypeSelected;
+        private List<string> _searchCombobox;
         private SnackbarMessageQueue _myMessageQueue;
-
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
+        public int SearchTypeSelected { get { return _searchTypeSelected; } set { _searchTypeSelected = value; OnPropertyChanged(nameof(SearchTypeSelected)); } }
+        public List<string> SearchCombobox { get { return _searchCombobox; } set { _searchCombobox = value; OnPropertyChanged(nameof(SearchCombobox)); } }
+
         public Visibility IsVisible { get { return _isVisible; } set { _isVisible = value;OnPropertyChanged(nameof(IsVisible)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public List<int> ListMonth { get => _listMonth; }
@@ -50,6 +57,8 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public InventoryReportViewModel()
         {
             IsVisible = Visibility.Hidden;
+            SearchCombobox = new List<String>() { "Tên Sách","Thể Loại"};
+            SearchTypeSelected = 0;
             Title = "Báo Cáo Tồn";
             ListYear = new List<int>();
             DataListView = new ObservableCollection<InventoryReportItem>();
@@ -67,10 +76,28 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         }
         public void SearchBook()
         {
+            List<SACH> BookList;
             if (SearchKey != "" && SearchKey != null)
             {
-                List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
-                List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear ).ToList();
+                switch (SearchTypeSelected)
+                {
+                    case 0:
+                        BookList = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        break;
+                    case 1:
+                        List<THELOAI> TypeBookList = DataProvider.Ins.DB.THELOAIs.Where(t => t.TenTheLoai.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        BookList = new List<SACH>();
+                        foreach (THELOAI item in TypeBookList)
+                        {
+                            List<SACH> Books = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == item.MaTheLoai).ToList();
+                            BookList.AddRange(Books);
+                        }
+                        break;
+                    default:
+                        return;
+
+                }
+                List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
 
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
             }
@@ -78,6 +105,10 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             {
                 LoadDataListView(false);
             }
+        }
+        public void CheckType()
+        {
+            
         }
         public void LoadDataComboBox()
         {
