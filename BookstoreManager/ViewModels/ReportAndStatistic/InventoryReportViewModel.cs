@@ -21,6 +21,9 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
     public class InventoryReportViewModel : BaseViewModel
     {
         private ObservableCollection<InventoryReportItem> _dataListView;
+        private ObservableCollection<InventoryReportItem> _dataListViewBookType;
+        private Visibility _isVisibilitySearchCbx;
+        private bool _isSelectedTypeBookBtn;
         private string _title;
         private List<int> _listYear;
         private List<int> _listMonth = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
@@ -32,6 +35,22 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public int _searchTypeSelected;
         private List<string> _searchCombobox;
         private SnackbarMessageQueue _myMessageQueue;
+
+        public bool IsSelectedTypeBookBtn { get { return _isSelectedTypeBookBtn; } 
+            set { 
+                _isSelectedTypeBookBtn = value; 
+                OnPropertyChanged(nameof(IsSelectedTypeBookBtn));
+                if (IsSelectedTypeBookBtn)
+                {
+                    SearchTypeSelected = 1;
+                    IsVisibilitySearchCbx = Visibility.Hidden;
+                }
+                else
+                {
+                    IsVisibilitySearchCbx = Visibility.Visible;
+                }
+            } }
+        public Visibility IsVisibilitySearchCbx { get { return _isVisibilitySearchCbx; } set { _isVisibilitySearchCbx = value; OnPropertyChanged(nameof(IsVisibilitySearchCbx)); } }
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
         public int SearchTypeSelected { get { return _searchTypeSelected; } set { _searchTypeSelected = value; OnPropertyChanged(nameof(SearchTypeSelected)); } }
         public List<string> SearchCombobox { get { return _searchCombobox; } set { _searchCombobox = value; OnPropertyChanged(nameof(SearchCombobox)); } }
@@ -46,6 +65,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
 
         public ObservableCollection<InventoryReportItem> DataListView { get { return _dataListView; } set { _dataListView = value; OnPropertyChanged(nameof(DataListView)); } }
+        public ObservableCollection<InventoryReportItem> DataListViewBookType { get { return _dataListViewBookType; } set { _dataListViewBookType = value; OnPropertyChanged(nameof(DataListViewBookType)); } }
 
         public ICommand CLoadData { get; set; }
         public ICommand CSearch { get; set; }

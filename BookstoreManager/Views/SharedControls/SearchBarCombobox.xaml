@@ -33,6 +33,8 @@
             </DockPanel>
         </Button>
         <ComboBox Width="100"   FontSize="14"
+                  x:Name="SearchCombobox"
+                  Visibility="{Binding IsVisibilitySearchCbx}"
                   SelectedIndex="{Binding SearchTypeSelected}" ItemsSource="{Binding SearchCombobox}" 
                   Margin="10 0 10 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
     </StackPanel>
