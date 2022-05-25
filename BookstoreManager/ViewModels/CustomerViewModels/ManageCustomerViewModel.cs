@@ -81,29 +81,50 @@ namespace BookstoreManager.ViewModels
         public void OpenAddCustomerWindow()
         {
             AddCustomerWindow AddWindow = new AddCustomerWindow(this);
-            AddWindow.Show();
+            AddWindow.ShowDialog();
+        }
+        public bool CanDeleted(ListView lv)
+        {
+            bool Delete = false;
+            System.Collections.IList list = lv.SelectedItems;
+            if(list.Count > 0)
+            {
+                System.Windows.Forms.DialogResult dialogResult = (System.Windows.Forms.DialogResult)MessageBox.Show("Bạn có muốn xóa khách hàng?", "Thông báo", MessageBoxButton.OKCancel);
+                if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    Delete = true;
+                }
+            }
+            return Delete;
         }
         public void DeleteCustomer(ListView lv)
         {
-            bool Deleted = false;
-            System.Collections.IList list = lv.SelectedItems;
-            for (int i = 0; i < list.Count; i++)
+            if(CanDeleted(lv))
             {
-                int id = (list[i] as ViewCustomer).Id;
-                KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).First<KHACHHANG>();
-                if (deletedCustomer == null)
+                System.Collections.IList list = lv.SelectedItems;
+                for (int i = 0; i < list.Count; i++)
                 {
-                    continue;
+                    int id = (list[i] as ViewCustomer).Id;
+                    KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).First<KHACHHANG>();
+                    if (deletedCustomer == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        try
+                        {
+
+                            DataProvider.Ins.DB.KHACHHANGs.Remove(deletedCustomer);
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            MyMessageQueue.Enqueue("Lỗi! Xóa khách hàng không thành công!");
+                            return;
+                        }
+                    }
                 }
-                else
-                {
-                    Deleted = true;
-                    DataProvider.Ins.DB.KHACHHANGs.Remove(deletedCustomer);
-                    DataProvider.Ins.DB.SaveChanges();
-                }
-            }
-            if (Deleted == true)
-            {
                 LoadListCustomer();
                 MyMessageQueue.Enqueue("Xóa khách hàng thành công!");
             }
@@ -116,7 +137,7 @@ namespace BookstoreManager.ViewModels
                 return;
             }
             UpdateCustomerWindow updWindow = new UpdateCustomerWindow(this);
-            updWindow.Show();
+            updWindow.ShowDialog();
         }
         public void SearchCustomer()
         {

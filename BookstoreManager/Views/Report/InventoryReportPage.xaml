@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:BookstoreManager.Views.Report"
       xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:UC ="clr-namespace:BookstoreManager.Views.SharedControl"
+      xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:chart ="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -16,6 +18,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/Button.xaml"/>
+                
                 <ResourceDictionary Source="../Style/ListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -30,7 +33,9 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal">
-                    <UC:SearchBar></UC:SearchBar>
+                    <!--<UC:SearchBar></UC:SearchBar>-->
+                    <UC2:SearchBarCombobox x:Name="SearchBarCombobox">
+                    </UC2:SearchBarCombobox>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
                                 FontSize="14"
@@ -69,8 +74,18 @@
                             Style="{StaticResource MaterialDesignTabRadioButton}"
                             GroupName="RevenueReportDisplayMode"
                             IsChecked="True"
-                            Content="Danh sách" >
+                            Content="Báo cáo theo sách" >
                         </RadioButton>
+                        <RadioButton
+                            x:Name="ListTypeBookRadBtn"
+                            Style="{StaticResource MaterialDesignTabRadioButton}"
+                            GroupName="RevenueReportDisplayMode"
+                            IsChecked="{Binding IsSelectedTypeBookBtn}"
+                            
+                            Content="Báo cáo theo thể loại">
+                           
+                        </RadioButton>
+
                         <RadioButton
                             x:Name="ChartRadBtn"
                             Style="{StaticResource MaterialDesignTabRadioButton}"
@@ -100,12 +115,46 @@
                                         </ListView.View>
                                     </ListView>
                                 </Grid>
+                                   
+                                
                                 <Grid.Style>
                                     <Style TargetType="Grid">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=ListRadBtn}" Value="False">
                                                 <Setter Property="Visibility" Value="Hidden" />
                                             </DataTrigger>
+                                  
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                            </Grid>
+                            <Grid >
+                                <Grid>
+                                    <ListView FontSize="14" x:Name="ListViewStatisticBookType"  ItemsSource="{Binding DataListViewBookType}" ItemContainerStyle="{StaticResource ListItemContainer}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn
+                                                Header="STT"
+                                                DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                AncestorType={x:Type ListViewItem}}, 
+                                                Converter={StaticResource IndexConverter}}" />
+                                                <GridViewColumn Header="Thể Loại" DisplayMemberBinding="{Binding  Type}"></GridViewColumn>
+                                                <GridViewColumn Header="Tồn đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Phát sinh" DisplayMemberBinding="{Binding IncurredQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Tồn cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+
+
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=ListTypeBookRadBtn}" Value="False">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </DataTrigger>
+                                   
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
