@@ -163,7 +163,7 @@
                                 <chart:SfChart Visibility="{Binding IsVisible}" 
                                                Palette="Metro" 
                                                Grid.Row="1" FontSize="20" 
-                                               Header="BIỂU ĐỒ THỂ HIỆN SỐ LƯỢNG SÁCH TỒN TRONG KHO" HorizontalAlignment="Left" 
+                                               Header="{Binding ChartHeader}" HorizontalAlignment="Left" 
                                                VerticalAlignment="Bottom" >
                                     <chart:SfChart.PrimaryAxis>
                                         <chart:CategoryAxis  FontSize="14"></chart:CategoryAxis>
@@ -213,13 +213,13 @@
                             <Setter Property="Margin" Value="20 0 0 0"></Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
+                    <Button ToolTip="Nhập dữ liệu từ file Excel"  Command="{Binding CImportExcel}">
                         <DockPanel>
                             <materialDesign:PackIcon Kind="Import" />
                             <TextBlock Text="Import Excel"/>
                         </DockPanel>
                     </Button>
-                    <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
+                    <Button ToolTip="Xuất file Excel"  Command="{Binding CExportExcel}">
                         <DockPanel>
                             <materialDesign:PackIcon Kind="Export" />
                             <TextBlock Text="Export Excel"/>
