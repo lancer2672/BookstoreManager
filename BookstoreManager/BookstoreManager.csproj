@@ -156,6 +156,9 @@
     <Compile Include="Models\Db\CHITIETPHIEUNHAPSACH.cs">
       <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Db\CHITIETTACGIA.cs">
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Db\HOADON.cs">
       <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
@@ -196,6 +199,7 @@
     <Compile Include="Resources\Utils\Validator.cs" />
     <Compile Include="ViewModels\AccountViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookViewModels\AddBookViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\ManageBookViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
@@ -208,6 +212,9 @@
     </Compile>
     <Compile Include="Views\Account\AccountMain.xaml.cs">
       <DependentUpon>AccountMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViews\AddBookWindow.xaml.cs">
+      <DependentUpon>AddBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BookViews\BookListPage.xaml.cs">
       <DependentUpon>BookListPage.xaml</DependentUpon>
@@ -278,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Account\AccountMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViews\AddBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -382,6 +393,17 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Imgs\Debt.png" />
+    <Resource Include="Resources\Imgs\Inventory.png" />
+    <Resource Include="Resources\Imgs\Regulation.png" />
+    <Resource Include="Resources\Imgs\Statistic.png" />
+    <Resource Include="Resources\Imgs\BookCase.png" />
+    <Resource Include="Resources\Imgs\BookStore.png" />
+    <Resource Include="Resources\Imgs\OpenBook.png" />
+    <Resource Include="Resources\Imgs\Customer.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
@@ -392,14 +414,6 @@
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
       <LastGenOutput>BookstoreManagerModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Resources\Imgs\Debt.png" />
-    <Resource Include="Resources\Imgs\Inventory.png" />
-    <Resource Include="Resources\Imgs\Regulation.png" />
-    <Resource Include="Resources\Imgs\Statistic.png" />
-    <Resource Include="Resources\Imgs\BookCase.png" />
-    <Resource Include="Resources\Imgs\BookStore.png" />
-    <Resource Include="Resources\Imgs\OpenBook.png" />
-    <Resource Include="Resources\Imgs\Customer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
