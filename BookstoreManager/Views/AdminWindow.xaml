@@ -7,7 +7,7 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="BookstoreManager.Views.AdminWindow"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-    
+        DataContext="{StaticResource AccountVM}"
         Title="AdminWindow" Height="650" Width="1050">
     <DockPanel>
         <syncfusion:SfNavigationDrawer x:Name="NavigationDrawer"  DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
@@ -17,9 +17,19 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Frame Padding="10 10" Grid.Row="1" x:Name="Main" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
+                    <Frame Padding="10 10" Grid.Row="1" x:Name="Main" FontSize="20" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
                 </Grid>
             </syncfusion:SfNavigationDrawer.ContentView>
+
+            <syncfusion:NavigationItem Height="40" Header="{Binding Name}" x:Name="NavAccount">
+                <syncfusion:NavigationItem.Icon>
+                    <Ellipse  Width="30" >
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding Source}" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </syncfusion:NavigationItem.Icon>
+            </syncfusion:NavigationItem>
             <syncfusion:NavigationItem Header="Khách Hàng" x:Name="NavCustomer">
                 <syncfusion:NavigationItem.Icon>
                     <Image Source="../Resources/Imgs/Customer.png"></Image>
@@ -67,9 +77,7 @@
                     <Image Source="../Resources/Imgs/Regulation.png"></Image>
                 </syncfusion:NavigationItem.Icon>
             </syncfusion:NavigationItem>
-            <syncfusion:NavigationItem Header="Account"  x:Name="NavAccount">
-       
-            </syncfusion:NavigationItem>
+
             <syncfusion:SfNavigationDrawer.FooterItems >
                 <syncfusion:NavigationItem Header="Log Out" x:Name="LogOut">
                     <syncfusion:NavigationItem.Icon >
@@ -78,6 +86,6 @@
                 </syncfusion:NavigationItem>
             </syncfusion:SfNavigationDrawer.FooterItems>
         </syncfusion:SfNavigationDrawer>
-     
+        
     </DockPanel>
 </Window>

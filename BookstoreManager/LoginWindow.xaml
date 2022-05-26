@@ -17,7 +17,9 @@
             <ColumnDefinition Width="450"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            
+            <Border Padding="35">
+                <Image Source="./Resources/Imgs/LoginWindow.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Border>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

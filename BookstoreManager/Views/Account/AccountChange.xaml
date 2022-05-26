@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BookstoreManager.Views.Account" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:rule="clr-namespace:BookstoreManager.Resources.Utils" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:SharedUC ="clr-namespace:BookstoreManager.Views"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource AccountVM}"
         Title="AccountChange" Height="510" Width="800">
     <Window.Resources>

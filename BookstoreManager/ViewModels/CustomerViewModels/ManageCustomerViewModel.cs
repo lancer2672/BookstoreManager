@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using BookstoreManager.Resources;
 using BookstoreManager.ViewModels.Customers;
 using BookstoreManager.Views.Customers;
 using MaterialDesignThemes.Wpf;
@@ -89,8 +90,8 @@ namespace BookstoreManager.ViewModels
             System.Collections.IList list = lv.SelectedItems;
             if(list.Count > 0)
             {
-                System.Windows.Forms.DialogResult dialogResult = (System.Windows.Forms.DialogResult)MessageBox.Show("Bạn có muốn xóa khách hàng?", "Thông báo", MessageBoxButton.OKCancel);
-                if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                bool? dialogResult = new CustomMessageBox("Bạn có muốn xóa khách hàng này", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
+                if (dialogResult == true)
                 {
                     Delete = true;
                 }
