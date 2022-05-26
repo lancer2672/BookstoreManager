@@ -21,9 +21,6 @@ namespace BookstoreManager.ViewModels.Customers
         private string _customerPhoneNumber;
         private decimal _customerDebt;
         private ManageCustomerViewModel _customerViewModel;
-        private SnackbarMessageQueue _myMessageQueue;
-
-        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public string CustomerName { get { return _customerName; } set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
@@ -40,8 +37,6 @@ namespace BookstoreManager.ViewModels.Customers
             LoadUpdWindow();
             CUpdateCustomer = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { UpdateCustomer(p); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
-            MyMessageQueue.DiscardDuplicates = true;
         }
         public void LoadUpdWindow()
         {

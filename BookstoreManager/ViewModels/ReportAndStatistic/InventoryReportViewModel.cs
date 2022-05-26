@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using BookstoreManager.Resources;
 namespace BookstoreManager.ViewModels.ReportAndStatistic
 {
     public enum SearchType
@@ -78,6 +78,8 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public ICommand CSearch { get; set; }
         public ICommand CImportExcel { get; set; }
 
+        public ICommand CRefreshData { get; set; }
+
         public ICommand CExportExcel { get; set; }
 
 
@@ -95,11 +97,17 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchBook(); });
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
+            CRefreshData = new RelayCommand<object>((p) => { return true; }, (p) => { RefreshData(); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2500));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadDataComboBox();
+        }
+        public void RefreshData()
+        {
+            SearchKey = "";
+            LoadDataListView(false);
         }
         public void SearchBook()
         {
@@ -126,8 +134,6 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                         return;
 
                 }
-
-
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
             }
             else
@@ -376,7 +382,6 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                     File.WriteAllBytes(filePath, bin);
 
                 }
-                MessageBox.Show("Xuất file thành công");
                 MyMessageQueue.Enqueue("Xuất excel thành công!");
             }
             catch (Exception ee)

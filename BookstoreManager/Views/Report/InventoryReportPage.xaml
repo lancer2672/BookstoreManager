@@ -36,6 +36,15 @@
                     <!--<UC:SearchBar></UC:SearchBar>-->
                     <UC2:SearchBarCombobox x:Name="SearchBarCombobox">
                     </UC2:SearchBarCombobox>
+                    <Button ToolTip="Làm mới "   
+                            Style="{StaticResource IconTextBtn}"
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Refresh" />
+                            <TextBlock Text="Làm mới"/>
+                        </DockPanel>
+                    </Button>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
                                 FontSize="14"

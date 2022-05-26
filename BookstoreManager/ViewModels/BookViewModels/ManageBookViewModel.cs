@@ -13,6 +13,7 @@ using BookstoreManager.Models.Db;
 using BookstoreManager.ViewModels.BookViewModels;
 using BookstoreManager.Views.BookViews;
 using MaterialDesignThemes.Wpf;
+using OfficeOpenXml;
 
 namespace BookstoreManager.ViewModels.BookViewModels
 {
@@ -43,10 +44,13 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public int SearchTypeSelected { get { return _searchTypeSelected; } set { _searchTypeSelected = value; OnPropertyChanged(nameof(SearchTypeSelected)); } }
         public List<string> SearchCombobox { get { return _searchCombobox; } set { _searchCombobox = value; OnPropertyChanged(nameof(SearchCombobox)); } }
 
-
+        public ICommand CRefreshData { get; set; }
         public ICommand CSearch { get; set; }
         public ICommand COpenAddBookWindow { get; set; }
         public ICommand COpenUpdateBookWindow { get; set; }
+        public ICommand CImportExcel { get; set; }
+        public ICommand CExportExcel { get; set; }
+
 
         public string FindCategory(int matheloai, List<THELOAI> listTHELOAI)
         {
@@ -180,6 +184,152 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         }
 
+        public void RefreshData()
+        {
+            SearchKey = "";
+            List<SACH> books = DataProvider.Ins.DB.SACHes.ToList();
+            ListBook = GetViewBookFromList(books);
+        }
+        public void ImportFileExcel()
+        {
+            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+            dialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = dialog.FileName;
+                AddImportedData(fileName);
+            }
+        }
+        public void AddImportedData(string filename)
+        {
+            try
+            {
+                var package = new ExcelPackage(new FileInfo(filename));
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+
+                for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
+                {
+                    try
+                    {
+                        // biến j biểu thị cho một column trong file
+                        int j = 1;
+                        bool check = true;
+                        SACH newBook = new SACH()
+                        {
+                        //    newBook.TenSach = workSheet.Cells[i, j++].Value.ToString();
+                        //int CategoryId = Convert.ToInt32(workSheet.Cells[i, j++].Value),
+                        //MaSach = Convert.ToInt32(workSheet.Cells[i, j++].Value.ToString()),
+                        //TonDau = Convert.ToInt32(workSheet.Cells[i, j++].Value),
+                        //PhatSinh = Convert.ToInt32(workSheet.Cells[i, j++].Value),
+                        //TonCuoi = Convert.ToInt32(workSheet.Cells[i, j++].Value)
+                        //    TonCuoi = Convert.ToInt32(workSheet.Cells[i, j++].Value)
+
+                        };
+                    DataProvider.Ins.DB.SACHes.Add(newBook);
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    MyMessageQueue.Enqueue("thêm dữ liệu từ file excel thành công!");
+                
+                    }
+                    catch (Exception error)
+                    {
+                        MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file excel");
+
+                    }
+                }
+                LoadListBook();
+            }
+            catch (Exception ee)
+            {
+                MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file Excel");
+            }
+        }
+        public void ExportFileExcel()
+        {
+            string filePath = "";
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "Excel files (*.xls or .xlsx)|.xls;*.xlsx";
+
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                filePath = dialog.FileName;
+            }
+
+            // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
+            if (string.IsNullOrEmpty(filePath))
+            {
+                MyMessageQueue.Enqueue("Lỗi. Đường dẫn không hợp lệ.");
+                return;
+            }
+
+            try
+            {
+                using (ExcelPackage package = new ExcelPackage())
+                {
+                    package.Workbook.Properties.Author = "Admin";
+                    package.Workbook.Properties.Title = "Báo cáo tồn";
+                    package.Workbook.Worksheets.Add("Sheet 1");
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+                    //add sheet
+                    workSheet.Name = "Sheet 1";
+                    workSheet.Cells.Style.Font.Size = 12;
+                    workSheet.Cells.Style.Font.Name = "Calibri";
+                    // Tạo danh sách các column header
+                    string[] arrColumnHeader = {
+                       "Tên sách",
+                       "Thể loại",
+                       "Tên tác giả",
+                       "Nhà xuất bản",
+                       "Năm xuất bản",
+                       "Số lượng tồn",
+                       "Giá nhập"
+                    };
+
+                    var countColHeader = arrColumnHeader.Count();
+
+                    int colIndex = 1;
+                    int rowIndex = 2;
+
+                    //tạo các header từ column header đã tạo từ bên trên
+                    foreach (var item in arrColumnHeader)
+                    {
+                        var cell = workSheet.Cells[rowIndex, colIndex];
+
+                        //gán giá trị
+                        cell.Value = item;
+
+                        colIndex++;
+                    }
+
+                    foreach (var item in ListBook)
+                    {
+                        colIndex = 1;
+                        rowIndex++;
+                        
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.TitleBook;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Category;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.NameAuthor;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.PublishCompany;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.PublishYear;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.InventoryNumber;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Price;
+
+
+                    }
+
+                    //Lưu file lại
+                    Byte[] bin = package.GetAsByteArray();
+                    File.WriteAllBytes(filePath, bin);
+
+                }
+                MyMessageQueue.Enqueue("Xuất excel thành công!");
+            }
+            catch (Exception ee)
+            {
+                MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
+            }
+        }
         public ManageBookViewModel()
         {
             ListBook = new ObservableCollection<ViewBook>();
@@ -188,15 +338,18 @@ namespace BookstoreManager.ViewModels.BookViewModels
             ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             LoadListBook();
 
+            CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
+            CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             COpenAddBookWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddBookWindow(); });
             COpenUpdateBookWindow = new RelayCommand<ListView>((p) => { return true; }, (p) => { OpenUpdateBookWindow(p); });
-
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            CRefreshData  =  new RelayCommand<object>((p) => { return true; }, (p) => { RefreshData(); });
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 
-            SearchCombobox = new List<String>() { "Tên Sách", "Thể Loại","Tác Giả" };
+            SearchCombobox = new List<string>() { "Tên Sách", "Thể Loại","Tác Giả" };
             SearchTypeSelected = 0;
         }
+
     }
 }

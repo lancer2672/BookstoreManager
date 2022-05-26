@@ -44,7 +44,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public ICommand CLoadData { get; set; }
         public ICommand CSearch { get; set; }
         public ICommand CImportExcel { get; set; }
-
+        public ICommand CRefreshData { get; set; }
         public ICommand CExportExcel { get; set; }
         public DebtReportViewModel()
         {
@@ -55,16 +55,21 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             ListYear = new List<int>();
             DataChart = new ObservableCollection<InventoryReportChartModel>();
 
-            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
+            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(true); });
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchCustomer(); });
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
-
+            CRefreshData = new RelayCommand<object>((p) => { return true; }, (p) => { RefreshData(); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2500));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadDataComboBox();
+        }
+        public void RefreshData()
+        {
+            SearchKey = "";
+            LoadDataListView(false);
         }
         public void SearchCustomer()
         {
@@ -77,7 +82,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             }
             else
             {
-                LoadDataListView();
+                LoadDataListView(false);
             }
         }
         public void LoadDataComboBox()
@@ -95,20 +100,25 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 ListYear.Add(DateTime.Now.Year);
             }
         }
-        public void LoadDataListView()
-        {
-            SearchKey = "";
+        public void LoadDataListView(bool IsNotify)
+        { 
             List<BAOCAOCONGNO> InvReport = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             if (InvReport.Count != 0)
             {
                 DataListView = GetDataListViewFromDB(InvReport, CustomerList);
-                MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                if (IsNotify)
+                { 
+                    MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                }
                 Title = "Báo Cáo Nợ Tháng " + SelectedMonth.ToString() + " Năm " + SelectedYear.ToString();
             }
             else
             {
-                MyMessageQueue.Enqueue("Không có thông tin");
+                if (IsNotify)
+                {
+                    MyMessageQueue.Enqueue("Không có thông tin");
+                }
                 DataListView.Clear();
                 Title = "Báo Cáo Nợ";
             }
@@ -206,7 +216,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
 
                     }
                 }
-                LoadDataListView();
+                LoadDataListView(true);
             }
             catch (Exception ee)
             {
@@ -289,12 +299,10 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                     File.WriteAllBytes(filePath, bin);
 
                 }
-                MessageBox.Show("Xuất file thành công");
                 MyMessageQueue.Enqueue("Xuất excel thành công!");
             }
             catch (Exception ee)
             {
-                MessageBox.Show("Xuất file không thành công");
                 MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
             }
         }

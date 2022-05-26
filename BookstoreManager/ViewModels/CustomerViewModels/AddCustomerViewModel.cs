@@ -43,7 +43,7 @@ namespace BookstoreManager.ViewModels.Customers
             _customerViewModel = CustomerVM;
             CAddCustomer = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddCustomer(p); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 
         }

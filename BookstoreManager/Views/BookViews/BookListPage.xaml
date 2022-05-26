@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
-
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Sách"></TextBlock>
         <Grid Grid.Row="1">
@@ -45,7 +45,15 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
-                <UC2:SearchBarCombobox x:Name="SearchBarCombobox"></UC2:SearchBarCombobox>
+                <UC2:SearchBarCombobox x:Name="SearchBarCombobox" ></UC2:SearchBarCombobox>
+                <Button ToolTip="Làm mới "  
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="Refresh" />
+                        <TextBlock Text="Làm mới"/>
+                    </DockPanel>
+                </Button>
                 <Button ToolTip="Thêm "  
                     Name="AddBtn"
                     Width="70"
@@ -94,11 +102,32 @@
                     </ListView>
                 </ScrollViewer>
             </Grid>
-            <materialDesign:Snackbar Grid.Row="2"
+         
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <Button ToolTip="Nhập dữ liệu từ file Excel"  Command="{Binding CImportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Import" />
+                    <TextBlock Text="Import Excel"/>
+                </DockPanel>
+            </Button>
+            <Button ToolTip="Xuất file Excel"  Command="{Binding CExportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Export" />
+                    <TextBlock Text="Export Excel"/>
+                </DockPanel>
+            </Button>
+        </StackPanel>
+        <materialDesign:Snackbar Grid.Row="3"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 MessageQueue="{Binding MyMessageQueue}">
-            </materialDesign:Snackbar>
-        </Grid>
+        </materialDesign:Snackbar>
+        
     </Grid>
 </Page>

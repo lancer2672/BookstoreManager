@@ -51,7 +51,7 @@ namespace BookstoreManager.ViewModels
             CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds( 2000));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadListCustomer();

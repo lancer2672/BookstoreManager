@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BookstoreManager.Views.SharedControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="520">
+             d:DesignHeight="50" d:DesignWidth="460">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal" Width="460">
+    <StackPanel Orientation="Horizontal" Margin="0,0,40,0">
         <TextBox 
             Height="Auto"
             materialDesign:HintAssist.Hint="Tìm kiếm"
@@ -26,16 +26,16 @@
              >
         </TextBox>
         
+        <ComboBox Width="100"   FontSize="14"
+                  x:Name="SearchCombobox"
+                  Visibility="{Binding IsVisibilitySearchCbx}"
+                  SelectedIndex="{Binding SearchTypeSelected}" ItemsSource="{Binding SearchCombobox}" 
+                  Margin="10 0 10 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
         <Button Width="100"  Style="{StaticResource IconTextBtn }" Command="{Binding CSearch}">
             <DockPanel>
                 <materialDesign:PackIcon Kind="Search" />
                 <TextBlock Text="Tìm kiếm"/>
             </DockPanel>
         </Button>
-        <ComboBox Width="100"   FontSize="14"
-                  x:Name="SearchCombobox"
-                  Visibility="{Binding IsVisibilitySearchCbx}"
-                  SelectedIndex="{Binding SearchTypeSelected}" ItemsSource="{Binding SearchCombobox}" 
-                  Margin="10 0 10 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
     </StackPanel>
 </UserControl>

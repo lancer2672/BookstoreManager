@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource AccountVM}"
-        Title="AdminWindow" Height="650" Width="1050">
+        Title="AdminWindow" Height="650" Width="1200">
     <DockPanel>
         <syncfusion:SfNavigationDrawer x:Name="NavigationDrawer" DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
             <syncfusion:SfNavigationDrawer.ContentView>
