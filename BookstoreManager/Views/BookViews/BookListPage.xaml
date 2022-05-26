@@ -4,6 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookstoreManager.Views.BookViews"
+      xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
+      
       xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
@@ -43,7 +45,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
-                <SharedUC:SearchBar></SharedUC:SearchBar>
+                <UC2:SearchBarCombobox x:Name="SearchBarCombobox"></UC2:SearchBarCombobox>
                 <Button ToolTip="Thêm "  
                     Name="AddBtn"
                     Width="70"
@@ -77,7 +79,9 @@
                           SelectedItem="{Binding SelectedBook}">    
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Mã sách" DisplayMemberBinding="{Binding Id}"/>
+                                <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}">
+                                    
+                                </GridViewColumn>
                                 <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding TitleBook}"/>
                                 <GridViewColumn Header="Thể loại" DisplayMemberBinding="{Binding Category}"/>
                                 <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>

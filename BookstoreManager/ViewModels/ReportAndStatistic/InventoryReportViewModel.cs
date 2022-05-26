@@ -34,7 +34,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private string _searchKey;
         private ObservableCollection<InventoryReportChartModel> _dataChart;
         private Visibility _isVisible;
-        public int _searchTypeSelected;
+        private int _searchTypeSelected;
         private List<string> _searchCombobox;
         private SnackbarMessageQueue _myMessageQueue;
 

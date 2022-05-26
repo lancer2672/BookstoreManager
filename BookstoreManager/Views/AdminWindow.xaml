@@ -10,7 +10,7 @@
         DataContext="{StaticResource AccountVM}"
         Title="AdminWindow" Height="650" Width="1050">
     <DockPanel>
-        <syncfusion:SfNavigationDrawer x:Name="NavigationDrawer"  DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
+        <syncfusion:SfNavigationDrawer x:Name="NavigationDrawer" DisplayMode="Expanded" ItemClicked="SfNavigationDrawer_ItemClicked" >
             <syncfusion:SfNavigationDrawer.ContentView>
                 <Grid>
                     <Grid.RowDefinitions>

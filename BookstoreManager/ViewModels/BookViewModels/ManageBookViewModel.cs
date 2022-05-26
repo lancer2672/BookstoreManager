@@ -38,6 +38,11 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         private SnackbarMessageQueue _myMessageQueue;
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
+        private int _searchTypeSelected;
+        private List<string> _searchCombobox;
+        public int SearchTypeSelected { get { return _searchTypeSelected; } set { _searchTypeSelected = value; OnPropertyChanged(nameof(SearchTypeSelected)); } }
+        public List<string> SearchCombobox { get { return _searchCombobox; } set { _searchCombobox = value; OnPropertyChanged(nameof(SearchCombobox)); } }
+
 
         public ICommand CSearch { get; set; }
         public ICommand COpenAddBookWindow { get; set; }
@@ -103,19 +108,59 @@ namespace BookstoreManager.ViewModels.BookViewModels
         }
         public void SearchCustomer()
         {
+            //if (SearchKey != "" && SearchKey != null)
+            //{
+            //    List<SACH> listSACH_KQ = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+            //    if (listSACH_KQ.Count == 0)
+            //        MyMessageQueue.Enqueue("Không có sách theo tên đã nhập!");
+                
+            //    ListBook = GetViewBookFromList(listSACH_KQ);
+
+            //}
+            //else
+            //{
+            //    LoadListBook();
+                
+            //}
+
+            List<SACH> Books = new List<SACH>();
             if (SearchKey != "" && SearchKey != null)
             {
-                List<SACH> listSACH_KQ = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
-                if (listSACH_KQ.Count == 0)
-                    MyMessageQueue.Enqueue("Không có sách theo tên đã nhập!");
-                
-                ListBook = GetViewBookFromList(listSACH_KQ);
-
+                switch (SearchTypeSelected)
+                {
+                    case 0:
+                        Books = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        break;
+                    case 1:
+                        List<THELOAI> TypeBookList = DataProvider.Ins.DB.THELOAIs.Where(t => t.TenTheLoai.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        Books = new List<SACH>();
+                        foreach (THELOAI item in TypeBookList)
+                        {
+                            List<SACH> list = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == item.MaTheLoai).ToList();
+                            Books.AddRange(list);
+                        }
+                        ListBook = GetViewBookFromList(Books);
+                        break;
+                    case 2:
+                        List<TACGIA> Authors = DataProvider.Ins.DB.TACGIAs.Where(t => t.HoTen.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        List<CHITIETTACGIA> AuthorDetail = new List<CHITIETTACGIA>();
+                        foreach (TACGIA item in Authors)
+                        {
+                            List<CHITIETTACGIA> List = DataProvider.Ins.DB.CHITIETTACGIAs.Where(t => t.MaTacGia == item.MaTacGia).ToList();
+                            AuthorDetail.AddRange(List);
+                        }
+                        foreach (CHITIETTACGIA item in AuthorDetail)
+                        {
+                            List<SACH> list = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.MaSach).ToList();
+                            Books.AddRange(list);
+                        }
+                        break;
+                }
+                ListBook = GetViewBookFromList(Books);
             }
             else
             {
                 LoadListBook();
-                
             }
         }
         public void OpenAddBookWindow()
@@ -149,6 +194,9 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
             MyMessageQueue.DiscardDuplicates = true;
+
+            SearchCombobox = new List<String>() { "Tên Sách", "Thể Loại","Tác Giả" };
+            SearchTypeSelected = 0;
         }
     }
 }
