@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>-->
-    <DockPanel>
+    <!--<DockPanel>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"></RowDefinition>
@@ -27,7 +27,7 @@
             <Grid.Resources>
                 <Style x:Key="Title" TargetType="TextBlock">
                     <Setter Property="FontSize" Value="20"/>
-                    <!--<Setter Property="FontWeight" Value="DemiBold"/>-->
+                
                     <Setter Property="Margin" Value="0 0 20 20"/>
                     <Setter Property="HorizontalAlignment" Value="Right"></Setter>
                 </Style>
@@ -70,5 +70,5 @@
                 <Button Content="Lập phiếu thu" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBtn}"></Button>
                 </Grid>
         </Grid>
-    </DockPanel>
+    </DockPanel>-->
 </Window>
