@@ -1,5 +1,6 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using BookstoreManager.Resources;
 using BookstoreManager.Resources.Utils;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -75,8 +76,12 @@ namespace BookstoreManager.ViewModels.Customers
                 }
                 else
                 {
-                    MessageBox.Show("Khách hàng đã tồn tại");
-                    return;
+                    bool? dialogResult = new CustomMessageBox("Khách hàng đã tồn tại. \nBạn có muốn thêm khách hàng khác", MessageType.Info,"Thông Báo", MessageButtons.OkCancel).ShowDialog();
+                    if (dialogResult == true)
+                    {
+                        AddCustomerWindow addCustomerWindow = new AddCustomerWindow(_customerViewModel);
+                        addCustomerWindow.ShowDialog();
+                    }
                 }
             }
             else
@@ -97,7 +102,7 @@ namespace BookstoreManager.ViewModels.Customers
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             for(int i=0;i< CustomerList.Count;i++)
             {
-                if (NewCustomer.HoTen == CustomerList[i].HoTen && NewCustomer.DienThoai == CustomerList[i].DienThoai)
+                if (NewCustomer.HoTen.ToLower() == CustomerList[i].HoTen.ToLower() && NewCustomer.DienThoai == CustomerList[i].DienThoai)
                 {
                     return true;
                 }
