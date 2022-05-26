@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -49,25 +50,34 @@ namespace BookstoreManager.ViewModels.Customers
         {        
             if (Validator.IsValid(p))
             {
+
                 KHACHHANG newCustomer = new KHACHHANG();
                 newCustomer.DiaChi = CustomerAddress;
                 newCustomer.HoTen = CustomerName;
                 newCustomer.Email = CustomerEmail;
                 newCustomer.DienThoai = CustomerPhoneNumber;
                 newCustomer.TongNo = CustomerDebt;
-                DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
-                try
+                if (IsExist(newCustomer) == false)
                 {
-                    DataProvider.Ins.DB.SaveChanges();
+                    DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
+                    try
+                    {
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    catch
+                    {
+                        _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+                        return;
+                    }
+                    _customerViewModel.LoadListCustomer();
+                    RefreshAddCustomerForm();
+                    _customerViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
                 }
-                catch
+                else
                 {
-                    _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+                    MessageBox.Show("Khách hàng đã tồn tại");
                     return;
                 }
-                _customerViewModel.LoadListCustomer();
-                RefreshAddCustomerForm();
-                _customerViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
             }
             else
             {
@@ -81,6 +91,18 @@ namespace BookstoreManager.ViewModels.Customers
             CustomerEmail = "";
             CustomerPhoneNumber = "";
             CustomerDebt = 0;
+        }
+        public bool IsExist(KHACHHANG NewCustomer)
+        {
+            List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
+            for(int i=0;i< CustomerList.Count;i++)
+            {
+                if (NewCustomer.HoTen == CustomerList[i].HoTen && NewCustomer.DienThoai == CustomerList[i].DienThoai)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

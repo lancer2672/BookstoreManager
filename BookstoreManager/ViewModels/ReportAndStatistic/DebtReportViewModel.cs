@@ -124,9 +124,12 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                     {
                      
                         DebtReportItem debtItem = new DebtReportItem();
-                        debtItem.Id = CustomerList[i].MaKhachHang;
+                        debtItem.CustomerId = CustomerList[i].MaKhachHang;
+                        debtItem.ReportId = item.MaBaoCao;
                         debtItem.CustomerName = CustomerList[i].HoTen;
-                        debtItem.PhoneNumber = CustomerList[i].DienThoai; 
+                        debtItem.CustomerPhone = CustomerList[i].DienThoai;
+                        debtItem.Month = (int)item.Thang;
+                        debtItem.Year = (int)item.Nam;
                         debtItem.FirstQuantity = (int)item.TonDau;
                         debtItem.IncurredQuantity = (int)item.PhatSinh;
                         debtItem.EndQuantity = (int)item.TonCuoi;
@@ -181,17 +184,17 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                         // biến j biểu thị cho một column trong file
                         int j = 1;
                         bool check = true;
-                        BAOCAOTON newReport = new BAOCAOTON()
+                        BAOCAOCONGNO newReport = new BAOCAOCONGNO()
                         {
                             Thang = Convert.ToInt32(workSheet.Cells[i, j++].Value),
                             Nam = Convert.ToInt32(workSheet.Cells[i, j++].Value),
-                            MaSach = Convert.ToInt32(workSheet.Cells[i, j++].Value.ToString()),
+                            MaKhachHang = Convert.ToInt32(workSheet.Cells[i, j++].Value.ToString()),
                             TonDau = Convert.ToInt32(workSheet.Cells[i, j++].Value),
                             PhatSinh = Convert.ToInt32(workSheet.Cells[i, j++].Value),
                             TonCuoi = Convert.ToInt32(workSheet.Cells[i, j++].Value)
 
                         };
-                        DataProvider.Ins.DB.BAOCAOTONs.Add(newReport);
+                        DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newReport);
                         DataProvider.Ins.DB.SaveChanges();
 
                         MyMessageQueue.Enqueue("thêm dữ liệu từ file excel thành công!");
@@ -212,88 +215,88 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         }
         public void ExportFileExcel()
         {
-            //string filePath = "";
-            //System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
-            //dialog.Filter = "Excel files (*.xls or .xlsx)|.xls;*.xlsx";
+            string filePath = "";
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "Excel files (*.xls or .xlsx)|.xls;*.xlsx";
 
-            //// Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
-            //if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    filePath = dialog.FileName;
-            //}
+            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                filePath = dialog.FileName;
+            }
 
-            //// nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
-            //if (string.IsNullOrEmpty(filePath))
-            //{
-            //    MyMessageQueue.Enqueue("Lỗi. Đường dẫn không hợp lệ.");
-            //    return;
-            //}
+            // nếu đường dẫn null hoặc rỗng thì báo không hợp lệ và return hàm
+            if (string.IsNullOrEmpty(filePath))
+            {
+                MyMessageQueue.Enqueue("Lỗi. Đường dẫn không hợp lệ.");
+                return;
+            }
 
-            //try
-            //{
-            //    using (ExcelPackage package = new ExcelPackage())
-            //    {
-            //        package.Workbook.Properties.Author = "Admin";
-            //        package.Workbook.Properties.Title = "Danh sách khách hàng";
-            //        package.Workbook.Worksheets.Add("Sheet 1");
-            //        ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
-            //        //add sheet
-            //        workSheet.Name = "Sheet 1";
-            //        workSheet.Cells.Style.Font.Size = 12;
-            //        workSheet.Cells.Style.Font.Name = "Calibri";
-            //        // Tạo danh sách các column header
-            //        string[] arrColumnHeader = {
-            //            "Tháng",
-            //            "Năm",
-            //            "Mã Sách",
-            //            "Tồn Đầu",
-            //            "Phát Sinh",
-            //            "Tồn Cuối",
-            //        };
+            try
+            {
+                using (ExcelPackage package = new ExcelPackage())
+                {
+                    package.Workbook.Properties.Author = "Admin";
+                    package.Workbook.Properties.Title = "Báo cáo nợ";
+                    package.Workbook.Worksheets.Add("Sheet 1");
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+                    //add sheet
+                    workSheet.Name = "Sheet 1";
+                    workSheet.Cells.Style.Font.Size = 12;
+                    workSheet.Cells.Style.Font.Name = "Calibri";
+                    // Tạo danh sách các column header
+                    string[] arrColumnHeader = {
+                        "Tháng",
+                        "Năm",
+                        "Mã Khách Hàng",
+                        "Nợ Đầu",
+                        "Phát Sinh",
+                        "Nợ Cuối",
+                    };
 
-            //        var countColHeader = arrColumnHeader.Count();
+                    var countColHeader = arrColumnHeader.Count();
 
-            //        int colIndex = 1;
-            //        int rowIndex = 2;
+                    int colIndex = 1;
+                    int rowIndex = 2;
 
-            //        //tạo các header từ column header đã tạo từ bên trên
-            //        foreach (var item in arrColumnHeader)
-            //        {
-            //            var cell = workSheet.Cells[rowIndex, colIndex];
+                    //tạo các header từ column header đã tạo từ bên trên
+                    foreach (var item in arrColumnHeader)
+                    {
+                        var cell = workSheet.Cells[rowIndex, colIndex];
 
-            //            //gán giá trị
-            //            cell.Value = item;
+                        //gán giá trị
+                        cell.Value = item;
 
-            //            colIndex++;
-            //        }
+                        colIndex++;
+                    }
 
-            //        foreach (var item in DataListView)
-            //        {
-            //            colIndex = 1;
-            //            rowIndex++;
+                    foreach (var item in DataListView)
+                    {
+                        colIndex = 1;
+                        rowIndex++;
 
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.Month;
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.Year;
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.BookId;
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.FirstQuantity;
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.IncurredQuantity;
-            //            workSheet.Cells[rowIndex, colIndex++].Value = item.EndQuantity;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Month;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.Year;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.CustomerId;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.FirstQuantity;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.IncurredQuantity;
+                        workSheet.Cells[rowIndex, colIndex++].Value = item.EndQuantity;
 
-            //        }
+                    }
 
-            //        //Lưu file lại
-            //        Byte[] bin = package.GetAsByteArray();
-            //        File.WriteAllBytes(filePath, bin);
+                    //Lưu file lại
+                    Byte[] bin = package.GetAsByteArray();
+                    File.WriteAllBytes(filePath, bin);
 
-            //    }
-            //    MessageBox.Show("Xuất file thành công");
-            //    MyMessageQueue.Enqueue("Xuất excel thành công!");
-            //}
-            //catch (Exception ee)
-            //{
-            //    MessageBox.Show("Xuất file không thành công");
-            //    MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
-            //}
+                }
+                MessageBox.Show("Xuất file thành công");
+                MyMessageQueue.Enqueue("Xuất excel thành công!");
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("Xuất file không thành công");
+                MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
+            }
         }
     }
 }

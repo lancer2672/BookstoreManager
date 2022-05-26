@@ -14,10 +14,19 @@ using System.Windows.Input;
 
 namespace BookstoreManager.ViewModels.ReportAndStatistic
 {
+    public enum SearchType
+    {
+        TENSACH,
+        THELOAI,
+    }
     public class InventoryReportViewModel : BaseViewModel
     {
         private ObservableCollection<InventoryReportItem> _dataListView;
+        private ObservableCollection<InventoryReportItem> _dataListViewBookType;
+        private Visibility _isVisibilitySearchCbx;
+        private bool _isSelectedTypeBookBtn;
         private string _title;
+        private string _chartHeader;
         private List<int> _listYear;
         private List<int> _listMonth = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         private int _selectedYear;
@@ -25,20 +34,45 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         private string _searchKey;
         private ObservableCollection<InventoryReportChartModel> _dataChart;
         private Visibility _isVisible;
-
+        public int _searchTypeSelected;
+        private List<string> _searchCombobox;
         private SnackbarMessageQueue _myMessageQueue;
 
+        public bool IsSelectedTypeBookBtn
+        {
+            get { return _isSelectedTypeBookBtn; }
+            set
+            {
+                _isSelectedTypeBookBtn = value;
+                OnPropertyChanged(nameof(IsSelectedTypeBookBtn));
+                if (IsSelectedTypeBookBtn)
+                {
+                    SearchTypeSelected = 1;
+                    IsVisibilitySearchCbx = Visibility.Hidden;
+                }
+                else
+                {
+                    IsVisibilitySearchCbx = Visibility.Visible;
+                }
+            }
+        }
+        public string ChartHeader { get { return _chartHeader; } set { _chartHeader = value; OnPropertyChanged(nameof(ChartHeader)); } }
+        public Visibility IsVisibilitySearchCbx { get { return _isVisibilitySearchCbx; } set { _isVisibilitySearchCbx = value; OnPropertyChanged(nameof(IsVisibilitySearchCbx)); } }
         public string Title { get { return _title; } set { _title = value; OnPropertyChanged(nameof(Title)); } }
-        public Visibility IsVisible { get { return _isVisible; } set { _isVisible = value;OnPropertyChanged(nameof(IsVisible)); } }
+        public int SearchTypeSelected { get { return _searchTypeSelected; } set { _searchTypeSelected = value; OnPropertyChanged(nameof(SearchTypeSelected)); } }
+        public List<string> SearchCombobox { get { return _searchCombobox; } set { _searchCombobox = value; OnPropertyChanged(nameof(SearchCombobox)); } }
+
+        public Visibility IsVisible { get { return _isVisible; } set { _isVisible = value; OnPropertyChanged(nameof(IsVisible)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public List<int> ListMonth { get => _listMonth; }
         public List<int> ListYear { get => _listYear; set { _listYear = value; OnPropertyChanged(nameof(ListYear)); } }
         public int SelectedMonth { get { return _selectedMonth; } set { _selectedMonth = value; OnPropertyChanged(nameof(SelectedMonth)); } }
-        public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; LoadDataChart(); OnPropertyChanged(nameof(SelectedYear)); } }
-        public ObservableCollection<InventoryReportChartModel> DataChart { get { return _dataChart; } set { _dataChart = value; OnPropertyChanged(nameof(DataChart)); } }
+        public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; LoadDataChart(); ChartHeader = "Biểu đồ thể hiện số lượng sách tồn trong năm " + SelectedYear.ToString(); OnPropertyChanged(nameof(SelectedYear)); } }
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+        public ObservableCollection<InventoryReportChartModel> DataChart { get { return _dataChart; } set { _dataChart = value; OnPropertyChanged(nameof(DataChart)); } }
 
         public ObservableCollection<InventoryReportItem> DataListView { get { return _dataListView; } set { _dataListView = value; OnPropertyChanged(nameof(DataListView)); } }
+        public ObservableCollection<InventoryReportItem> DataListViewBookType { get { return _dataListViewBookType; } set { _dataListViewBookType = value; OnPropertyChanged(nameof(DataListViewBookType)); } }
 
         public ICommand CLoadData { get; set; }
         public ICommand CSearch { get; set; }
@@ -50,12 +84,14 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public InventoryReportViewModel()
         {
             IsVisible = Visibility.Hidden;
+            SearchCombobox = new List<String>() { "Tên Sách", "Thể Loại" };
+            SearchTypeSelected = 0;
             Title = "Báo Cáo Tồn";
             ListYear = new List<int>();
             DataListView = new ObservableCollection<InventoryReportItem>();
             DataChart = new ObservableCollection<InventoryReportChartModel>();
 
-            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
+            CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(true); });
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { SearchBook(); });
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
@@ -67,16 +103,36 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         }
         public void SearchBook()
         {
+            List<SACH> BookList;
+            List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
             if (SearchKey != "" && SearchKey != null)
             {
-                List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
-                List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear ).ToList();
+                switch (SearchTypeSelected)
+                {
+                    case 0:
+                        BookList = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        break;
+                    case 1:
+                        List<THELOAI> TypeBookList = DataProvider.Ins.DB.THELOAIs.Where(t => t.TenTheLoai.ToLower().Contains(SearchKey.ToLower())).ToList();
+                        BookList = new List<SACH>();
+                        foreach (THELOAI item in TypeBookList)
+                        {
+                            List<SACH> Books = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == item.MaTheLoai).ToList();
+                            BookList.AddRange(Books);
+                        }
+                        DataListViewBookType = GetDataListViewBookTypeFromDB(InvReport, TypeBookList);
+                        break;
+                    default:
+                        return;
+
+                }
+
 
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
             }
             else
             {
-                LoadDataListView();
+                LoadDataListView(false);
             }
         }
         public void LoadDataComboBox()
@@ -94,32 +150,40 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 ListYear.Add(DateTime.Now.Year);
             }
         }
-        public void LoadDataListView()
+        public void LoadDataListView(bool IsNotify)
         {
             SearchKey = "";
             List<BAOCAOTON> InvReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == SelectedMonth && p.Nam == SelectedYear).ToList();
             List<SACH> BookList = DataProvider.Ins.DB.SACHes.ToList();
-            if (InvReport.Count !=0 )
+            List<THELOAI> BookTypeList = DataProvider.Ins.DB.THELOAIs.ToList();
+            if (InvReport.Count != 0)
             {
                 DataListView = GetDataListViewFromDB(InvReport, BookList);
-                MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                DataListViewBookType = GetDataListViewBookTypeFromDB(InvReport, BookTypeList);
+                if (IsNotify)
+                {
+                    MyMessageQueue.Enqueue("Tạo báo cáo thành công!");
+                }
                 Title = "Báo Cáo Tồn Tháng " + SelectedMonth.ToString() + " Năm " + SelectedYear.ToString();
             }
             else
             {
-                MyMessageQueue.Enqueue("Không có thông tin");
+                if (IsNotify)
+                {
+                    MyMessageQueue.Enqueue("Không có thông tin");
+                }
                 DataListView.Clear();
                 Title = "Báo Cáo Tồn";
             }
         }
-        public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(List<BAOCAOTON> InvReport,List<SACH> BookList)
+        public ObservableCollection<InventoryReportItem> GetDataListViewFromDB(List<BAOCAOTON> InvReport, List<SACH> BookList)
         {
             ObservableCollection<InventoryReportItem> Data = new ObservableCollection<InventoryReportItem>();
             foreach (BAOCAOTON item in InvReport)
             {
                 for (int i = 0; i < BookList.Count; i++)
                 {
-                    if(BookList[i].MaSach == item.MaSach)
+                    if (BookList[i].MaSach == item.MaSach)
                     {
                         int Indentity = (int)BookList[i].MaTheLoai;
                         THELOAI Type = DataProvider.Ins.DB.THELOAIs.Where(p => p.MaTheLoai == Indentity).SingleOrDefault();
@@ -138,19 +202,41 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 }
             }
             return Data;
-        }
 
+        }
+        public ObservableCollection<InventoryReportItem> GetDataListViewBookTypeFromDB(List<BAOCAOTON> InvReport, List<THELOAI> BookTypeList)
+        {
+            ObservableCollection<InventoryReportItem> Data = new ObservableCollection<InventoryReportItem>();
+            foreach (BAOCAOTON item in InvReport)
+            {
+                for (int i = 0; i < BookTypeList.Count; i++)
+                {
+                    int BookTypeId = BookTypeList[i].MaTheLoai;
+                    List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == BookTypeId).ToList();
+                    InventoryReportItem InvItem = new InventoryReportItem();
+                    InvItem.Type = BookTypeList[i].TenTheLoai;
+                    for (int j = 0; j < BookList.Count; j++)
+                    {
+                        InvItem.FirstQuantity += (int)item.TonDau;
+                        InvItem.IncurredQuantity += (int)item.PhatSinh;
+                        InvItem.EndQuantity += (int)item.TonCuoi;
+                    }
+                    Data.Add(InvItem);
+                }
+            }
+            return Data;
+        }
         public void LoadDataChart()
         {
             IsVisible = Visibility.Visible;
             for (int i = 1; i <= 12; i++)
             {
-                int Quantity = CountBookInMonth(i,SelectedYear);
+                int Quantity = CountBookInMonth(i, SelectedYear);
                 InventoryReportChartModel Data = new InventoryReportChartModel(Quantity, i);
                 DataChart.Add(Data);
             }
         }
-        public int CountBookInMonth(int month,int year)
+        public int CountBookInMonth(int month, int year)
         {
             int Count = 0;
             List<BAOCAOTON> ListReport = DataProvider.Ins.DB.BAOCAOTONs.Where(p => p.Thang == month && p.Nam == year).ToList();
@@ -159,7 +245,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 Count += (int)ListReport[i].TonCuoi;
             }
             return Count;
-            
+
         }
         public void ImportFileExcel()
         {
@@ -207,7 +293,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
 
                     }
                 }
-                LoadDataListView();
+                LoadDataListView(false);
             }
             catch (Exception ee)
             {
@@ -238,7 +324,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                 using (ExcelPackage package = new ExcelPackage())
                 {
                     package.Workbook.Properties.Author = "Admin";
-                    package.Workbook.Properties.Title = "Danh sách khách hàng";
+                    package.Workbook.Properties.Title = "Báo cáo tồn";
                     package.Workbook.Worksheets.Add("Sheet 1");
                     ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
                     //add sheet

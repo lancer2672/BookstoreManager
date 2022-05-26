@@ -89,7 +89,7 @@
                                                 AncestorType={x:Type ListViewItem}}, 
                                                 Converter={StaticResource IndexConverter}}" />
                                                 <GridViewColumn Header="Tên khách hàng" DisplayMemberBinding="{Binding  CustomerName}"></GridViewColumn>
-                                                <GridViewColumn Header="Số điện thoại" DisplayMemberBinding="{Binding  PhoneNumber}"></GridViewColumn>
+                                                <GridViewColumn Header="Số điện thoại" DisplayMemberBinding="{Binding  CustomerPhone}"></GridViewColumn>
                                                 <GridViewColumn Header="Tồn đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
                                                 <GridViewColumn Header="Phát sinh" DisplayMemberBinding="{Binding IncurredQuantity}"></GridViewColumn>
                                                 <GridViewColumn Header="Tồn cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>
@@ -107,7 +107,7 @@
                                     </Style>
                                 </Grid.Style>
                             </Grid>
-                            <Grid >
+                            <Grid>
                                 <chart:SfChart Visibility="{Binding IsVisible}" 
                                                Palette="Metro" 
                                                Grid.Row="1" FontSize="20" 
