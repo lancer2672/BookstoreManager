@@ -1,5 +1,6 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
+using BookstoreManager.Resources;
 using BookstoreManager.Resources.Utils;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -75,8 +76,8 @@ namespace BookstoreManager.ViewModels.Customers
                 }
                 else
                 {
-                    System.Windows.Forms.DialogResult dialogResult = (System.Windows.Forms.DialogResult)MessageBox.Show("Khách hàng đã tồn tại", "Thông báo", MessageBoxButton.OKCancel);
-                    if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                    bool? dialogResult = new CustomMessageBox("Khách hàng đã tồn tại. \nBạn có muốn thêm khách hàng khác", MessageType.Info,"Thông Báo", MessageButtons.OkCancel).ShowDialog();
+                    if (dialogResult == true)
                     {
                         AddCustomerWindow addCustomerWindow = new AddCustomerWindow(_customerViewModel);
                         addCustomerWindow.ShowDialog();
