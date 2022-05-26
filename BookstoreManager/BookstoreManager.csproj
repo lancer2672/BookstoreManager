@@ -432,6 +432,9 @@
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
       <LastGenOutput>BookstoreManagerModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Imgs\rules.png" />
+    <Resource Include="Resources\Imgs\AccountWallpaper.jpg" />
+    <Resource Include="Resources\Imgs\LoginWindow.png" />
     <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
