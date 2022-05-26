@@ -59,17 +59,17 @@ namespace BookstoreManager.ViewModels.BookViewModels
         {
             string author = "";
             int matacgia = 0;
-            foreach(var item in listCT_TACGIA)
+            foreach (var item in listCT_TACGIA)
             {
-                if(masach == item.MaSach)
+                if (masach == item.MaSach)
                 {
-                    matacgia = item.MaTacGia;
+                    matacgia = (int)item.MaTacGia;
                     break;
                 }
             }
-            foreach(var item in listTACGIA)
+            foreach (var item in listTACGIA)
             {
-                if(matacgia == item.MaTacGia)
+                if (matacgia == item.MaTacGia)
                 {
                     author = item.HoTen;
                     break;
