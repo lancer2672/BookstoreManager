@@ -10,34 +10,33 @@ using MaterialDesignThemes.Wpf;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-
 namespace BookstoreManager.ViewModels.BookViewModels
 {
-    public class AddBookViewModel: BaseViewModel
+    public class UpdateBookViewModel:BaseViewModel
     {
         private ManageBookViewModel _manageBookViewModel;
 
         private int _bookid;
         public int BookId { get { return _bookid; } set { _bookid = value; OnPropertyChanged(nameof(BookId)); } }
-        
+
         private string _bookname;
         public string BookName { get { return _bookname; } set { _bookname = value; OnPropertyChanged(nameof(BookName)); } }
 
         private string _bookcategory;
         public string BookCategory { get { return _bookcategory; } set { _bookcategory = value; OnPropertyChanged(nameof(BookCategory)); } }
-        
+
         private string _bookauthor;
         public string BookAuthor { get { return _bookauthor; } set { _bookauthor = value; OnPropertyChanged(nameof(BookAuthor)); } }
-        
+
         private string _bookpublishcom;
         public string BookPublishCom { get { return _bookpublishcom; } set { _bookpublishcom = value; OnPropertyChanged(nameof(BookPublishCom)); } }
-        
+
         private int _bookpublishyear;
         public int BookPublishYear { get { return _bookpublishyear; } set { _bookpublishyear = value; OnPropertyChanged(nameof(BookPublishYear)); } }
-        
+
         private int _bookinventory;
         public int BookInventory { get { return _bookinventory; } set { _bookinventory = value; OnPropertyChanged(nameof(BookInventory)); } }
-        
+
         private decimal _bookprice;
         public decimal BookPrice { get { return _bookprice; } set { _bookprice = value; OnPropertyChanged(nameof(BookPrice)); } }
 
@@ -63,75 +62,65 @@ namespace BookstoreManager.ViewModels.BookViewModels
         private SnackbarMessageQueue _myMessageQueue;
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
-        public ICommand CAddBook { get; set; }
+        public ICommand CUpdateBook { get; set; }
 
-        public bool CheckExistID(int bookid, List<SACH> listSACAH)
+        public void LoadWindow()
         {
-            bool check = false;
-            foreach (SACH book in listSACAH)
-            {
-                if(bookid == book.MaSach)
-                {
-                    check = true;
-                    break;
-                }
-            }
-            return check;
+            ViewBook book = _manageBookViewModel.SelectedBook;
+            BookId = book.Id;
+            BookName = book.TitleBook;
+            SelectedTheLoai.TenTheLoai = book.Category;
+            BookAuthor = book.NameAuthor;
+            BookPublishCom = book.PublishCompany;
+            BookPublishYear = book.PublishYear;
+            BookInventory = book.InventoryNumber;
+            BookPrice = book.Price;
         }
-        public void ClearAddBookWindow()
+        public void ClearUpdateBookWindow()
         {
             BookId = BookInventory = BookPublishYear = 0;
             BookName = BookCategory = BookAuthor = BookPublishCom = "";
             BookPrice = 0;
         }
-        public void AddBook(StackPanel p)
+        public void UpdateBook(StackPanel p)
         {
-            if(CheckExistID(BookId, ListSACH))
+            if (Validator.IsValid(p))
             {
-                _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
+                SACH newBook = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == BookId).FirstOrDefault();
+                newBook.TenSach = BookName;
+                newBook.MaTheLoai = SelectedTheLoai.MaTheLoai;
+                newBook.NhaXuatBan = BookPublishCom;
+                newBook.NamXuatBan = BookPublishYear;
+                newBook.SoLuongTon = BookInventory;
+                newBook.GiaNhap = BookPrice;
+                try
+                {
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                catch
+                {
+                    _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
+                    return;
+                }
+                _manageBookViewModel.LoadListBook();
+                ClearUpdateBookWindow();
+                _manageBookViewModel.MyMessageQueue.Enqueue("Sửa sách thành công!");
             }
             else
             {
-                if (Validator.IsValid(p))
-                {
-                    SACH newBook = new SACH();
-                    //newBook.MaSach = BookId;
-                    newBook.TenSach = BookName;
-                    newBook.MaTheLoai = SelectedTheLoai.MaTheLoai;
-                    newBook.NhaXuatBan = BookPublishCom;
-                    newBook.NamXuatBan = BookPublishYear;
-                    newBook.SoLuongTon = BookInventory;
-                    newBook.GiaNhap = BookPrice;
-                    DataProvider.Ins.DB.SACHes.Add(newBook);
+                _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
 
-                    try
-                    {
-                        DataProvider.Ins.DB.SaveChanges();
-                    }
-                    catch
-                    {
-                        _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
-                        return;
-                    }
-                    _manageBookViewModel.LoadListBook();
-                    ClearAddBookWindow();
-                    _manageBookViewModel.MyMessageQueue.Enqueue("Thêm sách thành công!");
-                }
-                else
-                {
-                    _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
-                }
             }
         }
-        public AddBookViewModel(ManageBookViewModel BookVM)
+
+        public UpdateBookViewModel(ManageBookViewModel BookVM)
         {
             _manageBookViewModel = BookVM;
-            //ListSACH = DataProvider.Ins.DB.SACHes.ToList();
             ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
-            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
-            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+           
+            LoadWindow();
 
-            CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
+            CUpdateBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { UpdateBook(p); });
         }
     }
 }

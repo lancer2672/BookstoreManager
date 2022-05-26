@@ -30,15 +30,16 @@ namespace BookstoreManager.ViewModels.BookViewModels
         private List<CHITIETTACGIA> _listCT_TACGIA;
         public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
 
-        private ViewCustomer _selectedCustomer;
-        public ViewCustomer SelectedCustomer { get => _selectedCustomer; set { _selectedCustomer = value; OnPropertyChanged(nameof(SelectedCustomer)); } }
+        private ViewBook _selectedBook;
+        public ViewBook SelectedBook { get => _selectedBook; set { _selectedBook = value; OnPropertyChanged(nameof(SelectedBook)); } }
         
         private string _searchKey;
         public string SearchKey { get => _searchKey; set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
 
         private SnackbarMessageQueue _myMessageQueue;
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
-        
+
+        public ICommand CSearch { get; set; }
         public ICommand COpenAddBookWindow { get; set; }
         public ICommand COpenUpdateBookWindow { get; set; }
 
@@ -63,7 +64,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             {
                 if(masach == item.MaSach)
                 {
-                    matacgia = item.MaTacGia;
+                    matacgia = (int)item.MaTacGia;
                     break;
                 }
             }
@@ -95,15 +96,43 @@ namespace BookstoreManager.ViewModels.BookViewModels
             }
             return list;
         }
-        public void LoadListCustomer()
+        public void LoadListBook()
         {
             List<SACH> listSACH = DataProvider.Ins.DB.SACHes.ToList();
             ListBook = GetViewBookFromList(listSACH);
         }
+        public void SearchCustomer()
+        {
+            if (SearchKey != "" && SearchKey != null)
+            {
+                List<SACH> listSACH_KQ = DataProvider.Ins.DB.SACHes.Where(t => t.TenSach.ToLower().Contains(SearchKey.ToLower())).ToList();
+                if (listSACH_KQ.Count == 0)
+                    MyMessageQueue.Enqueue("Không có sách theo tên đã nhập!");
+                
+                ListBook = GetViewBookFromList(listSACH_KQ);
+
+            }
+            else
+            {
+                LoadListBook();
+                
+            }
+        }
         public void OpenAddBookWindow()
         {
-            AddBookWindow addBook = new AddBookWindow();
+            AddBookWindow addBook = new AddBookWindow(this);
             addBook.ShowDialog();
+        }
+        public void OpenUpdateBookWindow(ListView listView)
+        {
+            System.Collections.IList list = listView.SelectedItems;
+            if (list.Count == 0)
+            {
+                return;
+            }
+            UpdateBookWindow updateBook = new UpdateBookWindow(this);
+            updateBook.ShowDialog();
+
         }
 
         public ManageBookViewModel()
@@ -112,8 +141,14 @@ namespace BookstoreManager.ViewModels.BookViewModels
             ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
             ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
             ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+            LoadListBook();
 
+            CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             COpenAddBookWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddBookWindow(); });
+            COpenUpdateBookWindow = new RelayCommand<ListView>((p) => { return true; }, (p) => { OpenUpdateBookWindow(p); });
+
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue.DiscardDuplicates = true;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="BookstoreManager.Views.BookViews.AddBookWindow"
+﻿<Window x:Class="BookstoreManager.Views.BookViews.UpdateBookWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Thêm sách" Height="380" Width="800">
+        Title="Sua sach" Height="380" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,14 +18,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <StackPanel x:Name="AddBook">
+    <StackPanel x:Name="UpdateBook">
         <StackPanel.Resources>
             <Style TargetType="TextBox" 
                        BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <Setter Property="Width"  Value="360"></Setter>
                 <Setter Property="Margin" Value="20 5 20 5"></Setter>
             </Style>
-            
+
         </StackPanel.Resources>
         <TextBlock Text="THÔNG TIN SÁCH" Style="{StaticResource PageTitle}" HorizontalAlignment="Center" Margin="0 5 0 15"/>
         <Grid>
@@ -72,7 +72,6 @@
                               
                               DisplayMemberPath="TenTheLoai" 
                                         ItemsSource="{Binding ListTHELOAI}" 
-                              SelectionChanged="BookCategory_SelectionChanged"
                                         SelectedItem="{Binding SelectedTheLoai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="41.399609375" VerticalContentAlignment="Bottom" FontSize="14" >
 
                     </ComboBox>
@@ -163,9 +162,9 @@
                 Margin="0 20 30 0"
                 Orientation="Horizontal" HorizontalAlignment="Right">
             <CheckBox x:Name="checkbox" IsChecked="{Binding ischecked}"></CheckBox>
-            <Button Margin="0 0 20 0" Content="Thêm" 
+            <Button Margin="0 0 20 0" Content="Lưu" 
                     
-                        Command="{Binding CAddBook}" CommandParameter="{Binding ElementName=AddBook}">
+                        Command="{Binding CUpdateBook}" CommandParameter="{Binding ElementName=UpdateBook}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:CallMethodAction MethodName="Close"
@@ -187,7 +186,7 @@
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookPublishYear}" Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookInventory}" Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookPrice}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=checkbox, Path=IsChecked}" Value="True"/>
+                                    <!--<Condition Binding="{Binding ElementName=checkbox, Path=IsChecked}" Value="True"/>-->
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>

@@ -16,20 +16,15 @@ using BookstoreManager.ViewModels.BookViewModels;
 namespace BookstoreManager.Views.BookViews
 {
     /// <summary>
-    /// Interaction logic for AddBookWindow.xaml
+    /// Interaction logic for UpdateBookWindow.xaml
     /// </summary>
-    public partial class AddBookWindow : Window
+    public partial class UpdateBookWindow : Window
     {
-        public AddBookWindow(ManageBookViewModel BookVM)
+        public UpdateBookWindow(ManageBookViewModel BookVM)
         {
             InitializeComponent();
-            AddBookViewModel AddBookVM = new AddBookViewModel(BookVM);
-            this.DataContext = AddBookVM;
-        }
-
-        private void BookCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            this.checkbox.IsChecked = true;
+           UpdateBookViewModel UpdateBookVM = new UpdateBookViewModel(BookVM);
+            this.DataContext = UpdateBookVM;
         }
     }
 }

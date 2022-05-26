@@ -201,6 +201,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\AddBookViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\ManageBookViewModel.cs" />
+    <Compile Include="ViewModels\BookViewModels\UpdateBookViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
     <Compile Include="ViewModels\RegulationViewModels\RegulationViewModel.cs" />
@@ -221,6 +222,9 @@
     </Compile>
     <Compile Include="Views\BookViews\BookTypePage.xaml.cs">
       <DependentUpon>BookTypePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViews\UpdateBookWindow.xaml.cs">
+      <DependentUpon>UpdateBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Customers\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
@@ -297,6 +301,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViews\BookTypePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViews\UpdateBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,7 +410,6 @@
     <Resource Include="Resources\Imgs\OpenBook.png" />
     <Resource Include="Resources\Imgs\Customer.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

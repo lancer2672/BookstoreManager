@@ -63,99 +63,38 @@
                         <TextBlock Text="Sửa"/>
                     </DockPanel>
                 </Button>
-                <!--<Button 
-                    ToolTip="Xóa khách hàng"
-                    Width="70"
-                    Style="{StaticResource DeleteBtn}"
-                    Command="{Binding CDeleteCustomer}" 
-                    CommandParameter="{Binding ElementName=lv}">
-                    <DockPanel>
-                        <materialDesign:PackIcon Kind="TrashCanOutline" />
-                        <TextBlock Text="Xóa"/>
-                    </DockPanel>
-                </Button>-->
 
             </StackPanel>
             <Grid Grid.Row="1" Margin="0 2 0 0 ">
                 <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
-                    <ListView 
-                  x:Name="listbook"
-                  ItemContainerStyle="{StaticResource  ListItemContainer}"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                  ItemsSource="{Binding ListCustomer}"  
-                  SelectionMode="Multiple" 
-                  HorizontalAlignment="Stretch"
-                  SelectedItem="{Binding SelectedCustomer}">
+                    <ListView x:Name="listbook"
+                          ItemContainerStyle="{StaticResource  ListItemContainer}"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                          ItemsSource="{Binding ListBook}"  
+                          
+                          HorizontalAlignment="Stretch"
+                          SelectedItem="{Binding SelectedBook}">    
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
-                                <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                                <GridViewColumn Header="Email" Width="Auto"  >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Email}">
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt,Converter={StaticResource UIMoneyConverter}}"/>
+                                <GridViewColumn Header="Mã sách" DisplayMemberBinding="{Binding Id}"/>
+                                <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding TitleBook}"/>
+                                <GridViewColumn Header="Thể loại" DisplayMemberBinding="{Binding Category}"/>
+                                <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>
+                                <GridViewColumn Header="Nhà xuất bản" DisplayMemberBinding="{Binding PublishCompany}"/>
+                                <GridViewColumn Header="Năm xuất bản" DisplayMemberBinding="{Binding PublishYear}" />
+                                <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding InventoryNumber}"/>
+                                <GridViewColumn Header="Giá nhập" DisplayMemberBinding="{Binding Price,Converter={StaticResource UIMoneyConverter}}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </ScrollViewer>
             </Grid>
-            <!--<ListView Grid.Row="1" 
-                  x:Name="lv"
-                  ItemContainerStyle="{StaticResource  ListItemContainer}"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                  ItemsSource="{Binding ListCustomer}"  
-                  SelectionMode="Multiple" 
-                  HorizontalAlignment="Stretch"
-                  SelectedItem="{Binding SelectedCustomer}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
-                        <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
-                        <GridViewColumn Header="Email" Width="Auto"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Email}">
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt,Converter={StaticResource UIMoneyConverter}}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
-            <!--<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <StackPanel.Resources>
-                    <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
-                        <Setter Property="Margin" Value="30 0 0 0"></Setter>
-                    </Style>
-                </StackPanel.Resources>
-                <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
-                    <DockPanel>
-                        <materialDesign:PackIcon Kind="Import" />
-                        <TextBlock Text="Import Excel"/>
-                    </DockPanel>
-                </Button>
-                <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
-                    <DockPanel>
-                        <materialDesign:PackIcon Kind="Export" />
-                        <TextBlock Text="Export Excel"/>
-                    </DockPanel>
-                </Button>
-            </StackPanel>
             <materialDesign:Snackbar Grid.Row="2"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 MessageQueue="{Binding MyMessageQueue}">
-            </materialDesign:Snackbar>-->
+            </materialDesign:Snackbar>
         </Grid>
     </Grid>
 </Page>
