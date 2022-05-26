@@ -418,6 +418,10 @@
     <Resource Include="Resources\Imgs\Customer.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Imgs\LoginWindow.png" />
+    <Resource Include="Resources\Imgs\AccountWallpaper.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
@@ -430,6 +434,7 @@
     </Content>
     <Resource Include="Resources\Imgs\AccountWallpaper.jpg" />
     <Resource Include="Resources\Imgs\LoginWindow.png" />
+    <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />

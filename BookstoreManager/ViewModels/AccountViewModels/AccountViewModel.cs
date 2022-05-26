@@ -48,6 +48,7 @@ namespace BookstoreManager.ViewModels.AccountViewModels
 
         public AccountViewModel()
         {
+   
             var select = from s in DataProvider.Ins.DB.TAIKHOANs select s;
             foreach (var data in select)
             {
@@ -58,7 +59,6 @@ namespace BookstoreManager.ViewModels.AccountViewModels
                 Phone = data.SoDienThoai;
                 Source = data.Avatar;
             }
-
             OpenAccountChange = new RelayCommand<object>((p) => { return true; }, (p) => { openAccountChangeWindow(p); });
             SaveAccountCommand = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { SaveAccount(p); });
             SavePictureCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SavePicture(p); });

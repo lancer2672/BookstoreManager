@@ -12,9 +12,18 @@
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lightblue.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#003632"></SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#49ccc2"></SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#017e87"></SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#fff"></SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#09b3a7"></SolidColorBrush>
+            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#09b3a7"></SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryHueMidBrush" Color="#18adb8"/>
+            <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="#09b3a7"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
