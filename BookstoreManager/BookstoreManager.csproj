@@ -402,7 +402,6 @@
     <Resource Include="Resources\Imgs\OpenBook.png" />
     <Resource Include="Resources\Imgs\Customer.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

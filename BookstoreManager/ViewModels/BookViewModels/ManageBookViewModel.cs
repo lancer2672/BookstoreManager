@@ -58,23 +58,23 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public string FindAuthor(int masach, List<TACGIA> listTACGIA, List<CHITIETTACGIA> listCT_TACGIA)
         {
             string author = "";
-            int matacgia = 0;
-            foreach(var item in listCT_TACGIA)
-            {
-                if(masach == item.MaSach)
-                {
-                    matacgia = item.MaTacGia;
-                    break;
-                }
-            }
-            foreach(var item in listTACGIA)
-            {
-                if(matacgia == item.MaTacGia)
-                {
-                    author = item.HoTen;
-                    break;
-                }
-            }
+            //int matacgia = 0;
+            //foreach(var item in listCT_TACGIA)
+            //{
+            //    if(masach == item.MaSach)
+            //    {
+            //        matacgia = item.MaTacGia;
+            //        break;
+            //    }
+            //}
+            //foreach(var item in listTACGIA)
+            //{
+            //    if(matacgia == item.MaTacGia)
+            //    {
+            //        author = item.HoTen;
+            //        break;
+            //    }
+            //}
             return author;
         }
         public ObservableCollection<ViewBook> GetViewBookFromList(List<SACH> listSACH)

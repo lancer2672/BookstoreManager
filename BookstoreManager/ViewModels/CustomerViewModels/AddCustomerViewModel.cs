@@ -75,8 +75,12 @@ namespace BookstoreManager.ViewModels.Customers
                 }
                 else
                 {
-                    MessageBox.Show("Khách hàng đã tồn tại");
-                    return;
+                    System.Windows.Forms.DialogResult dialogResult = (System.Windows.Forms.DialogResult)MessageBox.Show("Khách hàng đã tồn tại", "Thông báo", MessageBoxButton.OKCancel);
+                    if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                    {
+                        AddCustomerWindow addCustomerWindow = new AddCustomerWindow(_customerViewModel);
+                        addCustomerWindow.ShowDialog();
+                    }
                 }
             }
             else
@@ -97,7 +101,7 @@ namespace BookstoreManager.ViewModels.Customers
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             for(int i=0;i< CustomerList.Count;i++)
             {
-                if (NewCustomer.HoTen == CustomerList[i].HoTen && NewCustomer.DienThoai == CustomerList[i].DienThoai)
+                if (NewCustomer.HoTen.ToLower() == CustomerList[i].HoTen.ToLower() && NewCustomer.DienThoai == CustomerList[i].DienThoai)
                 {
                     return true;
                 }
