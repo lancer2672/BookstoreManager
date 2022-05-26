@@ -18,7 +18,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" >
-                    <Image Source="../../Resources/Imgs/AccountWallpaper.jpg" Stretch="Fill" Height="150" VerticalAlignment="Top"/>
+                    <Image Source="../../Resources/Imgs/AccountWallpaper.jpg" Stretch="Fill" Height="220" VerticalAlignment="Top"/>
 
                     <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Left">
                         <StackPanel Margin="50 0 0 0">
@@ -30,7 +30,7 @@
                                     </Border.Background>
                                 </Border>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 40 0 0"
-                                   Text="{Binding Name}" FontSize="25" FontWeight="DemiBold" Foreground="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"></TextBlock>
+                                   Text="{Binding Name}" FontSize="25" FontWeight="DemiBold" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"></TextBlock>
                             </DockPanel>
                         </StackPanel>
                     </DockPanel>
