@@ -67,7 +67,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public List<int> ListMonth { get => _listMonth; }
         public List<int> ListYear { get => _listYear; set { _listYear = value; OnPropertyChanged(nameof(ListYear)); } }
         public int SelectedMonth { get { return _selectedMonth; } set { _selectedMonth = value; OnPropertyChanged(nameof(SelectedMonth)); } }
-        public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; LoadDataChart(); ChartHeader = "Biểu đồ thể hiện số lượng sách tồn trong năm " + SelectedYear.ToString(); OnPropertyChanged(nameof(SelectedYear)); } }
+        public int SelectedYear { get { return _selectedYear; } set { _selectedYear = value; LoadDataChart(); ChartHeader = "Biểu đồ số lượng sách tồn qua từng tháng trong năm " + SelectedYear.ToString(); OnPropertyChanged(nameof(SelectedYear)); } }
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
         public ObservableCollection<InventoryReportChartModel> DataChart { get { return _dataChart; } set { _dataChart = value; OnPropertyChanged(nameof(DataChart)); } }
 
