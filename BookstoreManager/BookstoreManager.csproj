@@ -199,6 +199,7 @@
     <Compile Include="ViewModels\BookViewModels\ManageBookViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\ReceiptsViewModels\ReceiptsViewModel.cs" />
     <Compile Include="ViewModels\RegulationViewModels\RegulationViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\DebtReportViewModel.cs" />
     <Compile Include="ViewModels\ReportAndStatistic\InventoryReportViewModel.cs" />
@@ -230,6 +231,9 @@
       <DependentUpon>UpdateCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages.cs" />
+    <Compile Include="Views\Receipts\ReceiptsWindow.xaml.cs">
+      <DependentUpon>ReceiptsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Regulation\RegulationPage.xaml.cs">
       <DependentUpon>RegulationPage.xaml</DependentUpon>
     </Compile>
@@ -299,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customers\UpdateCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Receipts\ReceiptsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
