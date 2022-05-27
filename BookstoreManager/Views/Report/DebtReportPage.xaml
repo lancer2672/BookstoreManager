@@ -27,7 +27,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal" >
-                    <UC:SearchBar></UC:SearchBar>
+                    <UC:SearchBar Margin="0 0 20 0"></UC:SearchBar>
                     <Button ToolTip="Làm mới "   
                             Style="{StaticResource IconTextBtn}"
                     Name="RefreshBtn"

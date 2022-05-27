@@ -40,6 +40,7 @@ namespace BookstoreManager.ViewModels
         public ICommand CDeleteCustomer { get; set; }
         public ICommand COpenUpdateCustomerWindow { get; set; }
         public ICommand CSearch { get; set; }
+        public ICommand CRefreshData { get; set; }
         public ManageCustomerViewModel()
         {
             ListCustomer = new ObservableCollection<ViewCustomer>();
@@ -50,6 +51,7 @@ namespace BookstoreManager.ViewModels
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
+            CRefreshData = new RelayCommand<ListView>((p) => { return true; }, (p) => { RefreshData(); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds( 2000));
             MyMessageQueue.DiscardDuplicates = true;
@@ -57,6 +59,11 @@ namespace BookstoreManager.ViewModels
             LoadListCustomer();
         }
 
+        public void RefreshData()
+        {
+            SearchKey = "";
+            LoadListCustomer();
+        }
         public void LoadListCustomer()
         {
             List<KHACHHANG> listKHACHHANG = DataProvider.Ins.DB.KHACHHANGs.ToList();
