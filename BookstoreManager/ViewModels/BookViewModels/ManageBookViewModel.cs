@@ -344,6 +344,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             COpenAddBookWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddBookWindow(); });
             COpenUpdateBookWindow = new RelayCommand<ListView>((p) => { return true; }, (p) => { OpenUpdateBookWindow(p); });
             CRefreshData  =  new RelayCommand<object>((p) => { return true; }, (p) => { RefreshData(); });
+
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 

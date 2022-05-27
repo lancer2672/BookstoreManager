@@ -386,7 +386,6 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             }
             catch (Exception ee)
             {
-                MessageBox.Show("Xuất file không thành công");
                 MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
             }
         }

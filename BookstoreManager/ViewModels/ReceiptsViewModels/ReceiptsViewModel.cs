@@ -10,19 +10,28 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
 {
     public class ReceiptsViewModel : BaseViewModel
     {
-        private int _receiptsId;
-        private int _customerId;
+        private string _customerName;
+        private string _customerPhoneNumber;
+        private decimal _customerPaid;
         private DateTime _date;
-        private decimal _receiptsMoney;
+        private DateTime _selectedDay;
+
+        public string CustomerName { get => _customerName; set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
+        public string CustomerPhoneNumber { get => _customerPhoneNumber; set { _customerPhoneNumber = value; OnPropertyChanged(nameof(_customerPhoneNumber)); } }
+        public DateTime Date { get => _date; set { _date = value; OnPropertyChanged(nameof(Date)); } }
+        public DateTime SelectedDay { get => _selectedDay; set { _selectedDay = value; OnPropertyChanged(nameof(SelectedDay)); } }
+        public decimal CustomerPaid { get => _customerPaid; set { _customerPaid = value; OnPropertyChanged(nameof(CustomerPaid)); } }
+        public ICommand SaveReceipts { get; set; }
         public SnackbarMessageQueue MyMessageQueue { get => myMessageQueue; set { myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         private SnackbarMessageQueue myMessageQueue;
-        public int ReceiptsId { get => _receiptsId; set { _receiptsId = value; OnPropertyChanged(); } }
-        public int CustomerId { get => _customerId; set { _customerId = value; OnPropertyChanged(); } }
-        public DateTime Date { get => _date; set { _date = value; OnPropertyChanged(); } }
-        public decimal ReceiptsMoney{ get => _receiptsMoney; set { _receiptsMoney = value; OnPropertyChanged(); } }
-        public ICommand SaveReceipts { get; set; }
+
         public ReceiptsViewModel()
         {
+            Date = DateTime.Now;
+            SelectedDay = DateTime.Now;
+            
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
+            MyMessageQueue.DiscardDuplicates = true;
 
         }
 

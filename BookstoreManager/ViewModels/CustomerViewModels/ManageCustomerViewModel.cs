@@ -290,12 +290,10 @@ namespace BookstoreManager.ViewModels
                     File.WriteAllBytes(filePath, bin);
 
                 }
-                MessageBox.Show("Xuat file thanh cong");
                 MyMessageQueue.Enqueue("Xuất excel thành công!");
             }
             catch (Exception ee)
             {
-                MessageBox.Show("Xuat file khong thanh cong");
                 MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
             }
         }
