@@ -1,6 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using BookstoreManager.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         private DateTime _date;
         private DateTime _selectedDay;
 
+        private ObservableCollection<ViewReceipt> _listReceipt;
+        public ObservableCollection<ViewReceipt> ListReceipt { get => _listReceipt; set { _listReceipt = value; OnPropertyChanged(nameof(ListReceipt)); } }
         public string CustomerName { get => _customerName; set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
         public string CustomerPhoneNumber { get => _customerPhoneNumber; set { _customerPhoneNumber = value; OnPropertyChanged(nameof(_customerPhoneNumber)); } }
         public DateTime Date { get => _date; set { _date = value; OnPropertyChanged(nameof(Date)); } }
@@ -29,7 +33,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         {
             Date = DateTime.Now;
             SelectedDay = DateTime.Now;
-            
+            ListReceipt = new ObservableCollection<ViewReceipt>();
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 

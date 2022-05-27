@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ReceiptsVM}"
-        Title="ReceiptsWindow" Height="600" Width="1100">
+        Title="ReceiptsWindow" Height="600" Width="1000">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -123,16 +123,29 @@
                             <RowDefinition Height="3*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <TextBlock HorizontalAlignment="Center" Margin="0 24 0 12" Text="QUẢN LÝ PHIẾU THU" Style="{StaticResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Margin="0 24 0 0" Text="QUẢN LÝ PHIẾU THU" Style="{StaticResource MaterialDesignHeadline6TextBlock}"></TextBlock>
                         </Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
-                            <DatePicker SelectedDate="{Binding SelectedDay}" Margin="0 16 20 0"></DatePicker>
+                            <DatePicker Height="30" Width="100" SelectedDate="{Binding SelectedDay}" Margin="0 16 20 0"></DatePicker>
                             <SharedUC:SearchBar Margin="0 0 20 0"></SharedUC:SearchBar>
                         </StackPanel>
-                        <ListView>
+                        <ListView Grid.Row="2" 
+                  x:Name="lvReceipt"
+                 
+                  ItemContainerStyle="{StaticResource  ListItemContainer}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ItemsSource="{Binding ListReceipt}"  
+                  
+                  HorizontalAlignment="Stretch"
+                  SelectedItem="{Binding SelectedItem}">
                             <ListView.View>
                                 <GridView>
-                                   
+                                    <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
+                                    <GridViewColumn Header="Thời Gian" DisplayMemberBinding="{Binding Date, StringFormat='HH:mm:ss'}" Width="Auto"  />
+                                    <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding CustomerName}"/>
+                                    <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding CustomerPhoneNumber}"/>
+                                    <GridViewColumn Header="Số tiền trả" DisplayMemberBinding="{Binding  CustomerPaid,Converter={StaticResource UIMoneyConverter}}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

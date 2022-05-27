@@ -28,15 +28,6 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal" >
                     <UC:SearchBar Margin="0 0 20 0"></UC:SearchBar>
-                    <Button ToolTip="Làm mới "   
-                            Style="{StaticResource IconTextBtn}"
-                    Name="RefreshBtn"
-                    Command="{Binding CRefreshData}">
-                        <DockPanel>
-                            <materialDesign:PackIcon Kind="Refresh" />
-                            <TextBlock Text="Làm mới"/>
-                        </DockPanel>
-                    </Button>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
                                 FontSize="14"
