@@ -7,7 +7,7 @@
              xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:BookstoreManager.Views.SharedControl"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="600">
+             d:DesignHeight="50" d:DesignWidth="660">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Width="300">
+    <DockPanel Width="420">
         <TextBox 
             Height="Auto"
             materialDesign:HintAssist.Hint="Tìm kiếm"
@@ -30,6 +30,15 @@
             <DockPanel>
                 <materialDesign:PackIcon Kind="Search" />
                 <TextBlock Text="Tìm kiếm"/>
+            </DockPanel>
+        </Button>
+        <Button ToolTip="Làm mới " Width="100"   Margin="20 0 0 0" 
+                            Style="{StaticResource IconTextBtn}"
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+            <DockPanel>
+                <materialDesign:PackIcon Kind="Refresh" />
+                <TextBlock Text="Làm mới"/>
             </DockPanel>
         </Button>
     </DockPanel>

@@ -8,6 +8,7 @@
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="450" d:DesignWidth="800"
+     
       DataContext="{StaticResource CustomerVM}"
       Title="ManageCustomerPage">
     <Page.Resources>
@@ -44,8 +45,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
-            <SharedUC:SearchBar></SharedUC:SearchBar>
-            <Button ToolTip="Thêm nhân viên"  
+            <SharedUC:SearchBar Margin="0 0 30 0"></SharedUC:SearchBar>
+                <Button ToolTip="Thêm nhân viên"  
                     Name="AddBtn"
                     Width="70"
                     Command="{Binding COpenAddCustomerWindow}">
@@ -79,11 +80,13 @@
         </StackPanel>
         <ListView Grid.Row="1" 
                   x:Name="lv"
+                 
                   ItemContainerStyle="{StaticResource  ListItemContainer}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   ItemsSource="{Binding ListCustomer}"  
                   SelectionMode="Multiple" 
+                  
                   HorizontalAlignment="Stretch"
                   SelectedItem="{Binding SelectedCustomer}">
             <ListView.View>

@@ -191,6 +191,7 @@
     <Compile Include="Models\InventoryReportItem.cs" />
     <Compile Include="Models\ViewBook.cs" />
     <Compile Include="Models\ViewCustomer.cs" />
+    <Compile Include="Models\ViewReceipt.cs" />
     <Compile Include="Resources\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
@@ -431,8 +432,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Imgs\rules.png" />
-    <Resource Include="Resources\Imgs\AccountWallpaper.jpg" />
-    <Resource Include="Resources\Imgs\LoginWindow.png" />
     <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
   <ItemGroup>

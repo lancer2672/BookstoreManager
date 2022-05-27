@@ -40,6 +40,7 @@ namespace BookstoreManager.ViewModels
         public ICommand CDeleteCustomer { get; set; }
         public ICommand COpenUpdateCustomerWindow { get; set; }
         public ICommand CSearch { get; set; }
+        public ICommand CRefreshData { get; set; }
         public ManageCustomerViewModel()
         {
             ListCustomer = new ObservableCollection<ViewCustomer>();
@@ -50,13 +51,19 @@ namespace BookstoreManager.ViewModels
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
+            CRefreshData = new RelayCommand<ListView>((p) => { return true; }, (p) => { RefreshData(); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(4000));
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds( 2000));
             MyMessageQueue.DiscardDuplicates = true;
 
             LoadListCustomer();
         }
 
+        public void RefreshData()
+        {
+            SearchKey = "";
+            LoadListCustomer();
+        }
         public void LoadListCustomer()
         {
             List<KHACHHANG> listKHACHHANG = DataProvider.Ins.DB.KHACHHANGs.ToList();
@@ -283,12 +290,10 @@ namespace BookstoreManager.ViewModels
                     File.WriteAllBytes(filePath, bin);
 
                 }
-                MessageBox.Show("Xuat file thanh cong");
                 MyMessageQueue.Enqueue("Xuất excel thành công!");
             }
             catch (Exception ee)
             {
-                MessageBox.Show("Xuat file khong thanh cong");
                 MyMessageQueue.Enqueue("Lỗi. Không thể xuất file Excel");
             }
         }

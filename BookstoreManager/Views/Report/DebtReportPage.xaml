@@ -27,7 +27,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20" Grid.Row="0" Orientation="Horizontal" >
-                    <UC:SearchBar></UC:SearchBar>
+                    <UC:SearchBar Margin="0 0 20 0"></UC:SearchBar>
                     <ComboBox   Grid.Column="1" 
                                 Width="80"
                                 FontSize="14"

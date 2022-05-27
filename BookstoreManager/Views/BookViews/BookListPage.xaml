@@ -4,6 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookstoreManager.Views.BookViews"
+      xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
+      
       xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
@@ -22,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
-
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Sách"></TextBlock>
         <Grid Grid.Row="1">
@@ -43,7 +45,15 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
-                <SharedUC:SearchBar></SharedUC:SearchBar>
+                <UC2:SearchBarCombobox x:Name="SearchBarCombobox" ></UC2:SearchBarCombobox>
+                <Button ToolTip="Làm mới "  
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="Refresh" />
+                        <TextBlock Text="Làm mới"/>
+                    </DockPanel>
+                </Button>
                 <Button ToolTip="Thêm "  
                     Name="AddBtn"
                     Width="70"
@@ -77,7 +87,9 @@
                           SelectedItem="{Binding SelectedBook}">    
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Mã sách" DisplayMemberBinding="{Binding Id}"/>
+                                <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}">
+                                    
+                                </GridViewColumn>
                                 <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding TitleBook}"/>
                                 <GridViewColumn Header="Thể loại" DisplayMemberBinding="{Binding Category}"/>
                                 <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>
@@ -90,11 +102,32 @@
                     </ListView>
                 </ScrollViewer>
             </Grid>
-            <materialDesign:Snackbar Grid.Row="2"
+         
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <Button ToolTip="Nhập dữ liệu từ file Excel"  Command="{Binding CImportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Import" />
+                    <TextBlock Text="Import Excel"/>
+                </DockPanel>
+            </Button>
+            <Button ToolTip="Xuất file Excel"  Command="{Binding CExportExcel}">
+                <DockPanel>
+                    <materialDesign:PackIcon Kind="Export" />
+                    <TextBlock Text="Export Excel"/>
+                </DockPanel>
+            </Button>
+        </StackPanel>
+        <materialDesign:Snackbar Grid.Row="3"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 MessageQueue="{Binding MyMessageQueue}">
-            </materialDesign:Snackbar>
-        </Grid>
+        </materialDesign:Snackbar>
+        
     </Grid>
 </Page>

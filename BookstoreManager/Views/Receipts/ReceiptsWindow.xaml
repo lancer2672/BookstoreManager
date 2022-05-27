@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:SharedUC="clr-namespace:BookstoreManager.Views.SharedControl"
+        xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         xmlns:local="clr-namespace:BookstoreManager.Views.Receipts"
+       
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ReceiptsVM}"
-        Title="ReceiptsWindow" Height="600" Width="500">
-    <!--<Window.Resources>
+        Title="ReceiptsWindow" Height="600" Width="1000">
+    <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
@@ -16,59 +20,266 @@
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Window.Resources>-->
-    <!--<DockPanel>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.Resources>
-                <Style x:Key="Title" TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="20"/>
-                
-                    <Setter Property="Margin" Value="0 0 20 20"/>
-                    <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                </Style>
-                <Style x:Key="textBox" TargetType="TextBox">
-                    <Setter Property="FontSize" Value="20"></Setter>
-                    <Setter Property="Width" Value="200"></Setter>
-                    <Setter Property="Margin" Value="0 0 0 20"></Setter>
-                    <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                </Style>
-            </Grid.Resources>
-            <Grid Grid.Row="0">
-                <TextBlock Text="Quản lý phiếu thu" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bookman Old Style"></TextBlock>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <StackPanel>
-                        <TextBlock Text="Mã phiếu thu" Style="{StaticResource Title}"></TextBlock>
-                        <TextBlock Text="Mã khách hàng" Style="{StaticResource Title}"></TextBlock>
-                        <TextBlock Text="Ngày lập" Style="{StaticResource Title}"></TextBlock>
-                        <TextBlock Text="Số tiền thu" Style="{StaticResource Title}"></TextBlock>
+    </Window.Resources>
+    <Grid>
+
+        <TabControl>
+            <TabItem DataContext="{StaticResource ReceiptsVM}" Header="Phiếu thu">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="20">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock HorizontalAlignment="Center" Margin="0 10 0 20"
+                                   Style="{StaticResource  MaterialDesignHeadline6TextBlock}" 
+                                   Text="LẬP PHIẾU THU"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" 
+                                   Style="{StaticResource  MaterialDesignHelperTextBlock}" 
+                                   Text="{Binding Date,StringFormat='dd-MM-yyyy'}"></TextBlock>
+                       
+                        <TextBox 
+                      Name="CustomerName"
+                         materialDesign:HintAssist.Hint="Tên khách hàng" >
+                            <TextBox.Text>
+                                <Binding Path="CustomerName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rules:NameRule></rules:NameRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox 
+                      Name="CustomerPhoneNumber"
+                         materialDesign:HintAssist.Hint="Số điện thoại" >
+                            <TextBox.Text>
+                                <Binding Path="CustomerPhoneNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rules:PhoneNumberRule></rules:PhoneNumberRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox 
+                      Name="Money"
+                         materialDesign:HintAssist.Hint="Số tiền nhận" >
+                            <TextBox.Text>
+                                <Binding Path="CustomerPaid" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rules:MoneyRule></rules:MoneyRule>
+                                    </Binding.ValidationRules>
+                                    <Binding.Converter>
+                                        <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox></TextBox>
+                        <StackPanel Margin="0 30 0 0">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                                    <Setter Property="Margin" Value="0 10 0 10"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button Content="Lập phiếu">
+                                <Button.Style >
+                                    <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Margin" Value="0 10 0 10"></Setter>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Money}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        <Button ToolTip="Làm mới thông tin"  
+                                Style="{StaticResource IconTextBtn}"
+                                Command="{Binding }">
+                            <DockPanel>
+                                <materialDesign:PackIcon Kind="Refresh" />
+                                <TextBlock Text="Làm mới"/>
+                            </DockPanel>
+                        </Button>
+                        </StackPanel>
                     </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBlock HorizontalAlignment="Center" Margin="0 24 0 0" Text="QUẢN LÝ PHIẾU THU" Style="{StaticResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
+                            <DatePicker Height="30" Width="100" SelectedDate="{Binding SelectedDay}" Margin="0 16 20 0"></DatePicker>
+                            <SharedUC:SearchBar Margin="0 0 20 0"></SharedUC:SearchBar>
+                        </StackPanel>
+                        <ListView Grid.Row="2" 
+                  x:Name="lvReceipt"
+                 
+                  ItemContainerStyle="{StaticResource  ListItemContainer}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ItemsSource="{Binding ListReceipt}"  
+                  
+                  HorizontalAlignment="Stretch"
+                  SelectedItem="{Binding SelectedItem}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
+                                    <GridViewColumn Header="Thời Gian" DisplayMemberBinding="{Binding Date, StringFormat='HH:mm:ss'}" Width="Auto"  />
+                                    <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding CustomerName}"/>
+                                    <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding CustomerPhoneNumber}"/>
+                                    <GridViewColumn Header="Số tiền trả" DisplayMemberBinding="{Binding  CustomerPaid,Converter={StaticResource UIMoneyConverter}}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                    <materialDesign:Snackbar 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    MessageQueue="{Binding MyMessageQueue}">
+                    </materialDesign:Snackbar>
                 </Grid>
-                <Grid Grid.Column="1">
-                    <StackPanel>
-                        <TextBox Style="{StaticResource textBox}"></TextBox>
-                        <TextBox Style="{StaticResource textBox}"></TextBox>
-                        <DatePicker Margin="0 -10 0 20" HorizontalAlignment="Left"
-                            Width="100"
-                            materialDesign:HintAssist.Hint="Pick Date"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                        <TextBox Style="{StaticResource textBox}"></TextBox>
-                    </StackPanel>
+            </TabItem>
+            <TabItem DataContext="{StaticResource CustomerVM}" Header="Quản lý khách hàng">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource PageTitle}" HorizontalAlignment="Center" Margin="0 10 0 10" Text="Quản Lý Khách Hàng"></TextBlock>
+                    <Grid Grid.Row="1">
+                        <Grid.Resources>
+                            <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                                <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                <Setter Property="MinWidth" Value="80"></Setter>
+                            </Style>
+                            <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                                <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                <Setter Property="MinWidth" Value="80"></Setter>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="20 0 0 0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+                            <SharedUC:SearchBar></SharedUC:SearchBar>
+                            <Button ToolTip="Làm mới " Margin="20 0 120 0"  
+                            Style="{StaticResource IconTextBtn}"
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Refresh" />
+                                    <TextBlock Text="Làm mới"/>
+                                </DockPanel>
+                            </Button>
+                            <Button ToolTip="Thêm nhân viên"  
+                    Name="AddBtn"
+                    Width="70"
+                    Command="{Binding COpenAddCustomerWindow}">
+                                    <DockPanel>
+                                        <materialDesign:PackIcon Kind="Add" />
+                                        <TextBlock Text="Thêm"/>
+                                    </DockPanel>
+                                </Button>
+                                <Button 
+                     Width="70"
+                    ToolTip="Chỉnh sửa thông tin"
+                    Command="{Binding COpenUpdateCustomerWindow}" 
+                    CommandParameter="{Binding ElementName=lv}">
+                                    <DockPanel>
+                                        <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                        <TextBlock Text="Sửa"/>
+                                    </DockPanel>
+                                </Button>
+                                <Button 
+                    ToolTip="Xóa khách hàng"
+                    Width="70"
+                    Style="{StaticResource DeleteBtn}"
+                    Command="{Binding CDeleteCustomer}" 
+                    CommandParameter="{Binding ElementName=lv}">
+                                    <DockPanel>
+                                        <materialDesign:PackIcon Kind="TrashCanOutline" />
+                                        <TextBlock Text="Xóa"/>
+                                    </DockPanel>
+                                </Button>
+                            </StackPanel>
+                        <ListView Grid.Row="1" 
+                  x:Name="lv"
+                 
+                  ItemContainerStyle="{StaticResource  ListItemContainer}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ItemsSource="{Binding ListCustomer}"  
+                  SelectionMode="Multiple" 
+                  
+                  HorizontalAlignment="Stretch"
+                  SelectedItem="{Binding SelectedCustomer}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
+                                    <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                                    <GridViewColumn Header="Email" Width="Auto"  >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Email}">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Tổng nợ" DisplayMemberBinding="{Binding Debt,Converter={StaticResource UIMoneyConverter}}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Margin=" 0 0 20 20" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button ToolTip="Nhập dữ liệu từ file Excel" Command="{Binding CImportExcel}">
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Import" />
+                                    <TextBlock Text="Import Excel"/>
+                                </DockPanel>
+                            </Button>
+                            <Button ToolTip="Xuất file Excel" Command="{Binding CExportExcel}">
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Export" />
+                                    <TextBlock Text="Export Excel"/>
+                                </DockPanel>
+                            </Button>
+                        </StackPanel>
+                        <materialDesign:Snackbar Grid.Row="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+                        </materialDesign:Snackbar>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="3">
-                <Button Content="Lập phiếu thu" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBtn}"></Button>
-                </Grid>
-        </Grid>
-    </DockPanel>-->
+            </TabItem>
+     
+        </TabControl>
+    </Grid>
 </Window>
