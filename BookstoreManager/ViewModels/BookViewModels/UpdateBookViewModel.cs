@@ -64,12 +64,17 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         public ICommand CUpdateBook { get; set; }
 
+        public void LoadCategory()
+        {
+            THELOAI theloai = DataProvider.Ins.DB.THELOAIs.Where(t => t.TenTheLoai == _manageBookViewModel.SelectedBook.Category).FirstOrDefault();
+            SelectedTheLoai = theloai;
+        }
         public void LoadWindow()
         {
             ViewBook book = _manageBookViewModel.SelectedBook;
             BookId = book.Id;
             BookName = book.TitleBook;
-            SelectedTheLoai.TenTheLoai = book.Category;
+            LoadCategory();
             BookAuthor = book.NameAuthor;
             BookPublishCom = book.PublishCompany;
             BookPublishYear = book.PublishYear;

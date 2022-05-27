@@ -4,11 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookstoreManager"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
         mc:Ignorable="d"
         x:Name="mainWindow"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1150">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,5 +21,62 @@
             <MenuItem Header="Admin" FontSize="14" Command="{Binding LoadedWidnowCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
             <MenuItem Header="Help" VerticalAlignment="Center" FontSize="14"/>
         </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBox" 
+                       BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                        <Setter Property="Width"  Value="360"></Setter>
+                        <Setter Property="Margin" Value="20 5 20 5"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox  Name="IdCustomer"
+                                materialDesign:HintAssist.Hint="Mã khách hàng">
+                        <TextBox.Text>
+                            <Binding Path="IdCustomer" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" >
+                                <Binding.ValidationRules>
+                                    <rules:PositiveNumberRule></rules:PositiveNumberRule>
+                                    <rules:NonEmptyRule></rules:NonEmptyRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox  Name="MoneyReceived"
+                                materialDesign:HintAssist.Hint="Số tiền trả">
+                        <TextBox.Text>
+                            <Binding Path="MoneyReceived" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" >
+                                <Binding.ValidationRules>
+                                    <rules:PositiveNumberRule></rules:PositiveNumberRule>
+                                    <rules:NonEmptyRule></rules:NonEmptyRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox  Name="NameCustomer"
+                                materialDesign:HintAssist.Hint="Họ tên khách hàng">
+                        <TextBox.Text>
+                            <Binding Path="NameCustomer" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" >
+                                <Binding.ValidationRules>
+                                    <rules:PositiveNumberRule></rules:PositiveNumberRule>
+                                    <rules:NonEmptyRule></rules:NonEmptyRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
