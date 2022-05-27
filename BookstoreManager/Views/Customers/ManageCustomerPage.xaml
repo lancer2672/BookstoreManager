@@ -46,7 +46,16 @@
         </Grid.RowDefinitions>
         <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
             <SharedUC:SearchBar></SharedUC:SearchBar>
-            <Button ToolTip="Thêm nhân viên"  
+                <Button ToolTip="Làm mới "   Margin="20 0 0 0" 
+                            Style="{StaticResource IconTextBtn}"
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="Refresh" />
+                        <TextBlock Text="Làm mới"/>
+                    </DockPanel>
+                </Button>
+                <Button ToolTip="Thêm nhân viên"  
                     Name="AddBtn"
                     Width="70"
                     Command="{Binding COpenAddCustomerWindow}">
