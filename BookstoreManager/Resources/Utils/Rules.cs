@@ -67,6 +67,10 @@ namespace BookstoreManager.Resources.Utils
         private static readonly Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+            if (value.ToString() == "")
+            {
+                return ValidationResult.ValidResult;
+            }
             if (!regex.IsMatch(value.ToString())) return new ValidationResult(false, "Email không hợp lệ");
             return ValidationResult.ValidResult;
         }

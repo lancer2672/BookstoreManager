@@ -26,11 +26,13 @@
         <TabControl>
             <TabItem DataContext="{StaticResource ReceiptsVM}" Header="Phiếu thu">
                 <Grid>
+                    <Grid>
+                        
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="20">
+                    <StackPanel x:Name="st" Grid.Column="0" Margin="20">
                         <StackPanel.Resources>
                             <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                             </Style>
@@ -38,10 +40,21 @@
                         <TextBlock HorizontalAlignment="Center" Margin="0 10 0 20"
                                    Style="{StaticResource  MaterialDesignHeadline6TextBlock}" 
                                    Text="LẬP PHIẾU THU"></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" 
+                        <TextBlock HorizontalAlignment="Center" Margin="0 0 0 20"
                                    Style="{StaticResource  MaterialDesignHelperTextBlock}" 
                                    Text="{Binding Date,StringFormat='dd-MM-yyyy'}"></TextBlock>
-                       
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Thông tin khách hàng" Margin="0 0 10 0"></Label>
+                            <Button ToolTip="Thêm khách hàng"  
+                                    Name="SelectExistCustomer"
+                                    Width="55"
+                                    Command="{Binding  COpenAddCustomer}">
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Add" />
+                                </DockPanel>
+                            </Button>
+                        </StackPanel>
                         <TextBox 
                       Name="CustomerName"
                          materialDesign:HintAssist.Hint="Tên khách hàng" >
@@ -68,7 +81,7 @@
                         </TextBox>
                         <TextBox 
                       Name="Money"
-                         materialDesign:HintAssist.Hint="Số tiền nhận" >
+                         materialDesign:HintAssist.Hint="Tổng nhận" >
                             <TextBox.Text>
                                 <Binding Path="CustomerPaid" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
@@ -81,14 +94,13 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox></TextBox>
                         <StackPanel Margin="0 30 0 0">
                             <StackPanel.Resources>
                                 <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
                                     <Setter Property="Margin" Value="0 10 0 10"></Setter>
                                 </Style>
                             </StackPanel.Resources>
-                            <Button Content="Lập phiếu">
+                            <Button Command="{Binding SaveReceipts}" CommandParameter="{Binding ElementName=st}" Content="Lập phiếu">
                                 <Button.Style >
                                     <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
                                         <Setter Property="IsEnabled" Value="False"/>
@@ -99,6 +111,8 @@
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Money}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
+                                                    <!--<Condition Binding="{Binding Path=(Validation.HasError), ElementName=MoneyReceive}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Change}" Value="False"/>-->
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
@@ -108,7 +122,7 @@
                             </Button>
                         <Button ToolTip="Làm mới thông tin"  
                                 Style="{StaticResource IconTextBtn}"
-                                Command="{Binding }">
+                                Command="{Binding CRefreshForm}">
                             <DockPanel>
                                 <materialDesign:PackIcon Kind="Refresh" />
                                 <TextBlock Text="Làm mới"/>
@@ -126,7 +140,7 @@
                             <TextBlock HorizontalAlignment="Center" Margin="0 24 0 0" Text="QUẢN LÝ PHIẾU THU" Style="{StaticResource MaterialDesignHeadline6TextBlock}"></TextBlock>
                         </Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
-                            <DatePicker Height="30" Width="100" SelectedDate="{Binding SelectedDay}" Margin="0 16 20 0"></DatePicker>
+                            <DatePicker Height="30" Width="100" SelectedDate="{Binding SelectedDate}" Margin="0 16 20 0"></DatePicker>
                             <SharedUC:SearchBar Margin="0 0 20 0"></SharedUC:SearchBar>
                         </StackPanel>
                         <ListView Grid.Row="2" 
@@ -149,6 +163,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                    </Grid>
                     </Grid>
                     <materialDesign:Snackbar 
                     HorizontalAlignment="Stretch"
@@ -184,15 +199,6 @@
                         </Grid.RowDefinitions>
                         <StackPanel Margin="20 0 0 0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
                             <SharedUC:SearchBar></SharedUC:SearchBar>
-                            <Button ToolTip="Làm mới " Margin="20 0 120 0"  
-                            Style="{StaticResource IconTextBtn}"
-                    Name="RefreshBtn"
-                    Command="{Binding CRefreshData}">
-                                <DockPanel>
-                                    <materialDesign:PackIcon Kind="Refresh" />
-                                    <TextBlock Text="Làm mới"/>
-                                </DockPanel>
-                            </Button>
                             <Button ToolTip="Thêm nhân viên"  
                     Name="AddBtn"
                     Width="70"

@@ -27,8 +27,8 @@ namespace BookstoreManager.ViewModels
 
         private SnackbarMessageQueue _myMessageQueue;
 
-        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+        public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
         public ObservableCollection<ViewCustomer> ListCustomer { get => _listCustomer; set { _listCustomer = value; OnPropertyChanged(nameof(ListCustomer)); } }
 
@@ -51,7 +51,7 @@ namespace BookstoreManager.ViewModels
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchCustomer(); });
             CImportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<ListView>((p) => { return true; }, (p) => { ExportFileExcel(); });
-            CRefreshData = new RelayCommand<ListView>((p) => { return true; }, (p) => { RefreshData(); });
+            CRefreshData = new RelayCommand<object>((p) => { return true; }, (p) => { RefreshData(); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds( 2000));
             MyMessageQueue.DiscardDuplicates = true;
@@ -81,7 +81,15 @@ namespace BookstoreManager.ViewModels
                 newCustomer.Address = listKHACHHANG[i].DiaChi;
                 newCustomer.Email = listKHACHHANG[i].Email;
                 newCustomer.PhoneNumber = listKHACHHANG[i].DienThoai;
-                newCustomer.Debt = (decimal)listKHACHHANG[i].TongNo;
+                if(listKHACHHANG[i].TongNo != null)
+                {
+                    newCustomer.Debt = (decimal)listKHACHHANG[i].TongNo;
+
+                }
+                else
+                {
+                    newCustomer.Debt = 0;
+                }
                 list.Add(newCustomer);
             }
             return list;
