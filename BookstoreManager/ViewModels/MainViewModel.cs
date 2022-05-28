@@ -12,6 +12,8 @@ namespace BookstoreManager.ViewModels
     public class MainViewModel : BaseViewModel
     {
         public bool IsLoaded = false;
+        private int _idcustomer { get; set; }
+        public int IdCustomer { get { return _idcustomer; } set { _idcustomer = value; OnPropertyChanged(nameof(IdCustomer)); } }
         public ICommand LoadedWidnowCommand { get; set; }
         public MainViewModel()
         {

@@ -130,61 +130,61 @@
     </Compile>
     <Compile Include="Models\DataProvider.cs" />
     <Compile Include="Models\Db\BAOCAOCONGNO.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\BAOCAOTON.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Db\BookstoreManager.Context.cs">
+    <Compile Include="Models\Db\BookstoreManagerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookstoreManager.Context.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Db\BookstoreManager.cs">
+    <Compile Include="Models\Db\BookstoreManagerModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Db\BookstoreManager.Designer.cs">
+    <Compile Include="Models\Db\BookstoreManagerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookstoreManager.edmx</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\CHITIETHOADON.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\CHITIETPHIEUNHAPSACH.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\CHITIETTACGIA.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\HOADON.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\KHACHHANG.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\PHIEUNHAPSACH.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\PHIEUTHU.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\SACH.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\TACGIA.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\TAIKHOAN.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\THAMSO.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Db\THELOAI.cs">
-      <DependentUpon>BookstoreManager.tt</DependentUpon>
+      <DependentUpon>BookstoreManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DebtReportItem.cs" />
     <Compile Include="Models\InventoryReportChartModel.cs" />
@@ -399,12 +399,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\Db\BookstoreManager.edmx">
+    <EntityDeploy Include="Models\Db\BookstoreManagerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BookstoreManager.Designer.cs</LastGenOutput>
+      <LastGenOutput>BookstoreManagerModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Db\BookstoreManager.edmx.diagram">
-      <DependentUpon>BookstoreManager.edmx</DependentUpon>
+    <None Include="Models\Db\BookstoreManagerModel.edmx.diagram">
+      <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -443,15 +443,15 @@
     <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\Db\BookstoreManager.Context.tt">
+    <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookstoreManager.edmx</DependentUpon>
-      <LastGenOutput>BookstoreManager.Context.cs</LastGenOutput>
+      <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
+      <LastGenOutput>BookstoreManagerModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Db\BookstoreManager.tt">
+    <Content Include="Models\Db\BookstoreManagerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookstoreManager.edmx</DependentUpon>
-      <LastGenOutput>BookstoreManager.cs</LastGenOutput>
+      <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>
+      <LastGenOutput>BookstoreManagerModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

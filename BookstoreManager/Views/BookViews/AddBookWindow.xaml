@@ -69,7 +69,8 @@
                     <ComboBox x:Name="BookCategory" materialDesign:HintAssist.Hint="Thể loại"
                               Margin="20 5 20 5"
                               Width="360"
-                              
+                              IsEditable="True"
+                              IsTextSearchCaseSensitive="False"
                               DisplayMemberPath="TenTheLoai" 
                                         ItemsSource="{Binding ListTHELOAI}" 
                               SelectionChanged="BookCategory_SelectionChanged"
