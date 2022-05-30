@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
-        
+        WindowStartupLocation="CenterScreen"
         Title="AddNewCustomer" Height="340" Width="500">
     <Window.Resources>
         <ResourceDictionary>

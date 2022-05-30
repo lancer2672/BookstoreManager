@@ -33,13 +33,15 @@
                              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                              Visibility="Visible"
                              Grid.ColumnSpan="2">
-            <StackPanel>
+            <StackPanel Width="400">
                 <TextBlock x:Name="txtTitle"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Stretch"
+                            
                            Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                           FontSize="20">Message Title</TextBlock>
+                           FontSize="20"></TextBlock>
             </StackPanel>
+            
         </materialDesign:Card>
         <StackPanel  HorizontalAlignment="Right"
                      Margin="0,5,5,0"
@@ -57,7 +59,11 @@
         </StackPanel>
         <Grid Grid.Row="1"
               Grid.ColumnSpan="2">
-            <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="129*"/>
+                <ColumnDefinition Width="271*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="20,20,20,20" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -66,8 +72,8 @@
 
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="217*"/>
-                        <ColumnDefinition Width="143*"/>
+                        <ColumnDefinition Width="217"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />

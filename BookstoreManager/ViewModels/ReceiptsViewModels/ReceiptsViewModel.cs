@@ -75,29 +75,13 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 KHACHHANG customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.DienThoai == CustomerPhoneNumber && t.HoTen == CustomerName).FirstOrDefault();
                 if (customer == null)
                 {
-                    AddCustomerWindow adWindow = new AddCustomerWindow(new ManageCustomerViewModel());
-                    adWindow.ShowDialog();
+                    bool? dialogResult = new CustomMessageBox("Khách hàng này không tồn tại, bạn có muốn thêm?", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
+                    if (dialogResult == true)
+                    {
+                        AddNewCustomer adWindow = new AddNewCustomer(this);
+                        adWindow.ShowDialog();
+                    }
                     return;
-                    //bool? dialogResult = new CustomMessageBox("Khách hàng này không tồn tại, bạn có muốn thêm?", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
-                    //if (dialogResult == true)
-                    //{
-                    //    customer = new KHACHHANG(CustomerName, CustomerPhoneNumber);
-                    //    DataProvider.Ins.DB.KHACHHANGs.Add(new KHACHHANG(CustomerName, CustomerPhoneNumber));
-                    //    try
-                    //    {
-                    //        DataProvider.Ins.DB.SaveChanges();
-                    //    }
-                    //    catch
-                    //    {
-                    //        MyMessageQueue.Enqueue("Lỗi. Thông tin không hợp lệ");
-                    //        return;
-                    //    }
-                    //    customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.DienThoai == CustomerPhoneNumber && t.HoTen == CustomerName).FirstOrDefault();
-                    //}
-                    //else
-                    //{
-                    //    return;
-                    //}
                 }
                 PHIEUTHU newReceipt = new PHIEUTHU();
                 newReceipt.NgayLap = DateTime.Now;

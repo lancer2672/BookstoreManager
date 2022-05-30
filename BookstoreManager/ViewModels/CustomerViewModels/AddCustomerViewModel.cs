@@ -50,7 +50,14 @@ namespace BookstoreManager.ViewModels.Customers
                 KHACHHANG newCustomer = new KHACHHANG();
                 newCustomer.DiaChi = CustomerAddress;
                 newCustomer.HoTen = CustomerName;
-                newCustomer.Email = CustomerEmail;
+                if (String.IsNullOrEmpty(CustomerEmail) == true)
+                {
+                    newCustomer.Email = "";
+                }
+                else
+                {
+                    newCustomer.Email = CustomerEmail;
+                }
                 newCustomer.DienThoai = CustomerPhoneNumber;
                 newCustomer.TongNo = CustomerDebt;
                 if (IsExist(newCustomer) == false)
