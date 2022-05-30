@@ -6,6 +6,7 @@
                     xmlns:AccountViewModel ="clr-namespace:BookstoreManager.ViewModels.AccountViewModels"
                     xmlns:RegulationViewModel ="clr-namespace:BookstoreManager.ViewModels.RegulationViewModels"
                     xmlns:BookViewModels ="clr-namespace:BookstoreManager.ViewModels.BookViewModels"
+                    xmlns:TypeBookViewModels ="clr-namespace:BookstoreManager.ViewModels.TypeBookViewModels"
                     xmlns:ReceiptsViewModel ="clr-namespace:BookstoreManager.ViewModels.ReceiptsViewModels">
     <ViewModels:MainViewModel x:Key="MainVM"></ViewModels:MainViewModel>
     <ViewModels:ManageCustomerViewModel x:Key="CustomerVM"></ViewModels:ManageCustomerViewModel>
@@ -14,6 +15,8 @@
     <ReporViewModels:DebtReportViewModel x:Key="DebtReportVM"></ReporViewModels:DebtReportViewModel>
     <AccountViewModel:AccountViewModel x:Key="AccountVM"></AccountViewModel:AccountViewModel>
     <BookViewModels:ManageBookViewModel x:Key="BookVM"></BookViewModels:ManageBookViewModel>
+    <TypeBookViewModels:ManageTypeBookViewModel x:Key="TypeBookVM"></TypeBookViewModels:ManageTypeBookViewModel>
     <RegulationViewModel:RegulationViewModel x:Key="RegulationVM"></RegulationViewModel:RegulationViewModel>
     <ReceiptsViewModel:ReceiptsViewModel x:Key="ReceiptsVM"></ReceiptsViewModel:ReceiptsViewModel>
+    <BookViewModels:EntryBookViewModel x:Key="EntryBookVM"></BookViewModels:EntryBookViewModel>
 </ResourceDictionary>

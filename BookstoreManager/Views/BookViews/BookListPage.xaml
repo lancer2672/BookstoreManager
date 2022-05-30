@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookstoreManager.Views.BookViews"
       xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
-      
       xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
@@ -23,7 +22,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Sách"></TextBlock>
@@ -79,8 +78,6 @@
                 <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
                     <ListView x:Name="listbook"
                           ItemContainerStyle="{StaticResource  ListItemContainer}"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible"
-                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                           ItemsSource="{Binding ListBook}"  
                           
                           HorizontalAlignment="Stretch"
@@ -107,7 +104,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
-                    <Setter Property="Margin" Value="20 0 0 0"></Setter>
+                    <Setter Property="Margin" Value="20 5 0 0"></Setter>
                 </Style>
             </StackPanel.Resources>
             <Button ToolTip="Nhập dữ liệu từ file Excel"  Command="{Binding CImportExcel}">

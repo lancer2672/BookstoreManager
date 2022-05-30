@@ -1,0 +1,248 @@
+﻿<Page x:Class="BookstoreManager.Views.BookViews.EntryBookPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookstoreManager.Views.BookViews"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EntryBookPage"
+      DataContext="{StaticResource EntryBookVM}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/ListView.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/Textbox.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource PageTitle}" Text="Lập Phiếu Nhập Sách"></TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2,8*"></ColumnDefinition>
+                <ColumnDefinition Width="5,2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBox" 
+                       BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                            <Setter Property="Width"  Value="250"></Setter>
+                            <Setter Property="Margin" Value="15 0 15 0"></Setter>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="14"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal" Height="48"  >
+                        <ComboBox x:Name="BookName"
+                              materialDesign:HintAssist.Hint="Tên sách"
+                              Width="260" Margin="15,0,5,0" FontSize="14"
+                              IsEditable="True"
+                              ItemsSource="{Binding ListSACH}"
+                              DisplayMemberPath="TenSach"
+                              SelectedItem="{Binding SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <Label Content="Thể loại: " 
+                           Width="64" 
+                           VerticalContentAlignment="Bottom" 
+                           Margin="11,0,0,0"/>
+                        <Label x:Name="Category" 
+                           BorderBrush="Black" 
+                           ClipToBounds="True" 
+                           BorderThickness="0,0,0,0.5" 
+                           Content="{Binding Category, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                           Width="200" 
+                           VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <Label Content="Tác giả: " 
+                           Width="64" 
+                           VerticalContentAlignment="Bottom" 
+                           Margin="11,0,0,0"/>
+                        <Label x:Name="Author" 
+                           BorderBrush="Black" 
+                           ClipToBounds="True" 
+                           BorderThickness="0,0,0,0.5" 
+                           Content="{Binding Author, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                           Width="200" 
+                           VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <Label Content="Số lượng tồn: " 
+                           Width="94" 
+                           VerticalContentAlignment="Bottom" 
+                           Margin="11,0,0,0"/>
+                        <Label x:Name="InventoryNumber" 
+                           BorderBrush="Black" 
+                           ClipToBounds="True" 
+                           BorderThickness="0,0,0,0.5" 
+                           Content="{Binding InventoryNumber, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                           Width="170" 
+                           VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <TextBox  Name="EntryNumber"
+                                materialDesign:HintAssist.Hint="Số lượng nhập" Height="42" Width="260" Margin="15,0,5,0">
+                            <TextBox.Text>
+                                <Binding Path="EntryNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" >
+                                    <Binding.ValidationRules>
+                                        <rules:PositiveNumberRule></rules:PositiveNumberRule>
+                                        <rules:NonEmptyRule></rules:NonEmptyRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <Label Content="Đơn giá: " 
+                           Width="64" 
+                           VerticalContentAlignment="Bottom" 
+                           Margin="11,0,0,0"/>
+                        <Label x:Name="Price" 
+                           BorderBrush="Black" 
+                           ClipToBounds="True" 
+                           BorderThickness="0,0,0,0.5" 
+                           Content="{Binding Price, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                           Width="200" 
+                           VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="48">
+                        <Label Content="Thành tiền: " 
+                           Width="84" 
+                           VerticalContentAlignment="Bottom" 
+                           Margin="11,0,0,0"/>
+                        <Label x:Name="Money" 
+                           BorderBrush="Black" 
+                           ClipToBounds="True" 
+                           BorderThickness="0,0,0,0.5" 
+                           Content="{Binding Money, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                           Width="180" 
+                           VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <materialDesign:Snackbar 
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                MessageQueue="{Binding MyMessageQueue}">
+                    </materialDesign:Snackbar>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource PageTitle}" Text="Danh sách mua sách" HorizontalAlignment="Center"></TextBlock>
+                <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.5,0.5,0.5,0.5">
+                    <Grid Margin="0 2 0 0 ">
+                        <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
+                            <ListView x:Name="listbook"
+                                      ItemContainerStyle="{StaticResource  ListItemContainer}"
+                                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                      ItemsSource="{Binding ListBook}"  
+                                      HorizontalAlignment="Stretch"
+                                      SelectedItem="{Binding SelectedListBook}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"/>
+                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding TitleBook}"/>
+                                        <GridViewColumn Header="Thể loại" DisplayMemberBinding="{Binding Category}"/>
+                                        <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>
+                                        <GridViewColumn Header="Nhà xuất bản" DisplayMemberBinding="{Binding PublishCompany}"/>
+                                        <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding InventoryNumber}"/>
+                                        <GridViewColumn Header="Số lượng nhập" DisplayMemberBinding="{Binding PublishYear}" />
+                                        <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding Price,Converter={StaticResource UIMoneyConverter}}"/>
+                                        <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding Price,Converter={StaticResource UIMoneyConverter}}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+                <StackPanel Grid.Row="2">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                            <Setter Property="Width"  Value="360"></Setter>
+                            <Setter Property="Margin" Value="20 5 20 5"></Setter>
+                        </Style>
+                        <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                            <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                            <Setter Property="MinWidth" Value="80"></Setter>
+                        </Style>
+                        <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                            <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                            <Setter Property="MinWidth" Value="80"></Setter>
+                        </Style>
+
+                    </StackPanel.Resources>
+                    <WrapPanel Orientation="Horizontal"  HorizontalAlignment="Right" Width="520">
+
+                        <Button ToolTip="Thêm "  
+                                Name="AddBtn"
+                                Width="90"
+                                Command="{Binding AddCommand}" Height="38" Margin="10,5,5,5">
+                            <DockPanel>
+                                <materialDesign:PackIcon Kind="Add" />
+                                <TextBlock Text="Thêm"/>
+                            </DockPanel>
+                        </Button>
+                        <Button 
+                                Width="70"
+                                ToolTip="Xóa"
+                                Command="{Binding DeleteCommand}" Margin="10 5 0 5">
+                            <DockPanel>
+                                <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                <TextBlock Text="Xóa"/>
+                            </DockPanel>
+                        </Button>
+
+                        <StackPanel Orientation="Horizontal" Height="42" Margin="90,5,15,5">
+                            <Label Content="Thành tiền: " 
+                                   Width="74" FontSize="14"
+                                   VerticalContentAlignment="Bottom" 
+                                   Margin="16,0,0,0"/>
+                            <Label x:Name="TotalMoney" 
+                                   BorderBrush="Black" 
+                                   ClipToBounds="True" 
+                                   BorderThickness="0,0,0,0.5" 
+                                   Content="{Binding TotalDebt, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                                   Width="120" FontSize="14"
+                                   VerticalContentAlignment="Bottom"/>
+                        </StackPanel>
+                    </WrapPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,5">
+                        <Button 
+                                Width="70"
+                                ToolTip="Lưu"
+                                Command="{Binding SaveCommand}" Margin="10,5,10,5">
+                            <DockPanel>
+                                <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                <TextBlock Text="Lưu"/>
+                            </DockPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -4,11 +4,159 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookstoreManager.Views.BookViews"
+      xmlns:UC2 ="clr-namespace:BookstoreManager.Views.SharedControls"
+      xmlns:SharedUC ="clr-namespace:BookstoreManager.Views.SharedControl"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:rules="clr-namespace:BookstoreManager.Resources.Utils"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="BookTypePage">
-
+      Title="BookTypePage"
+      DataContext="{StaticResource TypeBookVM}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/ListView.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Style/Textbox.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource PageTitle}" Text="Quản Lý Thể Loại"></TextBlock>
+        <Grid Grid.Row="1">
+            <!--<Grid.Resources>
+                <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                    <Setter Property="MinWidth" Value="80"></Setter>
+                </Style>
+                <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                    <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                    <Setter Property="MinWidth" Value="80"></Setter>
+                </Style>
+            </Grid.Resources>-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+                <SharedUC:SearchBar Margin="0 0 30 0" Width="460"></SharedUC:SearchBar>
+            </StackPanel>
+            <Grid Grid.Row="1" Margin="0 2 0 0 ">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Black" BorderThickness="0,0,0.5,0" >
+                    <ScrollViewer Grid.Column="0"  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
+                        <ListView x:Name="listbook"
+                          ItemContainerStyle="{StaticResource ListItemContainer}"
+                          ItemsSource="{Binding ListCategory}"  
+                          HorizontalAlignment="Stretch"
+                          SelectedItem="{Binding SelectedCategory}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"/>
+                                    <GridViewColumn Header="Tên thể loại" DisplayMemberBinding="{Binding TenTheLoai}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <Setter Property="Width"  Value ="Auto"></Setter>
+                                <Setter Property="Margin" Value="20 5 5 5"></Setter>
+                            </Style>
+                            <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                                <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                <Setter Property="MinWidth" Value="80"></Setter>
+                            </Style>
+                            <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                                <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                <Setter Property="MinWidth" Value="80"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock Style="{StaticResource PageTitle}" Text="Chỉnh sửa thể loại" FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"></TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="275" >
+                            <TextBox Name="Category"
+                                 materialDesign:HintAssist.Hint="Tên thể loại" Width="260" HorizontalAlignment="Left">
+                                <TextBox.Text>
+                                    <Binding Path="Category" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                        <Binding.ValidationRules>
+                                            <rules:NameRule></rules:NameRule>
+                                            <rules:NonEmptyRule></rules:NonEmptyRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="400" Height="61" HorizontalAlignment="Left">
+                            <Button ToolTip="Thêm nhân viên"  
+                            Name="AddBtn"
+                            Width="20"
+                            Command="{Binding CAddTypeBook}" Margin="20,0,0,0">
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Add" />
+                                    <TextBlock Text="Thêm"/>
+                                </DockPanel>
+                            </Button>
+                            <Button Width="70"
+                            ToolTip="Chỉnh sửa thông tin"
+                            Command="{Binding CUpdateTypeBook}" >
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                    <TextBlock Text="Sửa"/>
+                                </DockPanel>
+                            </Button>
+                            <Button ToolTip="Xóa khách hàng"
+                            Width="51"
+                            Style="{StaticResource DeleteBtn}"
+                            Command="{Binding CDeleteTypeBook}" >
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="TrashCanOutline" />
+                                    <TextBlock Text="Xóa"/>
+                                </DockPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <materialDesign:Snackbar Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        MessageQueue="{Binding MyMessageQueue}">
+                    </materialDesign:Snackbar>
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,5" >
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
+                        <Setter Property="Margin" Value="10 0 0 0"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <Button ToolTip="Nhập dữ liệu từ file Excel"  Command="{Binding CImportExcel}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="Import" />
+                        <TextBlock Text="Import Excel"/>
+                    </DockPanel>
+                </Button>
+                <Button ToolTip="Xuất file Excel"  Command="{Binding CExportExcel}">
+                    <DockPanel>
+                        <materialDesign:PackIcon Kind="Export" />
+                        <TextBlock Text="Export Excel"/>
+                    </DockPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

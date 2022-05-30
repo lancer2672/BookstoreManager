@@ -39,6 +39,9 @@ namespace BookstoreManager.Views
                 case "NavBookType":
                     Main.Content = Pages.BookTypePage;
                     break;
+                case "NavAddBook":
+                    Main.Content = Pages.EntryBookPage;
+                    break;
                 case "NavDebtReport":
                     Main.Content = Pages.DebtReportPage;
                     break;

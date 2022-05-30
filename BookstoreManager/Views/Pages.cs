@@ -24,6 +24,7 @@ namespace BookstoreManager.Views
 
         public static Page RegulationPage { get => ListPages[5]; }
         public static Page AccountPage { get => ListPages[6]; }
+        public static Page EntryBookPage { get => ListPages[7]; }
 
         static Pages()
         {
@@ -34,6 +35,7 @@ namespace BookstoreManager.Views
             ListPages.Add(new InventoryReportPage());
             ListPages.Add(new RegulationPage());
             ListPages.Add(new AccountMain());
+            ListPages.Add(new EntryBookPage());
         }
     }
 }

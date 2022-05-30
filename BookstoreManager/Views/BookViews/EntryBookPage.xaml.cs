@@ -1,6 +1,4 @@
-﻿using BookstoreManager.ViewModels;
-using BookstoreManager.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BookstoreManager.Models.Db;
 
-namespace BookstoreManager
+namespace BookstoreManager.Views.BookViews
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EntryBookPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EntryBookPage : Page
     {
-        public MainWindow()
+        public EntryBookPage()
         {
             InitializeComponent();
         }
