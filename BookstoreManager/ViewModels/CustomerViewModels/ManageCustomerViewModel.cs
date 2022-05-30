@@ -120,7 +120,7 @@ namespace BookstoreManager.ViewModels
                 System.Collections.IList list = lv.SelectedItems;
                 for (int i = 0; i < list.Count; i++)
                 {
-                    int id = (list[i] as ViewCustomer).Id;
+                    long id = (list[i] as ViewCustomer).Id;
                     KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).First<KHACHHANG>();
                     if (deletedCustomer == null)
                     {

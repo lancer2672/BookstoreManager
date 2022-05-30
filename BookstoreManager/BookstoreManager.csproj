@@ -442,6 +442,7 @@
     <Resource Include="Resources\Imgs\rules.png" />
     <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

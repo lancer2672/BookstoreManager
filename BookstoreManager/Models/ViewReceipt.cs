@@ -9,6 +9,7 @@ namespace BookstoreManager.Models
     public class ViewReceipt
     {
         public int ReceiptId { get; set; }
+        public long CustomerID { get; set; }
         public DateTime Date { get; set; }
         public decimal CustomerPaid { get; set; }
         public string CustomerPhoneNumber { get; set; }

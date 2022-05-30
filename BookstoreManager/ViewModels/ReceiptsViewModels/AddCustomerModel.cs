@@ -15,7 +15,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
     {
         private string _customerName;
         private string _customerAddress;
-        private string _customerId;
+        private long _customerId;
         private string _customerEmail;
         private string _customerPhoneNumber;
         private decimal _customerDebt;
@@ -23,7 +23,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
 
         public string CustomerName { get { return _customerName; } set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
-        public string CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
+        public long CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
         public string CustomerEmail { get { return _customerEmail; } set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
         public decimal CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
         public string CustomerPhoneNumber { get { return _customerPhoneNumber; } set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber)); } }
@@ -97,7 +97,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             for (int i = 0; i < CustomerList.Count; i++)
             {
-                if (NewCustomer.HoTen.ToLower() == CustomerList[i].HoTen.ToLower() && NewCustomer.DienThoai == CustomerList[i].DienThoai)
+                if (NewCustomer.MaKhachHang == CustomerId)
                 {
                     return true;
                 }

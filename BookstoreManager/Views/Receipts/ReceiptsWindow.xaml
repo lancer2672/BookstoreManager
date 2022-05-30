@@ -55,7 +55,19 @@
                                 </DockPanel>
                             </Button>
                         </StackPanel>
-                        <TextBox 
+                            <TextBox 
+                      Name="CustomerID"
+                         materialDesign:HintAssist.Hint="CMND" >
+                                <TextBox.Text>
+                                    <Binding Path="CustomerID" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                                        <Binding.ValidationRules>
+                                            <rules:NonEmptyRule></rules:NonEmptyRule>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBox 
                       Name="CustomerName"
                          materialDesign:HintAssist.Hint="Tên khách hàng" >
                             <TextBox.Text>
@@ -111,6 +123,7 @@
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Money}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerID}" Value="False"/>
                                                     <!--<Condition Binding="{Binding Path=(Validation.HasError), ElementName=MoneyReceive}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Change}" Value="False"/>-->
                                                 </MultiDataTrigger.Conditions>
@@ -157,6 +170,7 @@
                                 <GridView>
                                     <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
                                     <GridViewColumn Header="Thời Gian" DisplayMemberBinding="{Binding Date, StringFormat='HH:mm:ss'}" Width="Auto"  />
+                                    <GridViewColumn Header="CMND" DisplayMemberBinding="{Binding CustomerID}"/>
                                     <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding CustomerName}"/>
                                     <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding CustomerPhoneNumber}"/>
                                     <GridViewColumn Header="Số tiền trả" DisplayMemberBinding="{Binding  CustomerPaid,Converter={StaticResource UIMoneyConverter}}"/>

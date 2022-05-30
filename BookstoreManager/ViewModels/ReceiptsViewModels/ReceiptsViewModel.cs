@@ -20,6 +20,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
     public class ReceiptsViewModel : BaseViewModel
     {
         private string _customerName;
+        private long _customerID;
         private string _customerPhoneNumber;
         private decimal _customerPaid;
         //private decimal _customerChange;
@@ -30,6 +31,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         private ObservableCollection<ViewReceipt> _listReceipt;
 
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
+        public long CustomerID { get => _customerID; set { _customerID = value; OnPropertyChanged(nameof(CustomerID)); } }
         public string CustomerName { get => _customerName; set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
         public string CustomerPhoneNumber { get => _customerPhoneNumber; set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber)); } }
         public DateTime Date { get => _date; set { _date = value; OnPropertyChanged(nameof(Date)); } }
@@ -72,7 +74,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         {
             if (Validator.IsValid(p))
             {
-                KHACHHANG customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.DienThoai == CustomerPhoneNumber && t.HoTen == CustomerName).FirstOrDefault();
+                KHACHHANG customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == CustomerID).FirstOrDefault();
                 if (customer == null)
                 {
                     bool? dialogResult = new CustomMessageBox("Khách hàng này không tồn tại, bạn có muốn thêm?", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
@@ -85,6 +87,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 }
                 PHIEUTHU newReceipt = new PHIEUTHU();
                 newReceipt.NgayLap = DateTime.Now;
+                newReceipt.MaKhachHang = CustomerID;
                 newReceipt.MaKhachHang = customer.MaKhachHang;
                 newReceipt.SoTienThu = CustomerPaid;
                 if ((customer.TongNo - CustomerPaid) >= 0)
@@ -120,7 +123,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         public bool CheckExist(KHACHHANG customer)
         {
             List<KHACHHANG> listCustomer = DataProvider.Ins.DB.KHACHHANGs.ToList();
-            KHACHHANG check = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.DienThoai == customer.DienThoai && t.HoTen == customer.HoTen).FirstOrDefault();
+            KHACHHANG check = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == CustomerID).FirstOrDefault();
             if (check != null)
             {
                 return true;

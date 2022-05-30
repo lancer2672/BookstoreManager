@@ -8,7 +8,7 @@ namespace BookstoreManager.Models
 {
     public class DebtReportItem
     {
-        public int CustomerId { get; set; }
+        public long CustomerId { get; set; }
         public int ReportId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhone { set; get; }

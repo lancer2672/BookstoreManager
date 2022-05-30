@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddNewCustomer" Height="340" Width="500">
+        Title="AddNewCustomer" Height="380" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,6 +28,21 @@
             </StackPanel.Resources>
             <TextBlock Text="THÔNG TIN KHÁCH HÀNG" Style="{StaticResource PageTitle}" HorizontalAlignment="Center"></TextBlock>
             <StackPanel Orientation="Horizontal">
+                <TextBox  
+                      Name="CustomerID"
+                    materialDesign:HintAssist.Hint="CMND"
+                         >
+                    <TextBox.Text>
+                        <Binding Path="CustomerID" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:NonEmptyRule></rules:NonEmptyRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+            <StackPanel>
                 <TextBox  
                       Name="CustomerName"
                     materialDesign:HintAssist.Hint="Tên khách hàng"
@@ -109,6 +124,7 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerID}" Value="False"/>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerEmail}" Value="False"/>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerDebt}" Value="False"/>
