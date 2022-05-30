@@ -92,8 +92,9 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}"></GridViewColumn>
-                    <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                        <GridViewColumn Header="CMND" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
                     <GridViewColumn Header="Email" Width="Auto"  >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

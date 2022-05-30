@@ -46,6 +46,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         public ICommand CRefreshData { get; set; }
         public ICommand CRefreshForm { get; set; }
         public ICommand CSearch { get; set; }
+        public ICommand CSearchInfo { get; set; }
         public ICommand COpenAddCustomer { get; set; }
         public ReceiptsViewModel()
         {
@@ -58,6 +59,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             CSearch = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
             SaveReceipts = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { CreateReceipt(p) ; });
             COpenAddCustomer = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddCustomerWindow(); });
+            CSearchInfo = new RelayCommand<object>((p) => { return true; }, (p) => { SearchInfoCustomer(); });
 
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
@@ -70,13 +72,22 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             AddNewCustomer adWindow = new AddNewCustomer(this);
             adWindow.ShowDialog();
         }
+        public void SearchInfoCustomer()
+        {
+            if(CheckExistById(CustomerID) == true)
+            {
+                KHACHHANG customer  = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang.Equals(CustomerID)).FirstOrDefault();
+                CustomerName = customer.HoTen;
+                CustomerPhoneNumber = customer.DienThoai;
+            }
+        }
         public void CreateReceipt(StackPanel p)
         {
             if (Validator.IsValid(p))
             {
-                KHACHHANG customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == CustomerID).FirstOrDefault();
-                if (customer == null)
-                {
+
+                if(CheckExistById(CustomerID) == false)
+                {    
                     bool? dialogResult = new CustomMessageBox("Khách hàng này không tồn tại, bạn có muốn thêm?", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
                     if (dialogResult == true)
                     {
@@ -88,8 +99,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 PHIEUTHU newReceipt = new PHIEUTHU();
                 newReceipt.NgayLap = DateTime.Now;
                 newReceipt.MaKhachHang = CustomerID;
-                newReceipt.MaKhachHang = customer.MaKhachHang;
                 newReceipt.SoTienThu = CustomerPaid;
+                KHACHHANG customer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == CustomerID).FirstOrDefault();
                 if ((customer.TongNo - CustomerPaid) >= 0)
                 {
 
@@ -129,6 +140,15 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 return true;
             }
             return false;
+        }
+        public bool CheckExistById(long Id)
+        {
+            KHACHHANG check = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == Id).FirstOrDefault();
+            if (check == null)
+            {
+                return false;
+            }
+            return true;
         }
         public void Search()
         {

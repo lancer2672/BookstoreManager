@@ -33,10 +33,11 @@
                     materialDesign:HintAssist.Hint="CMND"
                          >
                     <TextBox.Text>
-                        <Binding Path="CustomerID" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                        <Binding Path="CustomerId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                             <Binding.ValidationRules>
                                 <rules:NonEmptyRule></rules:NonEmptyRule>
+                                <rules:PositiveNumberRule></rules:PositiveNumberRule>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

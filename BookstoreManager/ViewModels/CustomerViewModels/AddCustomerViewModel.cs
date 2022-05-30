@@ -106,7 +106,7 @@ namespace BookstoreManager.ViewModels.Customers
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             for(int i=0;i< CustomerList.Count;i++)
             {
-                if (NewCustomer.HoTen.ToLower() == CustomerList[i].HoTen.ToLower() && NewCustomer.DienThoai == CustomerList[i].DienThoai)
+                if (CustomerList[i].MaKhachHang == NewCustomer.MaKhachHang)
                 {
                     return true;
                 }
