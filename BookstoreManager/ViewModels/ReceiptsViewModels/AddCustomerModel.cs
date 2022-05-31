@@ -97,7 +97,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
             for (int i = 0; i < CustomerList.Count; i++)
             {
-                if (NewCustomer.MaKhachHang == CustomerId)
+                if (CustomerList[i].MaKhachHang == NewCustomer.MaKhachHang)
                 {
                     return true;
                 }
