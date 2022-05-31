@@ -1,21 +1,17 @@
 ﻿using BookstoreManager.Models;
 using BookstoreManager.Models.Db;
-using BookstoreManager.Resources;
 using BookstoreManager.Resources.Utils;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-
-namespace BookstoreManager.ViewModels.Customers
+namespace BookstoreManager.ViewModels.ReceiptsViewModels
 {
-    public class AddCustomerViewModel:BaseViewModel
+    public class AddCustomerModel : BaseViewModel
     {
         private string _customerName;
         private string _customerAddress;
@@ -23,32 +19,31 @@ namespace BookstoreManager.ViewModels.Customers
         private string _customerEmail;
         private string _customerPhoneNumber;
         private decimal _customerDebt;
-        private ManageCustomerViewModel _customerViewModel;
-  
-        public string CustomerName {  get {   return _customerName;  }  set { _customerName = value;  OnPropertyChanged(nameof(CustomerName)); }  }
+        private ReceiptsViewModel _receiptViewModel;
+
+        public string CustomerName { get { return _customerName; } set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
         public string CustomerAddress { get { return _customerAddress; } set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
         public long CustomerId { get { return _customerId; } set { _customerId = value; OnPropertyChanged(nameof(CustomerId)); } }
         public string CustomerEmail { get { return _customerEmail; } set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
         public decimal CustomerDebt { get { return _customerDebt; } set { _customerDebt = value; OnPropertyChanged(nameof(CustomerDebt)); } }
-        public string CustomerPhoneNumber {  get { return _customerPhoneNumber; }  set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber));  } }
+        public string CustomerPhoneNumber { get { return _customerPhoneNumber; } set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber)); } }
 
         public ICommand CAddCustomer { get; set; }
 
-      
-        public AddCustomerViewModel(ManageCustomerViewModel CustomerVM)
+
+        public AddCustomerModel(ReceiptsViewModel CustomerVM)
         {
 
-            _customerViewModel = CustomerVM;
+            _receiptViewModel = CustomerVM;
             CAddCustomer = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddCustomer(p); });
 
         }
         public void AddCustomer(StackPanel p)
-        {        
+        {
             if (Validator.IsValid(p))
             {
 
                 KHACHHANG newCustomer = new KHACHHANG();
-                newCustomer.MaKhachHang = CustomerId;
                 newCustomer.DiaChi = CustomerAddress;
                 newCustomer.HoTen = CustomerName;
                 if (String.IsNullOrEmpty(CustomerEmail) == true)
@@ -70,31 +65,27 @@ namespace BookstoreManager.ViewModels.Customers
                     }
                     catch
                     {
-                        _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+                        _receiptViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
                         return;
                     }
-                    _customerViewModel.LoadListCustomer();
+                    _receiptViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
+                    _receiptViewModel.CustomerName = CustomerName;
+                    _receiptViewModel.CustomerPhoneNumber = CustomerPhoneNumber;
                     RefreshAddCustomerForm();
-                    _customerViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
                 }
                 else
                 {
-                    bool? dialogResult = new CustomMessageBox("Khách hàng đã tồn tại. \nBạn có muốn thêm khách hàng khác", MessageType.Info,"Thông Báo", MessageButtons.OkCancel).ShowDialog();
-                    if (dialogResult == true)
-                    {
-                        AddCustomerWindow addCustomerWindow = new AddCustomerWindow(_customerViewModel);
-                        addCustomerWindow.ShowDialog();
-                    }
+                    _receiptViewModel.MyMessageQueue.Enqueue("Lỗi!. Khách hàng đã tồn tại");
+
                 }
             }
             else
             {
-                _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
+                _receiptViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin khách hàng không hợp lệ");
             }
         }
         public void RefreshAddCustomerForm()
         {
-            CustomerId = 0;
             CustomerName = "";
             CustomerAddress = "";
             CustomerEmail = "";
@@ -104,9 +95,9 @@ namespace BookstoreManager.ViewModels.Customers
         public bool IsExist(KHACHHANG NewCustomer)
         {
             List<KHACHHANG> CustomerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
-            for(int i=0;i< CustomerList.Count;i++)
+            for (int i = 0; i < CustomerList.Count; i++)
             {
-                if (CustomerList[i].MaKhachHang == NewCustomer.MaKhachHang)
+                if (NewCustomer.MaKhachHang == CustomerId)
                 {
                     return true;
                 }
