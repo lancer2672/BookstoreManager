@@ -122,7 +122,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 }
                 else
                 {
-                    MyMessageQueue.Enqueue("Lỗi!. Số tiền thu phải bé hơn hoặc bằng số tiền nợ");
+                    string customerDebt = MoneyConverter.convertMoney(customer.TongNo.ToString());
+                    MyMessageQueue.Enqueue("Lỗi!. Số tiền thu phải bé hơn hoặc bằng số tiền nợ" + "< hoặc = " + customerDebt);
 
                 }
             }
