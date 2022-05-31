@@ -20,7 +20,7 @@
                     <Frame Padding="10 10" Grid.Row="1" x:Name="Main" FontSize="20" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
                 </Grid>
             </syncfusion:SfNavigationDrawer.ContentView>
-
+  
             <syncfusion:NavigationItem Height="40" Header="{Binding Name}" x:Name="NavAccount">
                 <syncfusion:NavigationItem.Icon>
                     <Ellipse  Width="30" >

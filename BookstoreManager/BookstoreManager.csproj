@@ -17,6 +17,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -125,6 +140,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LoginUC.xaml.cs">
+      <DependentUpon>LoginUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -251,12 +269,18 @@
     <Compile Include="Views\Customers\UpdateCustomerWindow.xaml.cs">
       <DependentUpon>UpdateCustomerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Invoice\InvoiceUserControl.xaml.cs">
+      <DependentUpon>InvoiceUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages.cs" />
     <Compile Include="Views\Receipts\AddNewCustomer.xaml.cs">
       <DependentUpon>AddNewCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Receipts\ReceiptsWindow.xaml.cs">
       <DependentUpon>ReceiptsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Receipts\ReceiptUserControl.xaml.cs">
+      <DependentUpon>ReceiptUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Regulation\RegulationPage.xaml.cs">
       <DependentUpon>RegulationPage.xaml</DependentUpon>
@@ -273,6 +297,10 @@
     <Compile Include="Views\SharedControls\SearchBarCombobox.xaml.cs">
       <DependentUpon>SearchBarCombobox.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoginUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -349,11 +377,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Invoice\InvoiceUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Receipts\AddNewCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Receipts\ReceiptsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Receipts\ReceiptUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -451,7 +487,18 @@
     <Resource Include="Resources\Imgs\rules.png" />
     <Resource Include="Resources\Imgs\Avatar.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

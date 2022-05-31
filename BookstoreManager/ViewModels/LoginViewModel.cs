@@ -1,4 +1,6 @@
 ﻿using BookstoreManager.Models;
+using BookstoreManager.Resources;
+using BookstoreManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,11 +46,13 @@ namespace BookstoreManager.ViewModels
             if (accCount > 0)
             {
                 IsLogin = true;
+                AdminWindow adminWindow = new AdminWindow();
+                adminWindow.ShowDialog();
 
             }
             else
             {
-                MessageBox.Show("Sai tài khoản hoặc mật khẩu", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                bool? result = new CustomMessageBox("Sai tài khoản hoặc mật khẩu", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
             }           
         }
     }

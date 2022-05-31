@@ -68,12 +68,7 @@
                             IsChecked="True"
                             Content="Danh sách" >
                         </RadioButton>
-                        <RadioButton
-                            x:Name="ChartRadBtn"
-                            Style="{StaticResource MaterialDesignTabRadioButton}"
-                            GroupName="RevenueReportDisplayMode"
-                            IsChecked="False"
-                            Content="Biểu đồ" />
+                      
 
                     </StackPanel>
                     <Border>
@@ -107,48 +102,7 @@
                                     </Style>
                                 </Grid.Style>
                             </Grid>
-                            <Grid>
-                                <chart:SfChart Visibility="{Binding IsVisible}" 
-                                               Palette="Metro" 
-                                               Grid.Row="1" FontSize="20" 
-                                               Header="BIỂU ĐỒ THỂ HIỆN SỐ TIỀN NỢ CỦA KHÁCH HÀNG" HorizontalAlignment="Left" 
-                                               VerticalAlignment="Bottom" >
-                                    <chart:SfChart.PrimaryAxis>
-                                        <chart:CategoryAxis  FontSize="14"></chart:CategoryAxis>
-                                    </chart:SfChart.PrimaryAxis>
-                                    <chart:SfChart.SecondaryAxis>
-                                        <chart:NumericalAxis Header="Đơn vị( VNĐ )" FontSize="11"></chart:NumericalAxis>
-                                    </chart:SfChart.SecondaryAxis>
-                                    <chart:SfChart.Legend>
-
-                                        <chart:ChartLegend  IconHeight="10" IconWidth="10" 
-                                        Margin="0,0,0,5"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"                                    
-                                        DockPosition="Top"
-                                        IconVisibility="Visible" CornerRadius="5" 
-                                        ItemMargin="10">
-                                        </chart:ChartLegend>
-
-                                    </chart:SfChart.Legend>
-                                    <chart:ColumnSeries ItemsSource="{Binding DataChart}" 
-                                        Label="Sách"
-                                        XBindingPath="Month"
-                                        YBindingPath= "Quantity"
-                                        >
-
-                                    </chart:ColumnSeries>
-                                </chart:SfChart>
-                                <Grid.Style>
-                                    <Style TargetType="Grid">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=ChartRadBtn}" Value="False">
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
-                            </Grid>
+                          
                         </Grid>
                     </Border>
                 </DockPanel>

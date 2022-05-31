@@ -7,7 +7,7 @@
         xmlns:SharedUC="clr-namespace:BookstoreManager.Views.SharedControl"
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         xmlns:local="clr-namespace:BookstoreManager.Views.Receipts"
-       
+        xmlns:receipt ="clr-namespace:BookstoreManager.Views.Receipts"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ReceiptsVM}"
@@ -23,7 +23,10 @@
     <Grid>
 
         <TabControl>
-            <TabItem DataContext="{StaticResource ReceiptsVM}" Header="Phiếu thu">
+            <TabItem Header="Phiếu Thu">
+                <receipt:ReceiptWindow Margin="0,34,0,52" Width="962"></receipt:ReceiptWindow>
+            </TabItem>
+            <!--<TabItem DataContext="{StaticResource ReceiptsVM}" Header="Phiếu thu">
                 <Grid>
                     <Grid>
                         
@@ -138,8 +141,7 @@
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Money}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
                                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerID}" Value="False"/>
-                                                    <!--<Condition Binding="{Binding Path=(Validation.HasError), ElementName=MoneyReceive}" Value="False"/>
-                                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Change}" Value="False"/>-->
+                                                    
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </MultiDataTrigger>
@@ -199,7 +201,7 @@
                     MessageQueue="{Binding MyMessageQueue}">
                     </materialDesign:Snackbar>
                 </Grid>
-            </TabItem>
+            </TabItem>-->
             <TabItem DataContext="{StaticResource CustomerVM}" Header="Quản lý khách hàng">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -231,33 +233,33 @@
                     Name="AddBtn"
                     Width="70"
                     Command="{Binding COpenAddCustomerWindow}">
-                                    <DockPanel>
-                                        <materialDesign:PackIcon Kind="Add" />
-                                        <TextBlock Text="Thêm"/>
-                                    </DockPanel>
-                                </Button>
-                                <Button 
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="Add" />
+                                    <TextBlock Text="Thêm"/>
+                                </DockPanel>
+                            </Button>
+                            <Button 
                      Width="70"
                     ToolTip="Chỉnh sửa thông tin"
                     Command="{Binding COpenUpdateCustomerWindow}" 
                     CommandParameter="{Binding ElementName=lv}">
-                                    <DockPanel>
-                                        <materialDesign:PackIcon Kind="SquareEditOutline" />
-                                        <TextBlock Text="Sửa"/>
-                                    </DockPanel>
-                                </Button>
-                                <Button 
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                    <TextBlock Text="Sửa"/>
+                                </DockPanel>
+                            </Button>
+                            <Button 
                     ToolTip="Xóa khách hàng"
                     Width="70"
                     Style="{StaticResource DeleteBtn}"
                     Command="{Binding CDeleteCustomer}" 
                     CommandParameter="{Binding ElementName=lv}">
-                                    <DockPanel>
-                                        <materialDesign:PackIcon Kind="TrashCanOutline" />
-                                        <TextBlock Text="Xóa"/>
-                                    </DockPanel>
-                                </Button>
-                            </StackPanel>
+                                <DockPanel>
+                                    <materialDesign:PackIcon Kind="TrashCanOutline" />
+                                    <TextBlock Text="Xóa"/>
+                                </DockPanel>
+                            </Button>
+                        </StackPanel>
                         <ListView Grid.Row="1" 
                   x:Name="lv"
                  
@@ -314,7 +316,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-     
+
         </TabControl>
     </Grid>
 </Window>
