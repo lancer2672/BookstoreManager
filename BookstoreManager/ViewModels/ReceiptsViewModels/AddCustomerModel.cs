@@ -42,8 +42,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         {
             if (Validator.IsValid(p))
             {
-
                 KHACHHANG newCustomer = new KHACHHANG();
+                newCustomer.MaKhachHang = CustomerId;
                 newCustomer.DiaChi = CustomerAddress;
                 newCustomer.HoTen = CustomerName;
                 if (String.IsNullOrEmpty(CustomerEmail) == true)
@@ -55,7 +55,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                     newCustomer.Email = CustomerEmail;
                 }
                 newCustomer.DienThoai = CustomerPhoneNumber;
-                newCustomer.TongNo = CustomerDebt;
+                newCustomer.TongNo = 0;
                 if (IsExist(newCustomer) == false)
                 {
                     DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
@@ -72,6 +72,13 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                     _receiptViewModel.CustomerName = CustomerName;
                     _receiptViewModel.CustomerPhoneNumber = CustomerPhoneNumber;
                     RefreshAddCustomerForm();
+                    BAOCAOCONGNO newrp = new BAOCAOCONGNO();
+                    newrp.MaKhachHang = newCustomer.MaKhachHang;
+                    newrp.Thang = DateTime.Now.Month;
+                    newrp.Nam = DateTime.Now.Year;
+                    newrp.TonDau = newCustomer.TongNo;
+                    DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
+                    DataProvider.Ins.DB.SaveChanges();
                 }
                 else
                 {

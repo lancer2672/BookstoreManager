@@ -76,7 +76,7 @@ namespace BookstoreManager.ViewModels
             ListKHACHHANG = DataProvider.Ins.DB.KHACHHANGs.ToList();
             DateTime today = DateTime.Now;
             Date = today.ToString("dd/MM/yyyy");
-            
+
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 
@@ -84,9 +84,120 @@ namespace BookstoreManager.ViewModels
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddBook(); });
             DeleteCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DeleteBook(); });
             CreateBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CreateBillBook(); });
+
+            CheckReportDay();
         }
-        public void LoadWindow(Window p)
+        void CheckReportDay()
         {
+            DateTime now = DateTime.Now;
+            int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
+            if (DateTime.Now.Day == DateTime.Now.Day)
+            {
+                CreateInvReport(now);
+                CreateDebtReport(now);
+            }
+            else
+            {
+                int day = daysInMonth - DateTime.Now.Day;
+                MyMessageQueue.Enqueue("Còn " + day.ToString() + " ngày nữa sẽ tới ngày tạo báo cáo");
+            }
+        }
+        void CreateDebtReport(DateTime now)
+        {
+            List<KHACHHANG> customerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
+            for (int i = 0; i < customerList.Count; i++)
+            {
+                long customerId = customerList[i].MaKhachHang;
+                BAOCAOCONGNO rp = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.MaKhachHang == customerId && t.Thang == now.Month && t.Nam == now.Year).FirstOrDefault();
+
+                if (rp != null)
+                {
+                    rp.PhatSinh = customerList[i].TongNo - rp.TonDau;
+                    rp.TonCuoi = customerList[i].TongNo;
+                }
+                else
+                {
+                    rp = new BAOCAOCONGNO();
+                    rp.Thang = DateTime.Now.Month;
+                    rp.Nam = DateTime.Now.Year;
+                    rp.MaKhachHang = customerList[i].MaKhachHang;
+                    rp.TonDau = GetFirstQuanityDebtRp(customerId);
+                    rp.TonCuoi = customerList[i].TongNo;
+                    rp.PhatSinh = customerList[i].TongNo - rp.TonDau;
+                }
+                DataProvider.Ins.DB.BAOCAOCONGNOes.Add(rp);
+            }
+            try
+            {
+                DataProvider.Ins.DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        void CreateInvReport(DateTime now)
+        {
+           
+            List<SACH> bookList = DataProvider.Ins.DB.SACHes.ToList();
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                int bookId = bookList[i].MaSach;
+                BAOCAOTON rp = DataProvider.Ins.DB.BAOCAOTONs.Where(t => t.MaSach == bookId && t.Thang == now.Month && t.Nam == now.Year).FirstOrDefault();
+                if (rp != null)
+                {
+                    rp.PhatSinh = bookList[i].SoLuongTon - rp.TonDau;
+                    rp.TonCuoi = bookList[i].SoLuongTon;
+                }
+                else
+                {
+                    rp = new BAOCAOTON();
+                    rp.Thang = DateTime.Now.Month;
+                    rp.Nam = DateTime.Now.Year;
+                    rp.MaSach = bookList[i].MaSach;
+                    rp.TonDau = GetFirstQuanityInvRp(bookList[i].MaSach);
+                    rp.TonCuoi = bookList[i].SoLuongTon;
+                    rp.PhatSinh = bookList[i].SoLuongTon - rp.TonDau;
+                }
+                DataProvider.Ins.DB.BAOCAOTONs.Add(rp);
+            }
+            try
+            {
+                DataProvider.Ins.DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        int GetFirstQuanityDebtRp(long customerId)
+        {
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            var first = month.AddMonths(-1);
+            //var last = month.AddDays(-1);
+            BAOCAOTON report = DataProvider.Ins.DB.BAOCAOTONs.Where(t => t.MaSach == customerId && t.Thang == first.Month && t.Nam == first.Year).FirstOrDefault();
+            if (report == null)
+            {
+                return 0;
+            }
+            return (int)report.TonCuoi;
+        }
+        int GetFirstQuanityInvRp(int bookId)
+        {
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            var first = month.AddMonths(-1);
+            //var last = month.AddDays(-1);
+            BAOCAOTON report = DataProvider.Ins.DB.BAOCAOTONs.Where(t => t.MaSach == bookId && t.Thang == first.Month && t.Nam == first.Year).FirstOrDefault();
+            if (report == null)
+            {
+                return 0;
+            }
+            return (int)report.TonCuoi;
+        }
+            public void LoadWindow(Window p)
+            {
             //IsLoaded = true;
             //p.Hide();
             //AdminWindow admWindow = new AdminWindow();
@@ -133,7 +244,7 @@ namespace BookstoreManager.ViewModels
         public void LoadInfor()
         {
             int i = CheckCustomer();
-            
+
 
             //for (i = 0; i < ListKHACHHANG.Count; i++)
             //{
@@ -202,10 +313,10 @@ namespace BookstoreManager.ViewModels
             }
             return author;
         }
-        public int CheckExist(ObservableCollection<ViewBook> listbook, int masach )
+        public int CheckExist(ObservableCollection<ViewBook> listbook, int masach)
         {
             int check = -1;
-            for (int i = 0; i < listbook.Count; i++) 
+            for (int i = 0; i < listbook.Count; i++)
             {
                 if (masach == listbook[i].Id)
                 {
@@ -221,7 +332,7 @@ namespace BookstoreManager.ViewModels
             foreach (ViewBook item in ListBook)
                 NewList.Add(item);
             ListBook.Clear();
-            foreach(ViewBook item in NewList)
+            foreach (ViewBook item in NewList)
                 ListBook.Add(item);
         }
         public void LoadMoneyRemained()
@@ -230,7 +341,7 @@ namespace BookstoreManager.ViewModels
         }
         public void AddBook()
         {
-            if (NumberBook == 0) 
+            if (NumberBook == 0)
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng chọn số lượng sách!");
@@ -276,7 +387,7 @@ namespace BookstoreManager.ViewModels
         }
         public void DeleteBook()
         {
-            if(SelectedListBook != null)
+            if (SelectedListBook != null)
             {
                 int location = CheckExist(ListBook, SelectedListBook.Id);
                 ListBook.Remove(ListBook[location]);
@@ -291,7 +402,7 @@ namespace BookstoreManager.ViewModels
         }
         public void CreateBillBook()
         {
-            if (IdCustomer == 0 || MoneyReceived == 0 || NameCustomer == null || PhoneNumber == null || Email == null || Address == null) 
+            if (IdCustomer == 0 || MoneyReceived == 0 || NameCustomer == null || PhoneNumber == null || Email == null || Address == null)
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng điền đủ thông tin khách hàng!");

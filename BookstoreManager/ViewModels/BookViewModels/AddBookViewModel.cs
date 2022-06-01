@@ -103,7 +103,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     newBook.SoLuongTon = BookInventory;
                     newBook.GiaNhap = BookPrice;
                     DataProvider.Ins.DB.SACHes.Add(newBook);
-
                     try
                     {
                         DataProvider.Ins.DB.SaveChanges();
@@ -116,6 +115,16 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     _manageBookViewModel.LoadListBook();
                     ClearAddBookWindow();
                     _manageBookViewModel.MyMessageQueue.Enqueue("Thêm sách thành công!");
+                    BAOCAOTON report = new BAOCAOTON();
+                    DateTime now = DateTime.Now;
+                    report.Thang = now.Month;
+                    report.Nam = now.Year;
+                    report.MaSach = newBook.MaSach;
+                    report.TonDau = newBook.SoLuongTon;
+                    report.PhatSinh = 0;
+                    report.TonCuoi = 0;
+                    DataProvider.Ins.DB.BAOCAOTONs.Add(report);
+                    DataProvider.Ins.DB.SaveChanges();
                 }
                 else
                 {

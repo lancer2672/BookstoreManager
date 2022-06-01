@@ -139,10 +139,14 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                         debtItem.CustomerName = CustomerList[i].HoTen;
                         debtItem.CustomerPhone = CustomerList[i].DienThoai;
                         debtItem.Month = (int)item.Thang;
-                        debtItem.Year = (int)item.Nam;
+                        debtItem.Year = (int)item.Nam;  
                         debtItem.FirstQuantity = (int)item.TonDau;
-                        debtItem.IncurredQuantity = (int)item.PhatSinh;
-                        debtItem.EndQuantity = (int)item.TonCuoi;
+                        if (item.PhatSinh == null)
+                            debtItem.IncurredQuantity = 0;
+                        else debtItem.IncurredQuantity = (int)item.PhatSinh;
+                        if (item.TonCuoi == null)
+                            debtItem.EndQuantity = 0;
+                        else debtItem.EndQuantity = (int)item.TonCuoi;
                         Data.Add(debtItem);
                     }
                 }

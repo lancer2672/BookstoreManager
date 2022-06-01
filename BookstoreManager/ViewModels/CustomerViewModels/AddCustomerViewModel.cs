@@ -60,7 +60,7 @@ namespace BookstoreManager.ViewModels.Customers
                     newCustomer.Email = CustomerEmail;
                 }
                 newCustomer.DienThoai = CustomerPhoneNumber;
-                newCustomer.TongNo = CustomerDebt;
+                newCustomer.TongNo = 0;
                 if (IsExist(newCustomer) == false)
                 {
                     DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
@@ -76,6 +76,13 @@ namespace BookstoreManager.ViewModels.Customers
                     _customerViewModel.LoadListCustomer();
                     RefreshAddCustomerForm();
                     _customerViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
+                    BAOCAOCONGNO newrp = new BAOCAOCONGNO();
+                    newrp.MaKhachHang = newCustomer.MaKhachHang;
+                    newrp.Thang = DateTime.Now.Month;
+                    newrp.Nam = DateTime.Now.Year;
+                    newrp.TonDau = newCustomer.TongNo;
+                    DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
+                    DataProvider.Ins.DB.SaveChanges();
                 }
                 else
                 {
