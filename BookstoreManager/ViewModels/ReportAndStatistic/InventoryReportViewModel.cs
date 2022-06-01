@@ -213,23 +213,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public ObservableCollection<InventoryReportItem> GetDataListViewBookTypeFromDB(List<BAOCAOTON> InvReport, List<THELOAI> BookTypeList)
         {
             ObservableCollection<InventoryReportItem> Data = new ObservableCollection<InventoryReportItem>();
-            //foreach (BAOCAOTON item in InvReport)
-            //{
-            //    for (int i = 0; i < BookTypeList.Count; i++)
-            //    {
-            //        int BookTypeId = BookTypeList[i].MaTheLoai;
-            //        List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == BookTypeId).ToList();
-            //        InventoryReportItem InvItem = new InventoryReportItem();
-            //        InvItem.Type = BookTypeList[i].TenTheLoai;
-            //        for (int j = 0; j < BookList.Count; j++)
-            //        {
-            //            InvItem.FirstQuantity += (int)item.TonDau;
-            //            InvItem.IncurredQuantity += (int)item.PhatSinh;
-            //            InvItem.EndQuantity += (int)item.TonCuoi;
-            //        }
-            //        Data.Add(InvItem);
-            //    }
-            //}
+          
             for (int i = 0; i < BookTypeList.Count; i++)
             {
                 InventoryReportItem InvItem = new InventoryReportItem();

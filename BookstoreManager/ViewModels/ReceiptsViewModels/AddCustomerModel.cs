@@ -72,6 +72,13 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                     _receiptViewModel.CustomerName = CustomerName;
                     _receiptViewModel.CustomerPhoneNumber = CustomerPhoneNumber;
                     RefreshAddCustomerForm();
+                    BAOCAOCONGNO newrp = new BAOCAOCONGNO();
+                    newrp.MaKhachHang = newCustomer.MaKhachHang;
+                    newrp.Thang = DateTime.Now.Month;
+                    newrp.Nam = DateTime.Now.Year;
+                    newrp.TonDau = newCustomer.TongNo;
+                    DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
+                    DataProvider.Ins.DB.SaveChanges();
                 }
                 else
                 {
