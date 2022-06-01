@@ -106,6 +106,8 @@ namespace BookstoreManager.ViewModels
             {
                 AdminWindow adminWindow = new AdminWindow();
                 adminWindow.Show();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Close();
                 p.Close();
             }
             else

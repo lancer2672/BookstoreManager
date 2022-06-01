@@ -52,8 +52,8 @@ namespace BookstoreManager.Views
                     Main.Content = Pages.RegulationPage;
                     break;
                 case "LogOut":
-                    Window mainWindow = new MainWindow();
-                    mainWindow.Show();
+                    //Window mainWindow = new MainWindow();
+                    //mainWindow.Show();
                     this.Close();
                     break;
                 case "NavAccount":
