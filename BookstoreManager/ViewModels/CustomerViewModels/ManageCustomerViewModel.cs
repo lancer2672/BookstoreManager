@@ -121,13 +121,27 @@ namespace BookstoreManager.ViewModels
                 for (int i = 0; i < list.Count; i++)
                 {
                     long id = (list[i] as ViewCustomer).Id;
-                    KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).First<KHACHHANG>();
-                    if (deletedCustomer == null)
+                    KHACHHANG deletedCustomer = DataProvider.Ins.DB.KHACHHANGs.Where(p => p.MaKhachHang == id).FirstOrDefault();
+                    if (deletedCustomer == null || deletedCustomer.TongNo !=0)
                     {
-                        continue;
+                        MyMessageQueue.Enqueue("Lỗi! Xóa khách hàng không thành công!");
+                        return;
                     }
                     else
                     {
+                        List<BAOCAOCONGNO> listRp = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.MaKhachHang == id).ToList();
+                        List<PHIEUTHU> listReceipt = DataProvider.Ins.DB.PHIEUTHUs.Where(t => t.MaKhachHang == id).ToList();
+                        List<HOADON> listInvoice = DataProvider.Ins.DB.HOADONs.Where(t => t.MaKhachHang == id).ToList();
+                        DataProvider.Ins.DB.BAOCAOCONGNOes.RemoveRange(listRp);
+                        DataProvider.Ins.DB.PHIEUTHUs.RemoveRange(listReceipt);
+
+                        foreach (HOADON item in listInvoice)
+                        {
+                            List<CHITIETHOADON> listDetailInvoice = DataProvider.Ins.DB.CHITIETHOADONs.Where(t => t.MaHoaDon == item.MaHoaDon).ToList();
+                            DataProvider.Ins.DB.CHITIETHOADONs.RemoveRange(listDetailInvoice);
+                        }
+                        DataProvider.Ins.DB.HOADONs.RemoveRange(listInvoice);
+
                         try
                         {
 
