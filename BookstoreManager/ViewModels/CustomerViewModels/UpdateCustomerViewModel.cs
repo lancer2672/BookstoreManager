@@ -40,6 +40,7 @@ namespace BookstoreManager.ViewModels.Customers
         }
         public void LoadUpdWindow()
         {
+
             ViewCustomer updCustomer = _customerViewModel.SelectedCustomer;
             CustomerName = updCustomer.Name;
             CustomerAddress = updCustomer.Address;
@@ -58,6 +59,14 @@ namespace BookstoreManager.ViewModels.Customers
                 updCustomer.DienThoai = CustomerPhoneNumber;
                 updCustomer.Email = CustomerEmail;
                 updCustomer.TongNo = CustomerDebt;
+
+                THAMSO qd1 = DataProvider.Ins.DB.THAMSOes.Where(p => p.MaTS == 3).FirstOrDefault();  // Lấy giới hạn tổng nợ
+                THAMSO qd2 = DataProvider.Ins.DB.THAMSOes.Where(p => p.MaTS == 6).FirstOrDefault();  //  qd2 = 0 cho phép vượt tổng nợ, != 0 thì k cho
+                if(CustomerDebt > qd1.GiaTri && qd2.GiaTri == 0)
+                {
+                    _customerViewModel.MyMessageQueue.Enqueue("Lỗi. Nợ của khách hàng không được vượt quá " + MoneyConverter.convertMoney(qd1.GiaTri.ToString()));
+                    return;
+                }
                 try
                 {
                     DataProvider.Ins.DB.SaveChanges();

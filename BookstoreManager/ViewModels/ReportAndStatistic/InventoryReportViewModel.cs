@@ -236,7 +236,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             }
                 return Data;
         }
-        public void LoadDataChart()
+        public void LoadDataChart() 
         {
             IsVisible = Visibility.Visible;
             for (int i = 1; i <= 12; i++)

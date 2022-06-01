@@ -20,7 +20,7 @@
                 <invoice:InvoiceUserControl></invoice:InvoiceUserControl>
             </TabItem>
             <TabItem Header="Phiếu Thu">
-                <receipt:ReceiptWindow Margin="0,-16,0,47" Width="1096"></receipt:ReceiptWindow>
+                <receipt:ReceiptWindow  Width="1096" ></receipt:ReceiptWindow>
             </TabItem>
             <TabItem DataContext="{StaticResource CustomerVM}" Header="Khách Hàng">
                 <Grid>

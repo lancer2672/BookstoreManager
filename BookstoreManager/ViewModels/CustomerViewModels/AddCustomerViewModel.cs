@@ -60,7 +60,7 @@ namespace BookstoreManager.ViewModels.Customers
                     newCustomer.Email = CustomerEmail;
                 }
                 newCustomer.DienThoai = CustomerPhoneNumber;
-                newCustomer.TongNo = CustomerDebt;
+                newCustomer.TongNo = 0;
                 if (IsExist(newCustomer) == false)
                 {
                     DataProvider.Ins.DB.KHACHHANGs.Add(newCustomer);
