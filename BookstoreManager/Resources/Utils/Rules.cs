@@ -39,6 +39,10 @@ namespace BookstoreManager.Resources.Utils
             {
                 salary += moneyArr[i];
             }
+            if(salary == "")
+            {
+                salary = "0";
+            }
             if (decimal.TryParse(salary, out check) == true)
             {
                 if (check < 0) return new ValidationResult(false, "Số tiền không được nhỏ hơn 0");
