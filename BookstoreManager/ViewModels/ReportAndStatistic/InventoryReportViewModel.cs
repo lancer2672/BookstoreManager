@@ -213,24 +213,44 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
         public ObservableCollection<InventoryReportItem> GetDataListViewBookTypeFromDB(List<BAOCAOTON> InvReport, List<THELOAI> BookTypeList)
         {
             ObservableCollection<InventoryReportItem> Data = new ObservableCollection<InventoryReportItem>();
-            foreach (BAOCAOTON item in InvReport)
+            //foreach (BAOCAOTON item in InvReport)
+            //{
+            //    for (int i = 0; i < BookTypeList.Count; i++)
+            //    {
+            //        int BookTypeId = BookTypeList[i].MaTheLoai;
+            //        List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == BookTypeId).ToList();
+            //        InventoryReportItem InvItem = new InventoryReportItem();
+            //        InvItem.Type = BookTypeList[i].TenTheLoai;
+            //        for (int j = 0; j < BookList.Count; j++)
+            //        {
+            //            InvItem.FirstQuantity += (int)item.TonDau;
+            //            InvItem.IncurredQuantity += (int)item.PhatSinh;
+            //            InvItem.EndQuantity += (int)item.TonCuoi;
+            //        }
+            //        Data.Add(InvItem);
+            //    }
+            //}
+            for (int i = 0; i < BookTypeList.Count; i++)
             {
-                for (int i = 0; i < BookTypeList.Count; i++)
+                InventoryReportItem InvItem = new InventoryReportItem();
+                InvItem.Type = BookTypeList[i].TenTheLoai;
+                int BookTypeId = BookTypeList[i].MaTheLoai;
+                List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == BookTypeId).ToList();
+                foreach (BAOCAOTON item in InvReport)
                 {
-                    int BookTypeId = BookTypeList[i].MaTheLoai;
-                    List<SACH> BookList = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == BookTypeId).ToList();
-                    InventoryReportItem InvItem = new InventoryReportItem();
-                    InvItem.Type = BookTypeList[i].TenTheLoai;
                     for (int j = 0; j < BookList.Count; j++)
                     {
-                        InvItem.FirstQuantity += (int)item.TonDau;
-                        InvItem.IncurredQuantity += (int)item.PhatSinh;
-                        InvItem.EndQuantity += (int)item.TonCuoi;
+                        if(item.MaSach == BookList[j].MaSach)
+                        {
+                            InvItem.FirstQuantity += (int)item.TonDau;
+                            InvItem.IncurredQuantity += (int)item.PhatSinh;
+                            InvItem.EndQuantity += (int)item.TonCuoi;
+                        }
                     }
-                    Data.Add(InvItem);
                 }
+                Data.Add(InvItem);
             }
-            return Data;
+                return Data;
         }
         public void LoadDataChart()
         {
