@@ -49,7 +49,8 @@
                     <TextBox x:Name="usernameTxb"
                             materialDesign:HintAssist.Hint="Tên đăng nhập" FontSize="16" 
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                            Text="{Binding Username}"/>
+                            Text="{Binding Username}" 
+                             />
                 </DockPanel>
                 <DockPanel >
                     <materialDesign:PackIcon Kind="Lock" />
@@ -85,10 +86,10 @@
                                                 TargetObject="{Binding RelativeSource={RelativeSource
                                                   Mode=FindAncestor,
                                                   AncestorType=Window}}" />
-                            
+
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    
+
                 </Button>
                 <Button x:Name="exitBtn"                  
                     Background="{DynamicResource SecondaryHueMidBrush}">
@@ -103,6 +104,12 @@
                     </i:Interaction.Triggers>
                 </Button>
             </StackPanel>
+           
         </Grid>
+        <materialDesign:Snackbar
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+        </materialDesign:Snackbar>
     </Grid>
 </Window>

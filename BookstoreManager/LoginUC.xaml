@@ -9,11 +9,12 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              DataContext="{StaticResource LoginVM}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1150">
     <Grid>
-        <Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="450"></ColumnDefinition>
+            <ColumnDefinition Width="480"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Border Padding="35">
@@ -82,6 +83,14 @@
                 </Button>
                
             </StackPanel>
+        
         </Grid>
+        
+    </Grid>
+        <materialDesign:Snackbar
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+        </materialDesign:Snackbar>
     </Grid>
 </UserControl>
