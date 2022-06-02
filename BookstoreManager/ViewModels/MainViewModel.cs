@@ -29,7 +29,7 @@ namespace BookstoreManager.ViewModels
         private string _address;
         private decimal _totaldebt;
         private int _numberbook;
-        private ObservableCollection<ViewBook> _listBook;
+        private ObservableCollection<ViewSellBook> _listBook;
         private ViewBook _selectedlistbook;
         private SACH _selectedbook;
         private THELOAI _selectedcategory;
@@ -38,6 +38,7 @@ namespace BookstoreManager.ViewModels
         private List<TACGIA> _listTACGIA;
         private List<CHITIETTACGIA> _listCT_TACGIA;
         private List<KHACHHANG> _listKHACHHANG;
+        private List<THAMSO> _listTHAMSO;
         private SnackbarMessageQueue _myMessageQueue;
 
         public int IdCustomer { get { return _idcustomer; } set { _idcustomer = value; OnPropertyChanged(nameof(IdCustomer)); LoadInfor(); } }
@@ -51,7 +52,7 @@ namespace BookstoreManager.ViewModels
         public string Address { get { return _address; } set { _address = value; OnPropertyChanged(nameof(Address)); } }
         public decimal TotalDebt { get { return _totaldebt; } set { _totaldebt = value; OnPropertyChanged(nameof(TotalDebt)); } }
         public int NumberBook { get { return _numberbook; } set { _numberbook = value; OnPropertyChanged(nameof(NumberBook)); } }
-        public ObservableCollection<ViewBook> ListBook { get => _listBook; set { _listBook = value; OnPropertyChanged(nameof(ListBook)); } }
+        public ObservableCollection<ViewSellBook> ListBook { get => _listBook; set { _listBook = value; OnPropertyChanged(nameof(ListBook)); } }
         public ViewBook SelectedListBook { get { return _selectedlistbook; } set { _selectedlistbook = value; OnPropertyChanged(nameof(SelectedListBook)); } }
         public SACH SelectedBook { get { return _selectedbook; } set { _selectedbook = value; OnPropertyChanged(nameof(SelectedBook)); } }
         public THELOAI SelectedCategory { get { return _selectedcategory; } set { _selectedcategory = value; OnPropertyChanged(nameof(SelectedCategory)); LoadBookName(); } }
@@ -60,6 +61,7 @@ namespace BookstoreManager.ViewModels
         public List<TACGIA> ListTACGIA { get => _listTACGIA; set { _listTACGIA = value; OnPropertyChanged(nameof(ListTACGIA)); } }
         public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
         public List<KHACHHANG> ListKHACHHANG { get { return _listKHACHHANG; } set { _listKHACHHANG = value; OnPropertyChanged(nameof(ListKHACHHANG)); } }
+        public List<THAMSO> ListTHAMSO { get => _listTHAMSO; set { _listTHAMSO = value; OnPropertyChanged(nameof(ListTHAMSO)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
         public ICommand LoadedWidnowCommand { get; set; }
@@ -68,7 +70,7 @@ namespace BookstoreManager.ViewModels
         public ICommand CreateBillCommand { get; set; }
         public MainViewModel()
         {
-            ListBook = new ObservableCollection<ViewBook>();
+            ListBook = new ObservableCollection<ViewSellBook>();
             ListSACH = DataProvider.Ins.DB.SACHes.ToList();
             ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
             ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
@@ -77,6 +79,10 @@ namespace BookstoreManager.ViewModels
             DateTime today = DateTime.Now;
             Date = today.ToString("dd/MM/yyyy");
 
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000))
+            {
+                DiscardDuplicates = true
+            };
             MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
             MyMessageQueue.DiscardDuplicates = true;
 
@@ -196,8 +202,8 @@ namespace BookstoreManager.ViewModels
             }
             return (int)report.TonCuoi;
         }
-            public void LoadWindow(Window p)
-            {
+        public void LoadWindow(Window p)
+        {
             //IsLoaded = true;
             //p.Hide();
             //AdminWindow admWindow = new AdminWindow();
@@ -313,7 +319,7 @@ namespace BookstoreManager.ViewModels
             }
             return author;
         }
-        public int CheckExist(ObservableCollection<ViewBook> listbook, int masach)
+        public int CheckExist(ObservableCollection<ViewSellBook> listbook, int masach)
         {
             int check = -1;
             for (int i = 0; i < listbook.Count; i++)
@@ -328,16 +334,29 @@ namespace BookstoreManager.ViewModels
         }
         public void LoadListBook()
         {
-            ObservableCollection<ViewBook> NewList = new ObservableCollection<ViewBook>();
-            foreach (ViewBook item in ListBook)
+            ObservableCollection<ViewSellBook> NewList = new ObservableCollection<ViewSellBook>();
+            foreach (ViewSellBook item in ListBook)
                 NewList.Add(item);
             ListBook.Clear();
-            foreach (ViewBook item in NewList)
+            foreach (ViewSellBook item in NewList)
                 ListBook.Add(item);
         }
         public void LoadMoneyRemained()
         {
-            MoneyRemained = TotalMoney - MoneyReceived;
+            if (TotalMoney != 0)
+                MoneyRemained = TotalMoney - MoneyReceived;
+        }
+        public int FindThamSo(string tenthamso)
+        {
+            int i;
+            for (i = 0; i < ListTHAMSO.Count; i++)
+            {
+                if (ListTHAMSO[i].TenThamSo == tenthamso)
+                {
+                    break;
+                }
+            }
+            return i;
         }
         public void AddBook()
         {
@@ -348,39 +367,50 @@ namespace BookstoreManager.ViewModels
             }
             else
             {
-                SACH newsach = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == SelectedBook.MaSach).FirstOrDefault();
-                ViewBook newViewBook = new ViewBook();
-                newViewBook.Id = newsach.MaSach;
-                newViewBook.TitleBook = newsach.TenSach;
-                newViewBook.Category = FindCategory((int)newsach.MaTheLoai, ListTHELOAI);
-                newViewBook.NameAuthor = FindAuthor(newsach.MaSach, ListTACGIA, ListCT_TACGIA);
-                newViewBook.PublishCompany = newsach.NhaXuatBan;
-                newViewBook.PublishYear = (int)newsach.NamXuatBan;
-                newViewBook.InventoryNumber = NumberBook;
-                newViewBook.Price = (decimal)newsach.GiaNhap;
-                if (ListBook.Count == 0)
+                if ((SelectedBook.SoLuongTon - NumberBook) < ListTHAMSO[FindThamSo("LuongTonToiThieuSauKhiBanSach")].GiaTri)
                 {
-                    ListBook.Add(newViewBook);
-                    TotalMoney = newViewBook.Price * NumberBook;
+                    string message = "Không thể thêm vì không đủ lượng tồn tối thiểu (>" + Convert.ToString(ListTHAMSO[FindThamSo("LuongTonToiThieuSauKhiBanSach")].GiaTri) + ") !";
                     MyMessageQueue.Clear();
-                    MyMessageQueue.Enqueue("Thêm sách thành công!");
+                    MyMessageQueue.Enqueue("Không thể thêm vì không đủ lượng tồn tối thiểu ( ");
                 }
                 else
                 {
-                    if (CheckExist(ListBook, SelectedBook.MaSach) == -1)
+                    SACH newsach = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == SelectedBook.MaSach).FirstOrDefault();
+                    ViewSellBook newBook = new ViewSellBook();
+                    newBook.Id = newsach.MaSach;
+                    newBook.TitleBook = newsach.TenSach;
+                    newBook.Category = FindCategory((int)newsach.MaTheLoai, ListTHELOAI);
+                    newBook.NameAuthor = FindAuthor(newsach.MaSach, ListTACGIA, ListCT_TACGIA);
+                    newBook.PublishCompany = newsach.NhaXuatBan;
+                    newBook.PublishYear = (int)newsach.NamXuatBan;
+                    newBook.Number = NumberBook;
+                    int tileban = (int)ListTHAMSO[FindThamSo("TiLeGiaBan")].GiaTri;
+                    newBook.SellPrice = ((decimal)newsach.GiaNhap * tileban) / 100;
+
+                    if (ListBook.Count == 0)
                     {
-                        ListBook.Add(newViewBook);
-                        TotalMoney += newViewBook.Price * NumberBook;
+                        ListBook.Add(newBook);
+                        TotalMoney = newBook.SellPrice * NumberBook;
                         MyMessageQueue.Clear();
                         MyMessageQueue.Enqueue("Thêm sách thành công!");
                     }
                     else
                     {
-                        ListBook[CheckExist(ListBook, SelectedBook.MaSach)].InventoryNumber += NumberBook;
-                        TotalMoney += newViewBook.Price * NumberBook;
-                        LoadListBook();
-                        MyMessageQueue.Clear();
-                        MyMessageQueue.Enqueue("Thêm sách thành công!");
+                        if (CheckExist(ListBook, SelectedBook.MaSach) == -1)
+                        {
+                            ListBook.Add(newBook);
+                            TotalMoney += newBook.SellPrice * NumberBook;
+                            MyMessageQueue.Clear();
+                            MyMessageQueue.Enqueue("Thêm sách thành công!");
+                        }
+                        else
+                        {
+                            ListBook[CheckExist(ListBook, SelectedBook.MaSach)].Number += NumberBook;
+                            TotalMoney += newBook.SellPrice * NumberBook;
+                            LoadListBook();
+                            MyMessageQueue.Clear();
+                            MyMessageQueue.Enqueue("Thêm sách thành công!");
+                        }
                     }
                 }
             }
@@ -393,6 +423,10 @@ namespace BookstoreManager.ViewModels
                 ListBook.Remove(ListBook[location]);
                 LoadListBook();
                 MyMessageQueue.Enqueue("Xóa sách thành công!");
+                SelectedBook = null;
+                SelectedCategory = null;
+                NumberBook = 0;
+                TotalMoney = 0;
             }
             else
             {
@@ -402,7 +436,7 @@ namespace BookstoreManager.ViewModels
         }
         public void CreateBillBook()
         {
-            if (IdCustomer == 0 || MoneyReceived == 0 || NameCustomer == null || PhoneNumber == null || Email == null || Address == null)
+            if (IdCustomer == 0 || MoneyReceived == 0 || NameCustomer == null || PhoneNumber == null )
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng điền đủ thông tin khách hàng!");
@@ -445,9 +479,9 @@ namespace BookstoreManager.ViewModels
                             {
                                 MaHoaDon = newbill.MaHoaDon,
                                 MaSach = item.Id,
-                                SoLuong = item.InventoryNumber,
-                                DonGia = item.Price,
-                                ThanhTien = item.Price * item.InventoryNumber
+                                SoLuong = item.Number,
+                                DonGia = item.SellPrice,
+                                ThanhTien = item.SellPrice * item.Number
                             };
                             DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
                         }
@@ -475,9 +509,9 @@ namespace BookstoreManager.ViewModels
                             {
                                 MaHoaDon = newbill.MaHoaDon,
                                 MaSach = item.Id,
-                                SoLuong = item.InventoryNumber,
-                                DonGia = item.Price,
-                                ThanhTien = item.Price * item.InventoryNumber
+                                SoLuong = item.Number,
+                                DonGia = item.SellPrice,
+                                ThanhTien = item.SellPrice * item.Number
                             };
                             DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
                         }
