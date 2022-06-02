@@ -221,6 +221,7 @@
     <Compile Include="Resources\Utils\Validator.cs" />
     <Compile Include="ViewModels\AccountViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BookViewModels\AddBookEntryViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\AddBookViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\EntryBookViewModel.cs" />
     <Compile Include="ViewModels\BookViewModels\ManageBookViewModel.cs" />
@@ -239,6 +240,9 @@
     </Compile>
     <Compile Include="Views\Account\AccountMain.xaml.cs">
       <DependentUpon>AccountMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViews\AddBookEntryWindow.xaml.cs">
+      <DependentUpon>AddBookEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BookViews\AddBookWindow.xaml.cs">
       <DependentUpon>AddBookWindow.xaml</DependentUpon>
@@ -338,6 +342,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Account\AccountMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViews\AddBookEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

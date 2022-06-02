@@ -51,11 +51,12 @@
                     <StackPanel Orientation="Horizontal" Height="48"  >
                         <ComboBox x:Name="BookName"
                                   materialDesign:HintAssist.Hint="Tên sách"
-                                  Width="260" Margin="15,0,5,0" FontSize="14"
+                                  Width="215" Margin="15,0,5,0" FontSize="14"
                                   IsEditable="True"
                                   ItemsSource="{Binding ListSACH}"
                                   DisplayMemberPath="TenSach"
                                   SelectedItem="{Binding SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" VerticalContentAlignment="Bottom"/>
+                        <Button Content="+" Height="36" Padding="16,-1,16,4" Command="{Binding COpenAddBookEntryWindow}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Thể loại: " 

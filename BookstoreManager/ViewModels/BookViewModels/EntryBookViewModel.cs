@@ -56,6 +56,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public ICommand AddBookListCommand { get; set; }
         public ICommand DeleteBookListCommand { get; set; }
         public ICommand SaveBookListCommand { get; set; }
+        public ICommand COpenAddBookEntryWindow { get; set; }
 
 
         public EntryBookViewModel()
@@ -73,6 +74,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             AddBookListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddBookList(); });
             DeleteBookListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DeleteBookList(); });
             SaveBookListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookList(); });
+            COpenAddBookEntryWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddBookEntryWindow(); });
         }
         public string FindCategory(int matheloai, List<THELOAI> listTHELOAI)
         {
@@ -171,6 +173,12 @@ namespace BookstoreManager.ViewModels.BookViewModels
         }
         public void AddBookList()
         {
+            if(SelectedBook==null)
+            {
+                MyMessageQueue.Clear();
+                MyMessageQueue.Enqueue("Vui lòng sách để nhập!");
+                return;
+            }
             string tenthamso = "SoLuongTonToiDaChoPhepNhapSach";
             if (InventoryNumber > ListTHAMSO[FindThamSo(tenthamso)].GiaTri)
             {
@@ -284,6 +292,11 @@ namespace BookstoreManager.ViewModels.BookViewModels
             Price = TotalMoneyFirst = TotalMoneySecond = 0;
             MyMessageQueue.Clear();
             MyMessageQueue.Enqueue("Lưu danh sách nhập sách thành công");
+        }
+        public void OpenAddBookEntryWindow()
+        {
+            AddBookEntryWindow addBookEntry = new AddBookEntryWindow(this);
+            addBookEntry.ShowDialog();
         }
     }
 }
