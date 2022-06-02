@@ -191,9 +191,17 @@
                                        BorderBrush="Black" 
                                        ClipToBounds="True" 
                                        BorderThickness="0,0,0,0.5" 
-                                       Content="{Binding TotalDebt, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                                        Width="300" 
-                                       VerticalContentAlignment="Bottom"/>
+                                       VerticalContentAlignment="Bottom">
+                                    <Label.Content>
+                                        <Binding Path="TotalDebt" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                                NotifyOnValidationError="True">
+                                            <Binding.Converter>
+                                                <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Label.Content>
+                                </Label>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Row="1" >

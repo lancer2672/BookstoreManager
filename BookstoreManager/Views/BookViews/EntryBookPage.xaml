@@ -35,7 +35,7 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="65"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
                     <StackPanel.Resources>
@@ -50,51 +50,51 @@
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal" Height="48"  >
                         <ComboBox x:Name="BookName"
-                              materialDesign:HintAssist.Hint="Tên sách"
-                              Width="260" Margin="15,0,5,0" FontSize="14"
-                              IsEditable="True"
-                              ItemsSource="{Binding ListSACH}"
-                              DisplayMemberPath="TenSach"
-                              SelectedItem="{Binding SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" VerticalContentAlignment="Bottom"/>
+                                  materialDesign:HintAssist.Hint="Tên sách"
+                                  Width="260" Margin="15,0,5,0" FontSize="14"
+                                  IsEditable="True"
+                                  ItemsSource="{Binding ListSACH}"
+                                  DisplayMemberPath="TenSach"
+                                  SelectedItem="{Binding SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" VerticalContentAlignment="Bottom"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Thể loại: " 
-                           Width="64" 
-                           VerticalContentAlignment="Bottom" 
-                           Margin="11,0,0,0"/>
+                               Width="64" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="11,0,0,0"/>
                         <Label x:Name="Category" 
-                           BorderBrush="Black" 
-                           ClipToBounds="True" 
-                           BorderThickness="0,0,0,0.5" 
-                           Content="{Binding Category, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                           Width="200" 
-                           VerticalContentAlignment="Bottom"/>
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,0.5" 
+                               Content="{Binding Category, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                               Width="200" 
+                               VerticalContentAlignment="Bottom"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Tác giả: " 
-                           Width="64" 
-                           VerticalContentAlignment="Bottom" 
-                           Margin="11,0,0,0"/>
+                               Width="64" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="11,0,0,0"/>
                         <Label x:Name="Author" 
-                           BorderBrush="Black" 
-                           ClipToBounds="True" 
-                           BorderThickness="0,0,0,0.5" 
-                           Content="{Binding Author, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                           Width="200" 
-                           VerticalContentAlignment="Bottom"/>
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,0.5" 
+                               Content="{Binding Author, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                               Width="200" 
+                               VerticalContentAlignment="Bottom"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Số lượng tồn: " 
-                           Width="94" 
-                           VerticalContentAlignment="Bottom" 
-                           Margin="11,0,0,0"/>
+                               Width="94" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="11,0,0,0"/>
                         <Label x:Name="InventoryNumber" 
-                           BorderBrush="Black" 
-                           ClipToBounds="True" 
-                           BorderThickness="0,0,0,0.5" 
-                           Content="{Binding InventoryNumber, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                           Width="170" 
-                           VerticalContentAlignment="Bottom"/>
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,0.5" 
+                               Content="{Binding InventoryNumber, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                               Width="170" 
+                               VerticalContentAlignment="Bottom"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <TextBox  Name="EntryNumber"
@@ -112,37 +112,52 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Đơn giá: " 
-                           Width="64" 
-                           VerticalContentAlignment="Bottom" 
-                           Margin="11,0,0,0"/>
+                               Width="64" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="11,0,0,0"/>
                         <Label x:Name="Price" 
-                           BorderBrush="Black" 
-                           ClipToBounds="True" 
-                           BorderThickness="0,0,0,0.5" 
-                           Content="{Binding Price, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                           Width="200" 
-                           VerticalContentAlignment="Bottom"/>
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,0.5" 
+                               Width="200" 
+                               VerticalContentAlignment="Bottom">
+                            <Label.Content>
+                                <Binding Path="Price" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                         NotifyOnValidationError="True">
+                                    <Binding.Converter>
+                                        <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Label.Content>
+                        </Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="48">
                         <Label Content="Thành tiền: " 
-                           Width="84" 
-                           VerticalContentAlignment="Bottom" 
-                           Margin="11,0,0,0"/>
-                        <Label x:Name="Money" 
-                           BorderBrush="Black" 
-                           ClipToBounds="True" 
-                           BorderThickness="0,0,0,0.5" 
-                           Content="{Binding Money, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                           Width="180" 
-                           VerticalContentAlignment="Bottom"/>
+                               Width="84" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="11,0,0,0"/>
+                        <Label x:Name="TotalMoneyFirst" 
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,0.5" 
+                               Width="180" 
+                               VerticalContentAlignment="Bottom">
+                            <Label.Content>
+                                <Binding Path="TotalMoneyFirst" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                         NotifyOnValidationError="True">
+                                    <Binding.Converter>
+                                        <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Label.Content>
+                        </Label>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <materialDesign:Snackbar 
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                MessageQueue="{Binding MyMessageQueue}">
-                    </materialDesign:Snackbar>
+                <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                    <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto" Height="65" VerticalScrollBarVisibility="Hidden">
+                        <materialDesign:Snackbar
+                                MessageQueue="{Binding MyMessageQueue}" Width="245"/>
+                    </ScrollViewer>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
@@ -151,7 +166,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource PageTitle}" Text="Danh sách mua sách" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Style="{StaticResource PageTitle}" Text="Danh sách nhập sách" HorizontalAlignment="Center"></TextBlock>
                 <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.5,0.5,0.5,0.5">
                     <Grid Margin="0 2 0 0 ">
                         <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
@@ -170,9 +185,9 @@
                                         <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>
                                         <GridViewColumn Header="Nhà xuất bản" DisplayMemberBinding="{Binding PublishCompany}"/>
                                         <GridViewColumn Header="Số lượng tồn" DisplayMemberBinding="{Binding InventoryNumber}"/>
-                                        <GridViewColumn Header="Số lượng nhập" DisplayMemberBinding="{Binding PublishYear}" />
+                                        <GridViewColumn Header="Số lượng nhập" DisplayMemberBinding="{Binding EntryNumber}" />
                                         <GridViewColumn Header="Đơn giá" DisplayMemberBinding="{Binding Price,Converter={StaticResource UIMoneyConverter}}"/>
-                                        <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding Price,Converter={StaticResource UIMoneyConverter}}"/>
+                                        <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding TotalPrice,Converter={StaticResource UIMoneyConverter}}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -200,7 +215,7 @@
                         <Button ToolTip="Thêm "  
                                 Name="AddBtn"
                                 Width="90"
-                                Command="{Binding AddCommand}" Height="38" Margin="10,5,5,5">
+                                Command="{Binding AddBookListCommand}" Height="38" Margin="10,5,5,5">
                             <DockPanel>
                                 <materialDesign:PackIcon Kind="Add" />
                                 <TextBlock Text="Thêm"/>
@@ -209,34 +224,42 @@
                         <Button 
                                 Width="70"
                                 ToolTip="Xóa"
-                                Command="{Binding DeleteCommand}" Margin="10 5 0 5">
+                                Command="{Binding DeleteBooklistCommand}" Margin="10 5 0 5">
                             <DockPanel>
-                                <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                <materialDesign:PackIcon Kind="Delete" />
                                 <TextBlock Text="Xóa"/>
                             </DockPanel>
                         </Button>
 
                         <StackPanel Orientation="Horizontal" Height="42" Margin="90,5,15,5">
-                            <Label Content="Thành tiền: " 
+                            <Label Content="Tổng tiền: " 
                                    Width="74" FontSize="14"
                                    VerticalContentAlignment="Bottom" 
                                    Margin="16,0,0,0"/>
-                            <Label x:Name="TotalMoney" 
+                            <Label x:Name="TotalMoneySecond" 
                                    BorderBrush="Black" 
                                    ClipToBounds="True" 
                                    BorderThickness="0,0,0,0.5" 
-                                   Content="{Binding TotalDebt, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                                    Width="120" FontSize="14"
-                                   VerticalContentAlignment="Bottom"/>
+                                   VerticalContentAlignment="Bottom">
+                                <Label.Content>
+                                    <Binding Path="TotalMoneySecond" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                         NotifyOnValidationError="True">
+                                        <Binding.Converter>
+                                            <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Label.Content>
+                            </Label>
                         </StackPanel>
                     </WrapPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5,5">
                         <Button 
                                 Width="70"
                                 ToolTip="Lưu"
-                                Command="{Binding SaveCommand}" Margin="10,5,10,5">
+                                Command="{Binding SaveBookListCommand}" Margin="10,5,10,5">
                             <DockPanel>
-                                <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                <!--<materialDesign:PackIcon Kind="Sa" />-->
                                 <TextBlock Text="Lưu"/>
                             </DockPanel>
                         </Button>

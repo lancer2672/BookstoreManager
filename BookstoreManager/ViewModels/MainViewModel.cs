@@ -76,6 +76,7 @@ namespace BookstoreManager.ViewModels
             ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
             ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             ListKHACHHANG = DataProvider.Ins.DB.KHACHHANGs.ToList();
+            ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
             DateTime today = DateTime.Now;
             Date = today.ToString("dd/MM/yyyy");
 
@@ -360,6 +361,12 @@ namespace BookstoreManager.ViewModels
         }
         public void AddBook()
         {
+            if(SelectedBook == null)
+            {
+                MyMessageQueue.Clear();
+                MyMessageQueue.Enqueue("Vui lòng chọn sách để thêm!");
+                return;
+            }
             if (NumberBook == 0)
             {
                 MyMessageQueue.Clear();
