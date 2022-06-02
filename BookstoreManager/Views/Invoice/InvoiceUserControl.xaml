@@ -108,7 +108,7 @@
                                     </TextBox.Text>
                                 </TextBox>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <!--<StackPanel Orientation="Horizontal">
                                 <TextBox  Name="Email"
                                         materialDesign:HintAssist.Hint="Email">
                                     <TextBox.Text>
@@ -120,7 +120,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                            </StackPanel>
+                            </StackPanel>-->
                             <!--<StackPanel Orientation="Horizontal">
                                 <TextBox  Name="Address"
                                         materialDesign:HintAssist.Hint="Địa chỉ">
