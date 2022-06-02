@@ -251,24 +251,10 @@ namespace BookstoreManager.ViewModels
         public void LoadInfor()
         {
             int i = CheckCustomer();
-
-
-            //for (i = 0; i < ListKHACHHANG.Count; i++)
-            //{
-            //    if (IdCustomer == ListKHACHHANG[i].MaKhachHang)
-            //    {
-            //        if (ListKHACHHANG[i].TongNo == 0)
-            //            TotalDebt = 0;
-            //        NameCustomer = ListKHACHHANG[i].HoTen;
-            //        Email = ListKHACHHANG[i].Email;
-            //        PhoneNumber = ListKHACHHANG[i].DienThoai;
-            //        Address = ListKHACHHANG[i].DiaChi;
-            //        break;
-            //    }
-            //}
             if (i == -1)
             {
-                TotalDebt = 0;
+                PhoneNumber = NameCustomer = "";
+                TotalMoney = MoneyReceived = MoneyRemained = TotalDebt = 0;
             }
             else
             {
@@ -278,12 +264,16 @@ namespace BookstoreManager.ViewModels
                 Email = ListKHACHHANG[i].Email;
                 PhoneNumber = ListKHACHHANG[i].DienThoai;
                 Address = ListKHACHHANG[i].DiaChi;
+                TotalDebt = (decimal)ListKHACHHANG[i].TongNo;
             }
         }
         public void LoadBookName()
         {
-            ListSACH.Clear();
-            ListSACH = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == SelectedCategory.MaTheLoai).ToList();
+            if (SelectedCategory != null)
+            {
+                ListSACH.Clear();
+                ListSACH = DataProvider.Ins.DB.SACHes.Where(t => t.MaTheLoai == SelectedCategory.MaTheLoai).ToList();
+            }
         }
         public string FindCategory(int matheloai, List<THELOAI> listTHELOAI)
         {
@@ -419,6 +409,9 @@ namespace BookstoreManager.ViewModels
                             MyMessageQueue.Enqueue("Thêm sách thành công!");
                         }
                     }
+                    SelectedBook = null;
+                    SelectedCategory = null;
+                    NumberBook = 0;
                 }
             }
         }
@@ -441,9 +434,24 @@ namespace BookstoreManager.ViewModels
                 MyMessageQueue.Enqueue("Vui lòng chọn sách để xóa!");
             }
         }
+        public void Clear()
+        {
+            ListBook.Clear();
+            IdCustomer = NumberBook = 0;
+            PhoneNumber = NameCustomer = "";
+            TotalMoney = MoneyReceived = MoneyRemained = TotalDebt = 0;
+            SelectedBook = null;
+            SelectedCategory = null;
+        }
         public void CreateBillBook()
         {
-            if (IdCustomer == 0 || MoneyReceived == 0 || NameCustomer == null || PhoneNumber == null )
+            if (MoneyReceived == 0)
+            {
+                MyMessageQueue.Clear();
+                MyMessageQueue.Enqueue("Vui lòng nhập số tiền trả!");
+                return;
+            }
+                if (IdCustomer == 0 || NameCustomer == null || PhoneNumber == null )
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng điền đủ thông tin khách hàng!");
@@ -526,6 +534,7 @@ namespace BookstoreManager.ViewModels
                         MyMessageQueue.Clear();
                         MyMessageQueue.Enqueue("Tạo hóa đơn thành công!");
                     }
+                    Clear();
                 }
             }
         }

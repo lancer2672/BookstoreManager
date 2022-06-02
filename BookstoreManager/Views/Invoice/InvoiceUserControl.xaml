@@ -178,9 +178,17 @@
                                        BorderBrush="Black" 
                                        ClipToBounds="True" 
                                        BorderThickness="0,0,0,0.5" 
-                                       Content="{Binding MoneyRemained, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                                        Width="310" 
-                                       VerticalContentAlignment="Bottom"/>
+                                       VerticalContentAlignment="Bottom">
+                                    <Label.Content>
+                                        <Binding Path="MoneyRemained" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                                NotifyOnValidationError="True">
+                                            <Binding.Converter>
+                                                <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Label.Content>
+                                </Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <Label Content="Tổng nợ: " 
