@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddCustomerWindow" Height="340" Width="500">
+        Title="AddCustomerWindow" Height="380" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -84,6 +84,17 @@
                             <Binding.ValidationRules>
                                 <rules:EmailRule></rules:EmailRule>
                             </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                      Name="CustomerAddress"
+                         materialDesign:HintAssist.Hint="Địa chỉ (có thể để trống)" >
+                    <TextBox.Text>
+                        <Binding Path="CustomerAddress" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
                         </Binding>
                     </TextBox.Text>
                 </TextBox>

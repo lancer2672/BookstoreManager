@@ -104,6 +104,7 @@
                                     <GridViewColumn Header="CMND" DisplayMemberBinding="{Binding Id}"/>
                                     <GridViewColumn Header="Họ Và Tên" DisplayMemberBinding="{Binding Name}"/>
                                     <GridViewColumn Header="Số Điện Thoại" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                                    <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding Address}"/>
                                     <GridViewColumn Header="Email" Width="Auto"  >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>

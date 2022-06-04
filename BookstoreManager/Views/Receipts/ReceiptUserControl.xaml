@@ -30,10 +30,10 @@
                     <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                     </Style>
                 </StackPanel.Resources>
-                <TextBlock HorizontalAlignment="Center" Margin="0 10 0 20"
+                <TextBlock HorizontalAlignment="Center" Margin="0 10 0 10"
                                    Style="{StaticResource  MaterialDesignHeadline6TextBlock}" 
                                    Text="LẬP PHIẾU THU"></TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="0 0 0 20"
+                <TextBlock HorizontalAlignment="Center" Margin="0 0 0 10"
                                    Style="{StaticResource  MaterialDesignHelperTextBlock}" 
                                    Text="{Binding Date,StringFormat='dd-MM-yyyy'}"></TextBlock>
 
@@ -96,6 +96,28 @@
                             <Binding.ValidationRules>
                                 <rules:PhoneNumberRule></rules:PhoneNumberRule>
                             </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox 
+                      Name="CustomerEmail"
+                         materialDesign:HintAssist.Hint="Email" >
+                    <TextBox.Text>
+                        <Binding Path="CustomerEmail" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rules:EmailRule></rules:EmailRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox 
+                      Name="CustomerAddress"
+                         materialDesign:HintAssist.Hint="Địa Chỉ" >
+                    <TextBox.Text>
+                        <Binding Path="CustomerAddress" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
+                     
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
