@@ -53,9 +53,9 @@
                     <Image Source="../Resources/Imgs/BookTypeICon.png"></Image>
                 </syncfusion:NavigationItem.Icon>-->
                 <syncfusion:NavigationItem Header="Phiếu nhập sách" x:Name="NavAddBook">
-                    <!--<syncfusion:NavigationItem.Icon>
-                        <Image Source="../Resources/Imgs/OpenBook.png"></Image>
-                    </syncfusion:NavigationItem.Icon>-->
+                    <syncfusion:NavigationItem.Icon>
+                        <Image Source="../Resources/Imgs/AddBook.png"></Image>
+                    </syncfusion:NavigationItem.Icon>
                 </syncfusion:NavigationItem>
             </syncfusion:NavigationItem>
             <syncfusion:NavigationItem Header="Báo cáo thống kê" x:Name="NavStatistic" IsExpanded="True">

@@ -23,6 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,1,0,0">
             <Grid>
@@ -212,13 +213,7 @@
                                 </Label>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Grid.Row="1" >
-                            <materialDesign:Snackbar 
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                MessageQueue="{Binding MyMessageQueue}">
-                            </materialDesign:Snackbar>
-                        </StackPanel>
+                        
                     </Grid>
                 </Border>
                 <Grid Grid.Column="1">
@@ -339,5 +334,12 @@
                 </Grid>
             </Grid>
         </Border>
+        <StackPanel Grid.Row="2">
+            <materialDesign:Snackbar 
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                MessageQueue="{Binding MyMessageQueue}">
+            </materialDesign:Snackbar>
+        </StackPanel>
     </Grid>
 </UserControl>
