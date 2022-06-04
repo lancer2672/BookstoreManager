@@ -22,6 +22,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         private string _customerName;
         private long _customerID;
         private string _customerPhoneNumber;
+        private string _customerEmail;
+        private string _customerAddress;
         private decimal _customerPaid;
         //private decimal _customerChange;
         //private decimal _receivedMoney;
@@ -33,6 +35,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         public string SearchKey { get { return _searchKey; } set { _searchKey = value; OnPropertyChanged(nameof(SearchKey)); } }
         public long CustomerID { get => _customerID; set { _customerID = value; OnPropertyChanged(nameof(CustomerID)); } }
         public string CustomerName { get => _customerName; set { _customerName = value; OnPropertyChanged(nameof(CustomerName)); } }
+        public string CustomerAddress { get => _customerAddress; set { _customerAddress = value; OnPropertyChanged(nameof(CustomerAddress)); } }
+        public string CustomerEmail { get => _customerEmail; set { _customerEmail = value; OnPropertyChanged(nameof(CustomerEmail)); } }
         public string CustomerPhoneNumber { get => _customerPhoneNumber; set { _customerPhoneNumber = value; OnPropertyChanged(nameof(CustomerPhoneNumber)); } }
         public DateTime Date { get => _date; set { _date = value; OnPropertyChanged(nameof(Date)); } }
         public DateTime SelectedDate { get => _selectedDate; set { _selectedDate = value; OnPropertyChanged(nameof(SelectedDate)); LoadDataListView(); } }
@@ -79,6 +83,9 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 KHACHHANG customer  = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang.Equals(CustomerID)).FirstOrDefault();
                 CustomerName = customer.HoTen;
                 CustomerPhoneNumber = customer.DienThoai;
+                CustomerAddress = customer.DiaChi;
+                CustomerEmail = customer.Email;
+
             }
         }
         public void CreateReceipt(StackPanel p)
@@ -183,6 +190,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         {
             CustomerName = "";
             CustomerPhoneNumber = "";
+            CustomerAddress = "";
+            CustomerEmail = "";
             CustomerPaid = 0;
         }
         public void LoadDataListView()
