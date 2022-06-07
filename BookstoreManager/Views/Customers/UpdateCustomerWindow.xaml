@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         
         WindowStartupLocation="CenterScreen"
-         Title="AddCustomerWindow" Height="380" Width="500">
+         Title="Sửa thông tin" Height="380" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

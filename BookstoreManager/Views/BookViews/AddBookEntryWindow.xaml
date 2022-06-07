@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddBookEntryWindow" Height="380" Width="800">
+        Title="Thêm sách" Height="380" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

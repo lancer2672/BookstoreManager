@@ -13,7 +13,7 @@
         xmlns:invoice="clr-namespace:BookstoreManager.Views.Invoice"
         xmlns:SharedUC="clr-namespace:BookstoreManager.Views.SharedControl"
         WindowStartupLocation="CenterScreen"    
-        Title="MainWindow" Height="600" Width="1150">
+        Title="Quản lý nhà sách" Height="600" Width="1150">
     <Grid>
         <TabControl>
             <TabItem Header="Hóa Đơn">

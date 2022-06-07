@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Sua sach" Height="380" Width="800">
+        Title="Sửa thông tin sách" Height="380" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -161,7 +161,7 @@
         <StackPanel 
                 Margin="0 20 30 0"
                 Orientation="Horizontal" HorizontalAlignment="Right">
-            <CheckBox x:Name="checkbox" IsChecked="{Binding ischecked}"></CheckBox>
+            <CheckBox IsEnabled="False" x:Name="checkbox" IsChecked="{Binding ischecked}"></CheckBox>
             <Button Margin="0 0 20 0" Content="Lưu" 
                     
                         Command="{Binding CUpdateBook}" CommandParameter="{Binding ElementName=UpdateBook}">

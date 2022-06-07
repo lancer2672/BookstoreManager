@@ -9,7 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddCustomerWindow" Height="380" Width="500">
+        Title="Thêm khách hàng" Height="380" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

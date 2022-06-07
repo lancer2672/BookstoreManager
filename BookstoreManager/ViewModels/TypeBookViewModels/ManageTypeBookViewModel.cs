@@ -41,7 +41,7 @@ namespace BookstoreManager.ViewModels.TypeBookViewModels
         {
             ListCategory = DataProvider.Ins.DB.THELOAIs.ToList();
 
-            //CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
+            CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
             CExportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ExportFileExcel(); });
             CSearch = new RelayCommand<ListView>((p) => { return true; }, (p) => { SearchTypeBook(); });
             CAddTypeBook = new RelayCommand<object>((p) => { return true; }, (p) => { AddTypeBook(); });
@@ -142,6 +142,73 @@ namespace BookstoreManager.ViewModels.TypeBookViewModels
                 }
             }
         }
+        public bool CheckCategory(string tentheloai)
+        {
+            bool check = false;
+            List<THELOAI> listTheLoai = DataProvider.Ins.DB.THELOAIs.ToList();
+            for(int i = 0; i < listTheLoai.Count; i++)
+            {
+                if (String.Compare(listTheLoai[i].TenTheLoai, tentheloai, true) == 0)
+                {
+                    check = true;
+                    break;
+                }
+            }
+            return check;
+        }
+        public void ImportFileExcel()
+        {
+            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+            dialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = dialog.FileName;
+                AddImportedData(fileName);
+            }
+        }
+
+        public void AddImportedData(string filename)
+        {
+            try
+            {
+                var package = new ExcelPackage(new FileInfo(filename));
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+
+                for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
+                {
+
+                    try
+                    {
+                        // biến j biểu thị cho một column trong file
+                        bool check = true;
+                        if (!CheckCategory(workSheet.Cells[i, 1].Value.ToString()))
+                        {
+                            THELOAI newtheloai = new THELOAI()
+                            {
+                                TenTheLoai = workSheet.Cells[i, 2].Value.ToString(),
+                            };
+                            DataProvider.Ins.DB.THELOAIs.Add(newtheloai);
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        //else
+                        //{
+                            
+                        //}
+                        MyMessageQueue.Enqueue("Thêm dữ liệu từ file excel thành công!");
+                    }
+                    catch (Exception error)
+                    {
+                        MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file excel");
+
+                    }
+                }
+                LoadListCategory();
+            }
+            catch (Exception ee)
+            {
+                MyMessageQueue.Enqueue("Lỗi! Không thể nhập liệu từ file Excel");
+            }
+        }
         public void ExportFileExcel()
         {
             string filePath = "";
@@ -174,7 +241,10 @@ namespace BookstoreManager.ViewModels.TypeBookViewModels
                     workSheet.Cells.Style.Font.Size = 12;
                     workSheet.Cells.Style.Font.Name = "Calibri";
                     // Tạo danh sách các column header
-                    string[] arrColumnHeader = { };
+                    string[] arrColumnHeader = {
+                        "STT",
+                        "Tên thể loại"
+                    };
 
                     var countColHeader = arrColumnHeader.Count();
 
@@ -191,13 +261,14 @@ namespace BookstoreManager.ViewModels.TypeBookViewModels
 
                         colIndex++;
                     }
-
+                    int stt = 0;
                     foreach (var item in ListCategory)
                     {
                         colIndex = 1;
                         rowIndex++;
+                        stt++;
 
-                        workSheet.Cells[rowIndex, colIndex++].Value = item.MaTheLoai;
+                        workSheet.Cells[rowIndex, colIndex++].Value = stt;
                         workSheet.Cells[rowIndex, colIndex++].Value = item.TenTheLoai;
                     }
 
