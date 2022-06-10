@@ -100,10 +100,14 @@ namespace BookstoreManager.ViewModels
             int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
             if (DateTime.Now.Day == 10)
             {
-                CreateInvReport(now.AddDays(-1));
-                CreateDebtReport(now.AddDays(-1));
-                MyMessageQueue.Enqueue("Đã tạo báo cáo");
 
+                if (IsCreatedReport(now.AddDays(-1)) == false)
+                {
+                    CreateInvReport(now.AddDays(-1));
+                    CreateDebtReport(now.AddDays(-1));
+                    MyMessageQueue.Enqueue("Đã tạo báo cáo");
+                }
+                    
             }
             else
             {
@@ -111,6 +115,13 @@ namespace BookstoreManager.ViewModels
                 MyMessageQueue.Enqueue("Còn " + day.ToString() + " ngày nữa sẽ tới ngày tạo báo cáo");
             }
         }
+        bool IsCreatedReport(DateTime time)
+        {
+            //  
+            List<BAOCAOCONGNO> list = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.Thang == time.Month && t.Nam == time.Year).ToList();
+            return list.Count == 0 ? false : true;
+        }
+
         void CreateDebtReport(DateTime now)
         {
             List<KHACHHANG> customerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
@@ -118,7 +129,6 @@ namespace BookstoreManager.ViewModels
             {
                 long customerId = customerList[i].MaKhachHang;
                 BAOCAOCONGNO rp = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.MaKhachHang == customerId && t.Thang == now.Month && t.Nam == now.Year).FirstOrDefault();
-
                 if (rp != null)
                 {
                     rp.PhatSinh = customerList[i].TongNo - rp.TonDau;
@@ -480,7 +490,13 @@ namespace BookstoreManager.ViewModels
                             TongNo = TotalDebt + MoneyRemained
                         };
                         DataProvider.Ins.DB.KHACHHANGs.Add(newcustomer);
-
+                        BAOCAOCONGNO newrp = new BAOCAOCONGNO();
+                        newrp.MaKhachHang = IdCustomer;
+                        newrp.Thang = DateTime.Now.Month;
+                        newrp.Nam = DateTime.Now.Year;
+                        newrp.TonDau = newcustomer.TongNo;
+                        DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
+                        DataProvider.Ins.DB.SaveChanges();
                         HOADON newbill = new HOADON()
                         {
                             MaKhachHang = IdCustomer,
@@ -526,6 +542,9 @@ namespace BookstoreManager.ViewModels
 
                         foreach (var item in ListBook)
                         {
+                            SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
+                            book.SoLuongTon = book.SoLuongTon - item.Number;
+                            DataProvider.Ins.DB.SaveChanges();
                             CHITIETHOADON detailbill = new CHITIETHOADON()
                             {
                                 MaHoaDon = newbill.MaHoaDon,
