@@ -102,6 +102,8 @@ namespace BookstoreManager.ViewModels
             {
                 CreateInvReport(now.AddDays(-1));
                 CreateDebtReport(now.AddDays(-1));
+                MyMessageQueue.Enqueue("Đã tạo báo cáo");
+
             }
             else
             {
@@ -192,6 +194,7 @@ namespace BookstoreManager.ViewModels
         }
         int GetFirstQuanityInvRp(int bookId)
         {
+            
             var today = DateTime.Today;
             var month = new DateTime(today.Year, today.Month, 1);
             var first = month.AddMonths(-1);
