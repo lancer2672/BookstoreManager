@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         
         WindowStartupLocation="CenterScreen"
-         Title="Sửa thông tin" Height="380" Width="500">
+         Title="Sửa thông tin" Height="340" Width="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -82,7 +82,7 @@
                     </TextBox.Text>
                 </TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <TextBox 
                          Name="CustomerDebt"
                          materialDesign:HintAssist.Hint="Tổng nợ">
@@ -98,7 +98,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-            </StackPanel>
+            </StackPanel>-->
             <StackPanel Margin="0 20 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                 
                 <Button Margin="0 0 20 0" Content="Lưu" 
@@ -120,7 +120,7 @@
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerName}" Value="False"/>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerPhoneNumber}" Value="False"/>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerEmail}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerDebt}" Value="False"/>
+                                        <!--<Condition Binding="{Binding Path=(Validation.HasError), ElementName=CustomerDebt}" Value="False"/>-->
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>

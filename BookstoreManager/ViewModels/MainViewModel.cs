@@ -95,16 +95,22 @@ namespace BookstoreManager.ViewModels
         {
             DateTime now = DateTime.Now;
             int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
-            if (DateTime.Now.Day == 10)
+            if (DateTime.Now.Day == 1)
             {
 
-                if (IsCreatedReport(now.AddDays(-1)) == false)
+                //if (IsCreatedReport(now.AddMonths(-1)) == false)
+                //{
+                //    CreateInvReport(now.AddMonths(-1));
+                //    CreateDebtReport(now.AddMonths(-1));
+                //    MyMessageQueue.Enqueue("Đã tạo báo cáo");
+                //}
+                if (IsCreatedReport(now) == false)
                 {
-                    CreateInvReport(now.AddDays(-1));
-                    CreateDebtReport(now.AddDays(-1));
+                    CreateInvReport(now);
+                    CreateDebtReport(now);
                     MyMessageQueue.Enqueue("Đã tạo báo cáo");
                 }
-                    
+
             }
             else
             {
@@ -112,13 +118,6 @@ namespace BookstoreManager.ViewModels
                 MyMessageQueue.Enqueue("Còn " + day.ToString() + " ngày nữa sẽ tới ngày tạo báo cáo");
             }
         }
-        bool IsCreatedReport(DateTime time)
-        {
-            //  
-            List<BAOCAOCONGNO> list = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.Thang == time.Month && t.Nam == time.Year).ToList();
-            return list.Count == 0 ? false : true;
-        }
-
         void CreateDebtReport(DateTime now)
         {
             List<KHACHHANG> customerList = DataProvider.Ins.DB.KHACHHANGs.ToList();
@@ -152,6 +151,13 @@ namespace BookstoreManager.ViewModels
                 throw (ex);
             }
         }
+        bool IsCreatedReport(DateTime time)
+        {
+            //  
+            List<BAOCAOCONGNO> list = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.Thang == time.Month && t.Nam == time.Year).ToList();
+            return list.Count == 0 ? false : true;
+        }
+
         void CreateInvReport(DateTime now)
         {
            
@@ -192,7 +198,7 @@ namespace BookstoreManager.ViewModels
             var month = new DateTime(today.Year, today.Month, 1);
             var first = month.AddMonths(-1);
             //var last = month.AddDays(-1);
-            BAOCAOTON report = DataProvider.Ins.DB.BAOCAOTONs.Where(t => t.MaSach == customerId && t.Thang == first.Month && t.Nam == first.Year).FirstOrDefault();
+            BAOCAOCONGNO report = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.MaKhachHang == customerId && t.Thang == first.Month && t.Nam == first.Year).FirstOrDefault();
             if (report == null)
             {
                 return 0;
