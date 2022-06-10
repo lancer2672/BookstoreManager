@@ -508,6 +508,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="How To Use\AppImages\account.png" />
+    <Resource Include="How To Use\AppImages\addBook.png" />
+    <Resource Include="How To Use\AppImages\bookList.png" />
+    <Resource Include="How To Use\AppImages\bookType.png" />
+    <Resource Include="How To Use\AppImages\customers.png" />
+    <Resource Include="How To Use\AppImages\debtReport.png" />
+    <Resource Include="How To Use\AppImages\inventoryReport.png" />
+    <Resource Include="How To Use\AppImages\invoice.png" />
+    <Resource Include="How To Use\AppImages\login.png" />
+    <Resource Include="How To Use\AppImages\mainWindow.png" />
+    <Resource Include="How To Use\AppImages\receipts.png" />
+    <Resource Include="How To Use\AppImages\regulation.png" />
     <Content Include="Models\Db\BookstoreManagerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookstoreManagerModel.edmx</DependentUpon>

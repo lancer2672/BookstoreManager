@@ -71,6 +71,8 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                     _receiptViewModel.MyMessageQueue.Enqueue("Thêm khách hàng thành công!");
                     _receiptViewModel.CustomerName = CustomerName;
                     _receiptViewModel.CustomerPhoneNumber = CustomerPhoneNumber;
+                    _receiptViewModel.CustomerAddress = CustomerAddress;
+                    _receiptViewModel.CustomerEmail = CustomerEmail;
                     RefreshAddCustomerForm();
                     BAOCAOCONGNO newrp = new BAOCAOCONGNO();
                     newrp.MaKhachHang = newCustomer.MaKhachHang;

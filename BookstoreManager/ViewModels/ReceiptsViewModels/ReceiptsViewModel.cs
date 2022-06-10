@@ -54,6 +54,9 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         public ICommand COpenAddCustomer { get; set; }
         public ReceiptsViewModel()
         {
+            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
+            MyMessageQueue.DiscardDuplicates = true;
+
             Date = DateTime.Now;
             SelectedDate = DateTime.Now;
             ListReceipt = new ObservableCollection<ViewReceipt>();
@@ -65,8 +68,6 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             COpenAddCustomer = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddCustomerWindow(); });
             CSearchInfo = new RelayCommand<object>((p) => { return true; }, (p) => { SearchInfoCustomer(); });
 
-            MyMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
-            MyMessageQueue.DiscardDuplicates = true;
 
             LoadDataListView();
 
@@ -200,6 +201,10 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                                      && t.NgayLap.Value.Year == SelectedDate.Year
                                      && t.NgayLap.Value.Day == SelectedDate.Day).ToList();
             ListReceipt = GetDataFromDb(list);
+            if (ListReceipt.Count == 0)
+            {
+                MyMessageQueue.Enqueue("Không có dữ liệu @@");
+            }
         }
         public ObservableCollection<ViewReceipt> GetDataFromDb(List<PHIEUTHU> list)
         {
@@ -214,6 +219,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                 viewReceipt.CustomerPhoneNumber = customer.DienThoai;
                 viewReceipt.Date = (DateTime)item.NgayLap;
                 viewReceipt.CustomerPaid = (decimal)item.SoTienThu;
+                viewReceipt.CustomerID = customer.MaKhachHang;
                 receipts.Add(viewReceipt);
             }
             return receipts;

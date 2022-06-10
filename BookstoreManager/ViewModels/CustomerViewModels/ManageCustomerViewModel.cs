@@ -207,7 +207,7 @@ namespace BookstoreManager.ViewModels
                         bool check = true;
                         KHACHHANG newCustomer = new KHACHHANG()
                         {
-                            MaKhachHang = Convert.ToInt32(workSheet.Cells[i, j++].Value),
+                            MaKhachHang = Convert.ToInt64(workSheet.Cells[i, j++].Value),
                             HoTen = workSheet.Cells[i, j++].Value.ToString(),
                             DienThoai = workSheet.Cells[i, j++].Value.ToString(),
                             DiaChi = workSheet.Cells[i, j++].Value.ToString(),
