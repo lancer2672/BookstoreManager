@@ -56,14 +56,24 @@ namespace BookstoreManager.ViewModels.BookViewModels
         private THELOAI _selectedTheLoai;
         public THELOAI SelectedTheLoai { get => _selectedTheLoai; set { _selectedTheLoai = value; OnPropertyChanged(nameof(SelectedTheLoai)); } }
 
-        private bool _ischecked;
-        public bool ischecked { get { return _ischecked; } set { _ischecked = value; OnPropertyChanged(nameof(ischecked)); } }
+        
 
 
         private SnackbarMessageQueue _myMessageQueue;
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
         public ICommand CAddBook { get; set; }
+
+        public AddBookViewModel(ManageBookViewModel BookVM)
+        {
+            _manageBookViewModel = BookVM;
+            ListSACH = DataProvider.Ins.DB.SACHes.ToList();
+            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
+            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
+            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+
+            CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
+        }
 
         public bool CheckExistID(int bookid, List<SACH> listSACAH)
         {
@@ -78,12 +88,28 @@ namespace BookstoreManager.ViewModels.BookViewModels
             }
             return check;
         }
+
+        public int FindTacGia(string tentacgia)
+        {
+            int result = -1;
+            for (int i = 0; i < ListTACGIA.Count; i++)
+            {
+                if (ListTACGIA[i].HoTen == tentacgia)
+                {
+                    result = ListTACGIA[i].MaTacGia;
+                    break;
+                }
+            }
+            return result;
+        }
+
         public void ClearAddBookWindow()
         {
             BookId = BookInventory = BookPublishYear = 0;
             BookName = BookCategory = BookAuthor = BookPublishCom = "";
             BookPrice = 0;
         }
+
         public void AddBook(StackPanel p)
         {
             if(CheckExistID(BookId, ListSACH))
@@ -103,6 +129,31 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     newBook.SoLuongTon = BookInventory;
                     newBook.GiaNhap = BookPrice;
                     DataProvider.Ins.DB.SACHes.Add(newBook);
+                    if (FindTacGia(BookAuthor) == -1)
+                    {
+                        TACGIA newTACGIA = new TACGIA()
+                        {
+                            HoTen = BookAuthor
+                        };
+                        DataProvider.Ins.DB.TACGIAs.Add(newTACGIA);
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = newTACGIA.MaTacGia
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    else
+                    {
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = FindTacGia(BookAuthor)
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
                     try
                     {
                         DataProvider.Ins.DB.SaveChanges();
@@ -131,16 +182,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
                 }
             }
-        }
-        public AddBookViewModel(ManageBookViewModel BookVM)
-        {
-            _manageBookViewModel = BookVM;
-            //ListSACH = DataProvider.Ins.DB.SACHes.ToList();
-            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
-            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
-            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
-
-            CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
         }
     }
 }

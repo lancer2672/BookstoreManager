@@ -34,21 +34,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <WrapPanel Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox  
-                      Name="BookId"
-                    materialDesign:HintAssist.Hint="Mã sách"
-                         >
-                        <TextBox.Text>
-                            <Binding Path="BookId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
-                                 NotifyOnValidationError="True" ValidatesOnExceptions="True">
-                                <Binding.ValidationRules>
-                                    <rules:PositiveNumberRule></rules:PositiveNumberRule>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                </StackPanel>
+                
                 <StackPanel Orientation="Horizontal">
                     <TextBox 
                       Name="BookName"
@@ -57,7 +43,6 @@
                             <Binding Path="BookName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
                                  NotifyOnValidationError="True" ValidatesOnExceptions="True">
                                 <Binding.ValidationRules>
-                                    <rules:NameRule></rules:NameRule>
                                     <rules:NonEmptyRule></rules:NonEmptyRule>
                                 </Binding.ValidationRules>
                             </Binding>
@@ -72,9 +57,8 @@
                               IsEditable="True"
                               IsTextSearchCaseSensitive="False"
                               DisplayMemberPath="TenTheLoai" 
-                                        ItemsSource="{Binding ListTHELOAI}" 
-                              SelectionChanged="BookCategory_SelectionChanged"
-                                        SelectedItem="{Binding SelectedTheLoai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="41.399609375" VerticalContentAlignment="Bottom" FontSize="14" >
+                              ItemsSource="{Binding ListTHELOAI}" 
+                              SelectedItem="{Binding SelectedTheLoai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="41.399609375" VerticalContentAlignment="Bottom" FontSize="14" >
 
                     </ComboBox>
                 </StackPanel>
@@ -93,9 +77,6 @@
                         </TextBox.Text>
                     </TextBox>
                 </StackPanel>
-            </WrapPanel>
-
-            <WrapPanel Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
                     <TextBox  
                       Name="BookPublishCom"
@@ -112,6 +93,10 @@
                         </TextBox.Text>
                     </TextBox>
                 </StackPanel>
+            </WrapPanel>
+
+            <WrapPanel Grid.Column="1">
+                
                 <StackPanel Orientation="Horizontal">
                     <TextBox 
                       Name="BookPublishYear"
@@ -163,7 +148,6 @@
         <StackPanel 
                 Margin="0 20 30 0"
                 Orientation="Horizontal" HorizontalAlignment="Right">
-            <CheckBox x:Name="checkbox" IsEnabled="False" IsChecked="{Binding ischecked}"></CheckBox>
             <Button Margin="0 0 20 0" Content="Thêm" 
                     
                         Command="{Binding CAddBook}" CommandParameter="{Binding ElementName=AddBook}">
@@ -177,7 +161,7 @@
                 </i:Interaction.Triggers>
                 <Button.Style >
                     <Style TargetType="Button" BasedOn="{StaticResource TextBtn}">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="True"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -188,9 +172,8 @@
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookPublishYear}" Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookInventory}" Value="False"/>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BookPrice}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=checkbox, Path=IsChecked}" Value="True"/>
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="IsEnabled" Value="False"/>
                             </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
