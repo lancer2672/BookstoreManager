@@ -451,7 +451,7 @@ namespace BookstoreManager.ViewModels
                 MyMessageQueue.Enqueue("Vui lòng nhập số tiền trả!");
                 return;
             }
-                if (IdCustomer == 0 || NameCustomer == null || PhoneNumber == null )
+            if (IdCustomer == 0 || NameCustomer == null || PhoneNumber == null )
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng điền đủ thông tin khách hàng!");
@@ -490,6 +490,9 @@ namespace BookstoreManager.ViewModels
 
                         foreach (var item in ListBook)
                         {
+                            SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
+                            book.SoLuongTon = book.SoLuongTon - item.Number;
+                            DataProvider.Ins.DB.SaveChanges();
                             CHITIETHOADON detailbill = new CHITIETHOADON()
                             {
                                 MaHoaDon = newbill.MaHoaDon,
