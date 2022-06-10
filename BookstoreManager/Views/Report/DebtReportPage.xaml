@@ -85,9 +85,9 @@
                                                 Converter={StaticResource IndexConverter}}" />
                                                 <GridViewColumn Header="Tên khách hàng" DisplayMemberBinding="{Binding  CustomerName}"></GridViewColumn>
                                                 <GridViewColumn Header="Số điện thoại" DisplayMemberBinding="{Binding  CustomerPhone}"></GridViewColumn>
-                                                <GridViewColumn Header="Tồn đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Nợ đầu" DisplayMemberBinding="{Binding FirstQuantity}"></GridViewColumn>
                                                 <GridViewColumn Header="Phát sinh" DisplayMemberBinding="{Binding IncurredQuantity}"></GridViewColumn>
-                                                <GridViewColumn Header="Tồn cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>
+                                                <GridViewColumn Header="Nợ cuối" DisplayMemberBinding="{Binding EndQuantity}"></GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
