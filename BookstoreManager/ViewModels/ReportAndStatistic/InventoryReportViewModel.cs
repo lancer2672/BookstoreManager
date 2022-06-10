@@ -179,6 +179,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
                     MyMessageQueue.Enqueue("Không có thông tin");
                 }
                 DataListView.Clear();
+                DataListViewBookType.Clear();
                 Title = "Báo Cáo Tồn";
             }
         }

@@ -142,7 +142,7 @@
                         
                     </StackPanel>
                     <StackPanel Margin="20 0">
-                        <Label Content="Cho phép vượt tổng nợ" FontSize="18" FontWeight="Medium"></Label>
+                        <Label Content="Cho phép vượt tổng nợ (1 = cho phép)" FontSize="18" FontWeight="Medium"></Label>
                         <TextBox x:Name="txbDebtAvailable" Style="{StaticResource MaterialDesignTextBox}" FontSize="15" Width="100" HorizontalAlignment="Left">
                             <TextBox.Text>
                                 <Binding Path="DebtAvailable" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnExceptions="True">

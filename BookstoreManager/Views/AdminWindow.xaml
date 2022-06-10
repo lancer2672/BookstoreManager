@@ -84,7 +84,7 @@
             </syncfusion:NavigationItem>
 
             <syncfusion:SfNavigationDrawer.FooterItems >
-                <syncfusion:NavigationItem Header="Log Out" x:Name="LogOut">
+                <syncfusion:NavigationItem Header="Thoát" x:Name="LogOut">
                     <syncfusion:NavigationItem.Icon >
                         <Image Source="../Resources/Imgs/LogOutIcon.ico"></Image>
                     </syncfusion:NavigationItem.Icon>
