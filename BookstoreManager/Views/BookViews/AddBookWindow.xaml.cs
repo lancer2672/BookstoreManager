@@ -27,9 +27,5 @@ namespace BookstoreManager.Views.BookViews
             this.DataContext = AddBookVM;
         }
 
-        private void BookCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            this.checkbox.IsChecked = true;
-        }
     }
 }

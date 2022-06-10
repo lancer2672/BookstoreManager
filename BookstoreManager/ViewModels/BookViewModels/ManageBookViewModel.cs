@@ -20,7 +20,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
     public class ManageBookViewModel:BaseViewModel
     {
         private ObservableCollection<ViewBook> _listBook;
-        private List<SACH> _listSACH;
         private List<THELOAI> _listTHELOAI;
         private List<TACGIA> _listTACGIA; 
         private List<CHITIETTACGIA> _listCT_TACGIA;
@@ -32,7 +31,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         public ObservableCollection<ViewBook> ListBook { get => _listBook; set { _listBook = value; OnPropertyChanged(nameof(ListBook)); } }
         public List<THELOAI> ListTHELOAI { get => _listTHELOAI; set { _listTHELOAI = value; OnPropertyChanged(nameof(ListTHELOAI));} }
-        public List<SACH> ListSACH { get => _listSACH; set { _listSACH = value; OnPropertyChanged(nameof(ListSACH));  } }
         public List<TACGIA> ListTACGIA { get => _listTACGIA; set { _listTACGIA = value; OnPropertyChanged(nameof(ListTACGIA)); } }
         public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
         public ViewBook SelectedBook { get => _selectedBook; set { _selectedBook = value; OnPropertyChanged(nameof(SelectedBook)); } }
@@ -52,10 +50,10 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public ManageBookViewModel()
         {
             ListBook = new ObservableCollection<ViewBook>();
-            ListSACH = DataProvider.Ins.DB.SACHes.ToList();
-            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
-            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
-            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+            
+            //ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
+            //ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
+            //ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             LoadListBook();
 
             CImportExcel = new RelayCommand<object>((p) => { return true; }, (p) => { ImportFileExcel(); });
@@ -92,35 +90,19 @@ namespace BookstoreManager.ViewModels.BookViewModels
             List<CHITIETTACGIA> listCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             string author = "";
             int matacgia = 0;
-            //foreach (var item in listCT_TACGIA)
-            //{
-            //    if (masach == item.MaSach)
-            //    {
-            //        matacgia = (int)item.MaTacGia;
-            //        break;
-            //    }
-            //}
-            //foreach (var item in listTACGIA)
-            //{
-            //    if (matacgia == item.MaTacGia)
-            //    {
-            //        author = item.HoTen;
-            //        break;
-            //    }
-            //}
-            for (int i = 0; i < ListCT_TACGIA.Count; i++) 
+            for (int i = 0; i < listCT_TACGIA.Count; i++)
             {
-                if (masach == ListCT_TACGIA[i].MaSach)
+                if (masach == listCT_TACGIA[i].MaSach)
                 {
-                    matacgia = (int)ListCT_TACGIA[i].MaTacGia;
+                    matacgia = (int)listCT_TACGIA[i].MaTacGia;
                     break;
                 }
             }
-            for (int i = 0; i < ListTACGIA.Count; i++)
+            for (int i = 0; i < listTACGIA.Count; i++)
             {
-                if (matacgia == ListTACGIA[i].MaTacGia)
+                if (matacgia == listTACGIA[i].MaTacGia)
                 {
-                    author = ListTACGIA[i].HoTen;
+                    author = listTACGIA[i].HoTen;
                     break;
                 }
             }
@@ -129,19 +111,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public ObservableCollection<ViewBook> GetViewBookFromList(List<SACH> listSACH)
         {
             ObservableCollection<ViewBook> list = new ObservableCollection<ViewBook>();
-            //foreach (SACH book in listSACH)
-            //{
-            //    ViewBook newViewBook = new ViewBook();
-            //    newViewBook.Id = book.MaSach;
-            //    newViewBook.TitleBook = book.TenSach;
-            //    newViewBook.Category = FindCategory((int)book.MaTheLoai, ListTHELOAI);
-            //    newViewBook.NameAuthor = FindAuthor(book.MaSach, ListTACGIA, ListCT_TACGIA);
-            //    newViewBook.PublishCompany = book.NhaXuatBan;
-            //    newViewBook.PublishYear = (int)book.NamXuatBan;
-            //    newViewBook.InventoryNumber = (int)book.SoLuongTon;
-            //    newViewBook.Price = (decimal)book.GiaNhap;
-            //    list.Add(newViewBook);
-            //}
+            
             for (int i = 0; i < listSACH.Count; i++) 
             {
                 ViewBook newViewBook = new ViewBook();
@@ -232,17 +202,11 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public bool CheckExistID(string bookname)
         {
             bool check = false;
-            //foreach (SACH book in listSACAH)
-            //{
-            //    if (bookname == book.TenSach)
-            //    {
-            //        check = true;
-            //        break;
-            //    }
-            //}
-            for (int i = 0; i < ListSACH.Count; i++) 
+
+            List<SACH> listSACH = DataProvider.Ins.DB.SACHes.ToList();
+            for (int i = 0; i < listSACH.Count; i++) 
             {
-                if (bookname == ListSACH[i].TenSach)
+                if (bookname == listSACH[i].TenSach)
                 {
                     check = true;
                     break;

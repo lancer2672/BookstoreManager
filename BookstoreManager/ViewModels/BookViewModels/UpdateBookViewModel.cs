@@ -64,11 +64,23 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         public ICommand CUpdateBook { get; set; }
 
+
+        public UpdateBookViewModel(ManageBookViewModel BookVM)
+        {
+            _manageBookViewModel = BookVM;
+            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
+
+            LoadWindow();
+
+            CUpdateBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { UpdateBook(p); });
+        }
+
         public void LoadCategory()
         {
             THELOAI theloai = DataProvider.Ins.DB.THELOAIs.Where(t => t.TenTheLoai == _manageBookViewModel.SelectedBook.Category).FirstOrDefault();
             SelectedTheLoai = theloai;
         }
+
         public void LoadWindow()
         {
             ViewBook book = _manageBookViewModel.SelectedBook;
@@ -81,12 +93,29 @@ namespace BookstoreManager.ViewModels.BookViewModels
             BookInventory = book.InventoryNumber;
             BookPrice = book.Price;
         }
+
+        public int FindTacGia(string tentacgia)
+        {
+            List<TACGIA> listTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
+            int result = -1;
+            for (int i = 0; i < listTACGIA.Count; i++)
+            {
+                if (listTACGIA[i].HoTen == tentacgia)
+                {
+                    result = listTACGIA[i].MaTacGia;
+                    break;
+                }
+            }
+            return result;
+        }
+
         public void ClearUpdateBookWindow()
         {
             BookId = BookInventory = BookPublishYear = 0;
             BookName = BookCategory = BookAuthor = BookPublishCom = "";
             BookPrice = 0;
         }
+
         public void UpdateBook(StackPanel p)
         {
             if (Validator.IsValid(p))
@@ -98,6 +127,38 @@ namespace BookstoreManager.ViewModels.BookViewModels
                 newBook.NamXuatBan = BookPublishYear;
                 newBook.SoLuongTon = BookInventory;
                 newBook.GiaNhap = BookPrice;
+                if (_manageBookViewModel.SelectedBook.NameAuthor != BookAuthor)
+                {
+                    //int oldAuthorId = FindTacGia(_manageBookViewModel.SelectedBook.NameAuthor);
+                    CHITIETTACGIA oldCT_TacGia = DataProvider.Ins.DB.CHITIETTACGIAs.Where(t=>t.MaSach == BookId).FirstOrDefault();
+                    DataProvider.Ins.DB.CHITIETTACGIAs.Remove(oldCT_TacGia);
+                    DataProvider.Ins.DB.SaveChanges();
+                    if (FindTacGia(BookAuthor) == -1)
+                    {
+                        TACGIA newTACGIA = new TACGIA()
+                        {
+                            HoTen = BookAuthor
+                        };
+                        DataProvider.Ins.DB.TACGIAs.Add(newTACGIA);
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = newTACGIA.MaTacGia
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    else
+                    {
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = FindTacGia(BookAuthor)
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                }
                 try
                 {
                     DataProvider.Ins.DB.SaveChanges();
@@ -116,16 +177,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
                 _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
 
             }
-        }
-
-        public UpdateBookViewModel(ManageBookViewModel BookVM)
-        {
-            _manageBookViewModel = BookVM;
-            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
-           
-            LoadWindow();
-
-            CUpdateBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { UpdateBook(p); });
         }
     }
 }
