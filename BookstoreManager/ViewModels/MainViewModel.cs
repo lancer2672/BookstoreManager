@@ -98,7 +98,7 @@ namespace BookstoreManager.ViewModels
         {
             DateTime now = DateTime.Now;
             int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
-            if (DateTime.Now.Day == 1)
+            if (DateTime.Now.Day == 10)
             {
                 CreateInvReport(now.AddDays(-1));
                 CreateDebtReport(now.AddDays(-1));
