@@ -30,11 +30,11 @@
                     </Ellipse>
                 </syncfusion:NavigationItem.Icon>
             </syncfusion:NavigationItem>
-            <syncfusion:NavigationItem Header="Khách Hàng" x:Name="NavCustomer">
+            <!--<syncfusion:NavigationItem Header="Khách Hàng" x:Name="NavCustomer">
                 <syncfusion:NavigationItem.Icon>
                     <Image Source="../Resources/Imgs/Customer.png"></Image>
                 </syncfusion:NavigationItem.Icon>
-            </syncfusion:NavigationItem>
+            </syncfusion:NavigationItem>-->
             <syncfusion:NavigationItem Header="Quản lý sách" x:Name="NavBook" IsExpanded="True">
                 <syncfusion:NavigationItem.Icon>
                     <Image Source="../Resources/Imgs/BookStore.png"></Image>

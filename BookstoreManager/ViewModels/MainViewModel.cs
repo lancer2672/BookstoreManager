@@ -98,14 +98,14 @@ namespace BookstoreManager.ViewModels
         {
             DateTime now = DateTime.Now;
             int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
-            if (DateTime.Now.Day == DateTime.Now.Day)
+            if (DateTime.Now.Day == 1)
             {
-                CreateInvReport(now);
-                CreateDebtReport(now);
+                CreateInvReport(now.AddDays(-1));
+                CreateDebtReport(now.AddDays(-1));
             }
             else
             {
-                int day = daysInMonth - DateTime.Now.Day;
+                int day = daysInMonth - DateTime.Now.Day + 1;
                 MyMessageQueue.Enqueue("Còn " + day.ToString() + " ngày nữa sẽ tới ngày tạo báo cáo");
             }
         }
