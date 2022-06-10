@@ -45,38 +45,60 @@ namespace BookstoreManager.ViewModels.BookViewModels
         public List<SACH> ListSACH { get => _listSACAH; set { _listSACAH = value; OnPropertyChanged(nameof(ListSACH)); } }
 
         private List<THELOAI> _listTHELOAI;
-        public List<THELOAI> ListTHELOAI { get => _listTHELOAI; set { _listTHELOAI = value; OnPropertyChanged(nameof(ListTHELOAI)); } }
-
         private List<TACGIA> _listTACGIA;
-        public List<TACGIA> ListTACGIA { get => _listTACGIA; set { _listTACGIA = value; OnPropertyChanged(nameof(ListTACGIA)); } }
-
         private List<CHITIETTACGIA> _listCT_TACGIA;
-        public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
-
         private THELOAI _selectedTheLoai;
-        public THELOAI SelectedTheLoai { get => _selectedTheLoai; set { _selectedTheLoai = value; OnPropertyChanged(nameof(SelectedTheLoai)); } }
 
         private bool _ischecked;
-        public bool ischecked { get { return _ischecked; } set { _ischecked = value; OnPropertyChanged(nameof(ischecked)); } }
-
-
         private SnackbarMessageQueue _myMessageQueue;
+
+        public List<THELOAI> ListTHELOAI { get => _listTHELOAI; set { _listTHELOAI = value; OnPropertyChanged(nameof(ListTHELOAI)); } }
+        public List<TACGIA> ListTACGIA { get => _listTACGIA; set { _listTACGIA = value; OnPropertyChanged(nameof(ListTACGIA)); } }
+        public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
+
+        public THELOAI SelectedTheLoai { get => _selectedTheLoai; set { _selectedTheLoai = value; OnPropertyChanged(nameof(SelectedTheLoai)); } }
+        public bool ischecked { get { return _ischecked; } set { _ischecked = value; OnPropertyChanged(nameof(ischecked)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
         public ICommand CAddBook { get; set; }
 
-        public bool CheckExistID(int bookid, List<SACH> listSACAH)
+        public AddBookEntryViewModel(EntryBookViewModel EntryBookVM)
         {
+            _entryBookViewModel = EntryBookVM;
+            ListSACH = DataProvider.Ins.DB.SACHes.ToList();
+            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
+            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
+            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+
+            CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
+        }
+
+        public bool CheckExistID(int bookid)
+        {
+            List<SACH> listSACH = DataProvider.Ins.DB.SACHes.ToList();
             bool check = false;
-            foreach (SACH book in listSACAH)
+            for (int i = 0; i < listSACH.Count; i++) 
             {
-                if (bookid == book.MaSach)
+                if (bookid == listSACH[i].MaSach)
                 {
                     check = true;
                     break;
                 }
             }
             return check;
+        }
+        public int FindTacGia(string tentacgia)
+        {
+            int result = -1;
+            for (int i = 0; i < ListTACGIA.Count; i++)
+            {
+                if (ListTACGIA[i].HoTen == tentacgia)
+                {
+                    result = ListTACGIA[i].MaTacGia;
+                    break;
+                }
+            }
+            return result;
         }
         public void ClearAddBookWindow()
         {
@@ -86,7 +108,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
         }
         public void AddBook(StackPanel p)
         {
-            if (CheckExistID(BookId, ListSACH))
+            if (CheckExistID(BookId))
             {
                 _entryBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
             }
@@ -103,6 +125,32 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     newBook.SoLuongTon = BookInventory;
                     newBook.GiaNhap = BookPrice;
                     DataProvider.Ins.DB.SACHes.Add(newBook);
+                    if (FindTacGia(BookAuthor) == -1)
+                    {
+                        TACGIA newTACGIA = new TACGIA()
+                        {
+                            HoTen = BookAuthor
+                        };
+                        DataProvider.Ins.DB.TACGIAs.Add(newTACGIA);
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = newTACGIA.MaTacGia
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    else
+                    {
+                        CHITIETTACGIA newCT_TACGIA = new CHITIETTACGIA()
+                        {
+                            MaSach = newBook.MaSach,
+                            MaTacGia = FindTacGia(BookAuthor)
+                        };
+                        DataProvider.Ins.DB.CHITIETTACGIAs.Add(newCT_TACGIA);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    
                     try
                     {
                         DataProvider.Ins.DB.SaveChanges();
@@ -132,15 +180,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
                 }
             }
         }
-        public AddBookEntryViewModel(EntryBookViewModel EntryBookVM)
-        {
-            _entryBookViewModel = EntryBookVM;
-            //ListSACH = DataProvider.Ins.DB.SACHes.ToList();
-            ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
-            ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
-            ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
-
-            CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
-        }
+        
     }
 }
