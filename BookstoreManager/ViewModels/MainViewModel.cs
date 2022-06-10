@@ -38,7 +38,6 @@ namespace BookstoreManager.ViewModels
         private List<TACGIA> _listTACGIA;
         private List<CHITIETTACGIA> _listCT_TACGIA;
         private List<KHACHHANG> _listKHACHHANG;
-        private List<THAMSO> _listTHAMSO;
         private SnackbarMessageQueue _myMessageQueue;
 
         public int IdCustomer { get { return _idcustomer; } set { _idcustomer = value; OnPropertyChanged(nameof(IdCustomer)); LoadInfor(); } }
@@ -61,7 +60,6 @@ namespace BookstoreManager.ViewModels
         public List<TACGIA> ListTACGIA { get => _listTACGIA; set { _listTACGIA = value; OnPropertyChanged(nameof(ListTACGIA)); } }
         public List<CHITIETTACGIA> ListCT_TACGIA { get => _listCT_TACGIA; set { _listCT_TACGIA = value; OnPropertyChanged(nameof(ListCT_TACGIA)); } }
         public List<KHACHHANG> ListKHACHHANG { get { return _listKHACHHANG; } set { _listKHACHHANG = value; OnPropertyChanged(nameof(ListKHACHHANG)); } }
-        public List<THAMSO> ListTHAMSO { get => _listTHAMSO; set { _listTHAMSO = value; OnPropertyChanged(nameof(ListTHAMSO)); } }
         public SnackbarMessageQueue MyMessageQueue { get { return _myMessageQueue; } set { _myMessageQueue = value; OnPropertyChanged(nameof(MyMessageQueue)); } }
 
         public ICommand LoadedWidnowCommand { get; set; }
@@ -76,7 +74,6 @@ namespace BookstoreManager.ViewModels
             ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
             ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             ListKHACHHANG = DataProvider.Ins.DB.KHACHHANGs.ToList();
-            ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
             DateTime today = DateTime.Now;
             Date = today.ToString("dd/MM/yyyy");
 
@@ -352,6 +349,7 @@ namespace BookstoreManager.ViewModels
         }
         public int FindThamSo(string tenthamso)
         {
+            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
             int i;
             for (i = 0; i < ListTHAMSO.Count; i++)
             {
@@ -377,11 +375,12 @@ namespace BookstoreManager.ViewModels
             }
             else
             {
+                List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
                 if ((SelectedBook.SoLuongTon - NumberBook) < ListTHAMSO[FindThamSo("LuongTonToiThieuSauKhiBanSach")].GiaTri)
                 {
                     string message = "Không thể thêm vì không đủ lượng tồn tối thiểu (>" + Convert.ToString(ListTHAMSO[FindThamSo("LuongTonToiThieuSauKhiBanSach")].GiaTri) + ") !";
                     MyMessageQueue.Clear();
-                    MyMessageQueue.Enqueue("Không thể thêm vì không đủ lượng tồn tối thiểu ( ");
+                    MyMessageQueue.Enqueue(message);
                 }
                 else
                 {
@@ -458,6 +457,7 @@ namespace BookstoreManager.ViewModels
         }
         public void CreateBillBook()
         {
+            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
             if (MoneyReceived == 0)
             {
                 MyMessageQueue.Clear();
@@ -468,100 +468,106 @@ namespace BookstoreManager.ViewModels
             {
                 MyMessageQueue.Clear();
                 MyMessageQueue.Enqueue("Vui lòng điền đủ thông tin khách hàng!");
+                return;
+            }
+            if((TotalDebt + MoneyRemained) >= ListTHAMSO[FindThamSo("TongNoToiDa")].GiaTri)
+            {
+                string message = "Không thể lập hóa đơn vì tổng nợ vượt quá tổng nợ tối đa (" + Convert.ToString(ListTHAMSO[FindThamSo("TongNoToiDa")].GiaTri) + ") !";
+                MyMessageQueue.Clear();
+                MyMessageQueue.Enqueue(message);
+                return;
+            }
+            if (ListBook.Count == 0)
+            {
+                MyMessageQueue.Clear();
+                MyMessageQueue.Enqueue("Vui lòng chọn sách để lập hóa đơn!");
             }
             else
             {
-                if (ListBook.Count == 0)
+                if (CheckCustomer() == -1)
                 {
+                    KHACHHANG newcustomer = new KHACHHANG()
+                    {
+                        MaKhachHang = IdCustomer,
+                        HoTen = NameCustomer,
+                        DienThoai = PhoneNumber,
+                        DiaChi = Address,
+                        Email = Email,
+                        TongNo = TotalDebt + MoneyRemained
+                    };
+                    DataProvider.Ins.DB.KHACHHANGs.Add(newcustomer);
+                    BAOCAOCONGNO newrp = new BAOCAOCONGNO();
+                    newrp.MaKhachHang = IdCustomer;
+                    newrp.Thang = DateTime.Now.Month;
+                    newrp.Nam = DateTime.Now.Year;
+                    newrp.TonDau = newcustomer.TongNo;
+                    DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
+                    DataProvider.Ins.DB.SaveChanges();
+                    HOADON newbill = new HOADON()
+                    {
+                        MaKhachHang = IdCustomer,
+                        NgayLap = DateTime.Today,
+                        TongTien = TotalMoney,
+                        SoTienTra = MoneyReceived,
+                        SoTienConLai = MoneyRemained
+                    };
+                    DataProvider.Ins.DB.HOADONs.Add(newbill);
+
+                    foreach (var item in ListBook)
+                    {
+                        SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
+                        book.SoLuongTon = book.SoLuongTon - item.Number;
+                        DataProvider.Ins.DB.SaveChanges();
+                        CHITIETHOADON detailbill = new CHITIETHOADON()
+                        {
+                            MaHoaDon = newbill.MaHoaDon,
+                            MaSach = item.Id,
+                            SoLuong = item.Number,
+                            DonGia = item.SellPrice,
+                            ThanhTien = item.SellPrice * item.Number
+                        };
+                        DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
+                    }
+                    DataProvider.Ins.DB.SaveChanges();
                     MyMessageQueue.Clear();
-                    MyMessageQueue.Enqueue("Vui lòng chọn sách để lập hóa đơn!");
+                    MyMessageQueue.Enqueue("Tạo hóa đơn thành công!");
                 }
                 else
                 {
-                    if (CheckCustomer() == -1)
+                    KHACHHANG oldcustomer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == IdCustomer).FirstOrDefault();
+                    oldcustomer.TongNo += MoneyRemained;
+                    HOADON newbill = new HOADON()
                     {
-                        KHACHHANG newcustomer = new KHACHHANG()
-                        {
-                            MaKhachHang = IdCustomer,
-                            HoTen = NameCustomer,
-                            DienThoai = PhoneNumber,
-                            DiaChi = Address,
-                            Email = Email,
-                            TongNo = TotalDebt + MoneyRemained
-                        };
-                        DataProvider.Ins.DB.KHACHHANGs.Add(newcustomer);
-                        BAOCAOCONGNO newrp = new BAOCAOCONGNO();
-                        newrp.MaKhachHang = IdCustomer;
-                        newrp.Thang = DateTime.Now.Month;
-                        newrp.Nam = DateTime.Now.Year;
-                        newrp.TonDau = newcustomer.TongNo;
-                        DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
-                        DataProvider.Ins.DB.SaveChanges();
-                        HOADON newbill = new HOADON()
-                        {
-                            MaKhachHang = IdCustomer,
-                            NgayLap = DateTime.Today,
-                            TongTien = TotalMoney,
-                            SoTienTra = MoneyReceived,
-                            SoTienConLai = MoneyRemained
-                        };
-                        DataProvider.Ins.DB.HOADONs.Add(newbill);
+                        MaKhachHang = IdCustomer,
+                        NgayLap = DateTime.Today,
+                        TongTien = TotalMoney,
+                        SoTienTra = MoneyReceived,
+                        SoTienConLai = MoneyRemained
+                    };
+                    DataProvider.Ins.DB.HOADONs.Add(newbill);
 
-                        foreach (var item in ListBook)
-                        {
-                            SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
-                            book.SoLuongTon = book.SoLuongTon - item.Number;
-                            DataProvider.Ins.DB.SaveChanges();
-                            CHITIETHOADON detailbill = new CHITIETHOADON()
-                            {
-                                MaHoaDon = newbill.MaHoaDon,
-                                MaSach = item.Id,
-                                SoLuong = item.Number,
-                                DonGia = item.SellPrice,
-                                ThanhTien = item.SellPrice * item.Number
-                            };
-                            DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
-                        }
-                        DataProvider.Ins.DB.SaveChanges();
-                        MyMessageQueue.Clear();
-                        MyMessageQueue.Enqueue("Tạo hóa đơn thành công!");
-                    }
-                    else
+                    foreach (var item in ListBook)
                     {
-                        KHACHHANG oldcustomer = DataProvider.Ins.DB.KHACHHANGs.Where(t => t.MaKhachHang == IdCustomer).FirstOrDefault();
-                        oldcustomer.TongNo += MoneyRemained;
-                        HOADON newbill = new HOADON()
-                        {
-                            MaKhachHang = IdCustomer,
-                            NgayLap = DateTime.Today,
-                            TongTien = TotalMoney,
-                            SoTienTra = MoneyReceived,
-                            SoTienConLai = MoneyRemained
-                        };
-                        DataProvider.Ins.DB.HOADONs.Add(newbill);
-
-                        foreach (var item in ListBook)
-                        {
-                            SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
-                            book.SoLuongTon = book.SoLuongTon - item.Number;
-                            DataProvider.Ins.DB.SaveChanges();
-                            CHITIETHOADON detailbill = new CHITIETHOADON()
-                            {
-                                MaHoaDon = newbill.MaHoaDon,
-                                MaSach = item.Id,
-                                SoLuong = item.Number,
-                                DonGia = item.SellPrice,
-                                ThanhTien = item.SellPrice * item.Number
-                            };
-                            DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
-                        }
+                        SACH book = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == item.Id).FirstOrDefault();
+                        book.SoLuongTon = book.SoLuongTon - item.Number;
                         DataProvider.Ins.DB.SaveChanges();
-                        MyMessageQueue.Clear();
-                        MyMessageQueue.Enqueue("Tạo hóa đơn thành công!");
+                        CHITIETHOADON detailbill = new CHITIETHOADON()
+                        {
+                            MaHoaDon = newbill.MaHoaDon,
+                            MaSach = item.Id,
+                            SoLuong = item.Number,
+                            DonGia = item.SellPrice,
+                            ThanhTien = item.SellPrice * item.Number
+                        };
+                        DataProvider.Ins.DB.CHITIETHOADONs.Add(detailbill);
                     }
-                    Clear();
+                    DataProvider.Ins.DB.SaveChanges();
+                    MyMessageQueue.Clear();
+                    MyMessageQueue.Enqueue("Tạo hóa đơn thành công!");
                 }
+                Clear();
             }
+
         }
     }
 }
