@@ -155,7 +155,22 @@ namespace BookstoreManager.ViewModels
         {
             //  
             List<BAOCAOCONGNO> list = DataProvider.Ins.DB.BAOCAOCONGNOes.Where(t => t.Thang == time.Month && t.Nam == time.Year).ToList();
-            return list.Count == 0 ? false : true;
+            List<BAOCAOTON> listInv = DataProvider.Ins.DB.BAOCAOTONs.Where(t => t.Thang == time.Month && t.Nam == time.Year).ToList();
+            for (int i = 0;i < list.Count; i++)
+            {
+                if(list[i].TonDau != 0)
+                {
+                    return true;
+                }
+            }
+            for (int i = 0; i < listInv.Count; i++)
+            {
+                if (listInv[i].TonDau != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         void CreateInvReport(DateTime now)

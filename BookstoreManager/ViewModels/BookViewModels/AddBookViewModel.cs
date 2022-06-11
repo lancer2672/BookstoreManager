@@ -171,8 +171,8 @@ namespace BookstoreManager.ViewModels.BookViewModels
                     report.Thang = now.Month;
                     report.Nam = now.Year;
                     report.MaSach = newBook.MaSach;
-                    report.TonDau = newBook.SoLuongTon;
-                    report.PhatSinh = 0;
+                    report.TonDau =0;
+                    report.PhatSinh = newBook.SoLuongTon;
                     report.TonCuoi = 0;
                     DataProvider.Ins.DB.BAOCAOTONs.Add(report);
                     DataProvider.Ins.DB.SaveChanges();
