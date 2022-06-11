@@ -40,6 +40,8 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         private decimal _bookprice;
         public decimal BookPrice { get { return _bookprice; } set { _bookprice = value; OnPropertyChanged(nameof(BookPrice)); } }
+        private string _warning;
+        public string warning { get { return _warning; } set { _warning = value; OnPropertyChanged(nameof(warning)); } }
 
         private List<SACH> _listSACAH;
         public List<SACH> ListSACH { get => _listSACAH; set { _listSACAH = value; OnPropertyChanged(nameof(ListSACH)); } }
@@ -69,6 +71,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             ListTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
             ListTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
             ListCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
+           
 
             CAddBook = new RelayCommand<StackPanel>((p) => { return true; }, (p) => { AddBook(p); });
         }
@@ -100,19 +103,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             }
             return result;
         }
-        public int FindThamSo(string tenthamso)
-        {
-            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
-            int i;
-            for (i = 0; i < ListTHAMSO.Count; i++)
-            {
-                if (ListTHAMSO[i].TenThamSo == tenthamso)
-                {
-                    break;
-                }
-            }
-            return i;
-        }
+        
         public void ClearAddBookWindow()
         {
             BookId = BookInventory = BookPublishYear = 0;
@@ -121,14 +112,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
         }
         public void AddBook(StackPanel p)
         {
-            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
-            if (BookInventory < ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri)
-            {
-                string message = "Số lượng nhập phải lớn hơn " + Convert.ToString(ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri) + "!";
-                _entryBookViewModel.MyMessageQueue.Clear();
-                _entryBookViewModel.MyMessageQueue.Enqueue(message);
-                return;
-            }
+            
             if (CheckExistID(BookId))
             {
                 _entryBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");

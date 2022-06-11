@@ -103,19 +103,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
             return result;
         }
 
-        public int FindThamSo(string tenthamso)
-        {
-            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
-            int i;
-            for (i = 0; i < ListTHAMSO.Count; i++)
-            {
-                if (ListTHAMSO[i].TenThamSo == tenthamso)
-                {
-                    break;
-                }
-            }
-            return i;
-        }
+        
 
         public void ClearAddBookWindow()
         {
@@ -126,14 +114,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         public void AddBook(StackPanel p)
         {
-            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
-            if (BookInventory < ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri)
-            {
-                string message = "Số lượng nhập phải lớn hơn " + Convert.ToString(ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri) + "!";
-                _manageBookViewModel.MyMessageQueue.Clear();
-                _manageBookViewModel.MyMessageQueue.Enqueue(message);
-                return;
-            }
+            
             if (CheckExistID(BookId, ListSACH))
             {
                 _manageBookViewModel.MyMessageQueue.Enqueue("Lỗi. Thông tin sách không hợp lệ");
