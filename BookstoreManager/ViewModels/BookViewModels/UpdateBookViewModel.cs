@@ -127,8 +127,6 @@ namespace BookstoreManager.ViewModels.BookViewModels
                 newBook.MaTheLoai = SelectedTheLoai.MaTheLoai;
                 newBook.NhaXuatBan = BookPublishCom;
                 newBook.NamXuatBan = BookPublishYear;
-                newBook.SoLuongTon = BookInventory;
-                newBook.GiaNhap = BookPrice;
                 if (_manageBookViewModel.SelectedBook.NameAuthor != BookAuthor)
                 {
                     //int oldAuthorId = FindTacGia(_manageBookViewModel.SelectedBook.NameAuthor);
