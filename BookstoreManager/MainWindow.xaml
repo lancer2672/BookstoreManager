@@ -19,6 +19,9 @@
             <TabItem Header="Hóa Đơn">
                 <invoice:InvoiceUserControl></invoice:InvoiceUserControl>
             </TabItem>
+            <TabItem Header="Quản Lý Hóa Đơn">
+                <invoice:InvoiceListUserControl></invoice:InvoiceListUserControl>
+            </TabItem>
             <TabItem Header="Phiếu Thu">
                 <receipt:ReceiptWindow  Width="1096" ></receipt:ReceiptWindow>
             </TabItem>
@@ -144,7 +147,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="ADMIN">
+            <TabItem Header="Đăng Nhập">
                 <local:LoginUC></local:LoginUC>
             </TabItem>
         </TabControl>

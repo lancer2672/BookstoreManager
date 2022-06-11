@@ -209,6 +209,7 @@
     <Compile Include="Models\InventoryReportItem.cs" />
     <Compile Include="Models\ViewBook.cs" />
     <Compile Include="Models\ViewCustomer.cs" />
+    <Compile Include="Models\ViewInvoice.cs" />
     <Compile Include="Models\ViewReceipt.cs" />
     <Compile Include="Resources\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
@@ -228,6 +229,7 @@
     <Compile Include="ViewModels\BookViewModels\UpdateBookViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModels\UpdateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceViewModels\InvoiceListViewModel.cs" />
     <Compile Include="ViewModels\ReceiptsViewModels\AddCustomerModel.cs" />
     <Compile Include="ViewModels\ReceiptsViewModels\ReceiptsViewModel.cs" />
     <Compile Include="ViewModels\RegulationViewModels\RegulationViewModel.cs" />
@@ -272,6 +274,9 @@
     </Compile>
     <Compile Include="Views\Customers\UpdateCustomerWindow.xaml.cs">
       <DependentUpon>UpdateCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoice\InvoiceListUserControl.xaml.cs">
+      <DependentUpon>InvoiceListUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Invoice\InvoiceUserControl.xaml.cs">
       <DependentUpon>InvoiceUserControl.xaml</DependentUpon>
@@ -382,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customers\UpdateCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Invoice\InvoiceListUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
