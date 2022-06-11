@@ -76,36 +76,39 @@ namespace BookstoreManager.ViewModels.BookViewModels
             SaveBookListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookList(); });
             COpenAddBookEntryWindow = new RelayCommand<object>((p) => { return true; }, (p) => { OpenAddBookEntryWindow(); });
         }
-        public string FindCategory(int matheloai, List<THELOAI> listTHELOAI)
+        public string FindCategory(int matheloai)
         {
+            List<THELOAI> listTHELOAI = DataProvider.Ins.DB.THELOAIs.ToList();
             string category = "";
-            foreach (var item in listTHELOAI)
+            for (int i = 0; i < listTHELOAI.Count; i++)
             {
-                if (matheloai == item.MaTheLoai)
+                if (matheloai == listTHELOAI[i].MaTheLoai)
                 {
-                    category = item.TenTheLoai;
+                    category = listTHELOAI[i].TenTheLoai;
                     break;
                 }
             }
             return category;
         }
-        public string FindAuthor(int masach, List<TACGIA> listTACGIA, List<CHITIETTACGIA> listCT_TACGIA)
+        public string FindAuthor(int masach)
         {
+            List<TACGIA> listTACGIA = DataProvider.Ins.DB.TACGIAs.ToList();
+            List<CHITIETTACGIA> listCT_TACGIA = DataProvider.Ins.DB.CHITIETTACGIAs.ToList();
             string author = "";
             int matacgia = 0;
-            foreach (var item in listCT_TACGIA)
+            for (int i = 0; i < listCT_TACGIA.Count; i++)
             {
-                if (masach == item.MaSach)
+                if (masach == listCT_TACGIA[i].MaSach)
                 {
-                    matacgia = (int)item.MaTacGia;
+                    matacgia = (int)listCT_TACGIA[i].MaTacGia;
                     break;
                 }
             }
-            foreach (var item in listTACGIA)
+            for (int i = 0; i < listTACGIA.Count; i++)
             {
-                if (matacgia == item.MaTacGia)
+                if (matacgia == listTACGIA[i].MaTacGia)
                 {
-                    author = item.HoTen;
+                    author = listTACGIA[i].HoTen;
                     break;
                 }
             }
@@ -115,8 +118,8 @@ namespace BookstoreManager.ViewModels.BookViewModels
         {
             if (SelectedBook != null)
             {
-                Category = FindCategory(SelectedBook.MaSach, ListTHELOAI);
-                Author = FindAuthor(SelectedBook.MaSach, ListTACGIA, ListCT_TACGIA);
+                Category = FindCategory((int)SelectedBook.MaTheLoai);
+                Author = FindAuthor(SelectedBook.MaSach);
                 InventoryNumber = (int)SelectedBook.SoLuongTon;
                 Price = (decimal)SelectedBook.GiaNhap;
                 EntryNumber = 0;
