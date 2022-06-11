@@ -297,6 +297,9 @@ namespace BookstoreManager.ViewModels.BookViewModels
         {
             AddBookEntryWindow addBookEntry = new AddBookEntryWindow(this);
             addBookEntry.ShowDialog();
+            ListSACH.Clear();
+            ListSACH = DataProvider.Ins.DB.SACHes.ToList();
+
         }
     }
 }

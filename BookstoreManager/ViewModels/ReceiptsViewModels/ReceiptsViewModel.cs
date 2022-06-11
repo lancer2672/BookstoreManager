@@ -95,13 +95,9 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
             {
 
                 if(CheckExistById(CustomerID) == false)
-                {    
-                    bool? dialogResult = new CustomMessageBox("Khách hàng này không tồn tại, bạn có muốn thêm?", MessageType.Info, "Thông Báo", MessageButtons.OkCancel).ShowDialog();
-                    if (dialogResult == true)
-                    {
-                        AddNewCustomer adWindow = new AddNewCustomer(this);
-                        adWindow.ShowDialog();
-                    }
+                {
+                    MyMessageQueue.Enqueue("Lỗi. Khách hàng không tồn tại");
+                    RefreshForm();
                     return;
                 }
                 PHIEUTHU newReceipt = new PHIEUTHU();
@@ -189,6 +185,7 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
         }
         public void RefreshForm()
         {
+            CustomerID = 0;
             CustomerName = "";
             CustomerPhoneNumber = "";
             CustomerAddress = "";
