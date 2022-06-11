@@ -33,6 +33,7 @@ namespace BookstoreManager.ViewModels.InvoiceViewModels
         public void LoadDataListView()
         {
             LoadListInvoice();
+            ListDetailInvoice.Clear();
         }
         public void LoadListInvoice()
         {
