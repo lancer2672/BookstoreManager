@@ -33,7 +33,6 @@ namespace BookstoreManager.ViewModels.InvoiceViewModels
         public void LoadDataListView()
         {
             LoadListInvoice();
-            ListDetailInvoice.Clear();
         }
         public void LoadListInvoice()
         {
@@ -54,11 +53,9 @@ namespace BookstoreManager.ViewModels.InvoiceViewModels
         }
         public void LoadListDetailInvoice()
         {
-            if(SelectedInvoice == null)
-            {
-                ListDetailInvoice.Clear();
-            }
-            else
+            ListDetailInvoice.Clear();
+
+            if (SelectedInvoice != null)
             {
                 List<CHITIETHOADON> list = DataProvider.Ins.DB.CHITIETHOADONs.Where(t => t.MaHoaDon == SelectedInvoice.InvoiceId).ToList();
                 foreach (CHITIETHOADON item in list)
