@@ -187,7 +187,7 @@ namespace BookstoreManager.ViewModels.BookViewModels
                 MyMessageQueue.Enqueue(message);
                 return;
             }
-            if (EntryNumber <= ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri)
+            if (EntryNumber < ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri)
             {
                 string message = "Số lượng nhập phải lớn hơn " + Convert.ToString(ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri);
                 MyMessageQueue.Clear();
