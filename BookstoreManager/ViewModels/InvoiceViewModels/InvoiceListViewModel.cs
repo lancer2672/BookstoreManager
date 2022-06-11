@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BookstoreManager.ViewModels.InvoiceViewModels
 {
@@ -20,16 +21,18 @@ namespace BookstoreManager.ViewModels.InvoiceViewModels
         public ObservableCollection<ViewInvoice> ListInvoice { get => _listInvoice; set { _listInvoice = value; OnPropertyChanged(nameof(ListInvoice)); } }
         public ObservableCollection<ViewInvoiceDetail> ListDetailInvoice { get => _listDetailInvoice; set { _listDetailInvoice = value; OnPropertyChanged(nameof(ListDetailInvoice)); } }
 
+
+         public ICommand RefreshData { get; set; }
         public InvoiceListViewModel()
         {
             ListInvoice = new ObservableCollection<ViewInvoice>();
             ListDetailInvoice = new ObservableCollection<ViewInvoiceDetail>();
             SelectedDate = DateTime.Now;
+            RefreshData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(); });
         }
         public void LoadDataListView()
         {
             LoadListInvoice();
-         
         }
         public void LoadListInvoice()
         {
