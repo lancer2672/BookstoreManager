@@ -39,6 +39,10 @@ Tài khoản mặc định để đăng nhập vào adminWindow: admin/123456
 
 ## CONTRIBUTORS 
 
+Bùi Khánh Duy - 19521418
+
+Trần Ngọc Thiện Bản - 16520071
+
 Nguyễn Xuân Tài - 20520744 - ngxuantai
 
 Trần Quốc Khánh - 20520578 - lancer2672
