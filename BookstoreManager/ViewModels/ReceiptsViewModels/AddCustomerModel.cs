@@ -78,7 +78,9 @@ namespace BookstoreManager.ViewModels.ReceiptsViewModels
                     newrp.MaKhachHang = newCustomer.MaKhachHang;
                     newrp.Thang = DateTime.Now.Month;
                     newrp.Nam = DateTime.Now.Year;
-                    newrp.TonDau = newCustomer.TongNo;
+                    newrp.TonDau = 0;
+                    newrp.PhatSinh = 0;
+                    newrp.TonCuoi = 0;
                     DataProvider.Ins.DB.BAOCAOCONGNOes.Add(newrp);
                     DataProvider.Ins.DB.SaveChanges();
                 }
