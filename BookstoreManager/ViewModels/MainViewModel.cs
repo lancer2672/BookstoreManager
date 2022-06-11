@@ -98,18 +98,18 @@ namespace BookstoreManager.ViewModels
             if (DateTime.Now.Day == 1)
             {
 
-                //if (IsCreatedReport(now.AddMonths(-1)) == false)
-                //{
-                //    CreateInvReport(now.AddMonths(-1));
-                //    CreateDebtReport(now.AddMonths(-1));
-                //    MyMessageQueue.Enqueue("Đã tạo báo cáo");
-                //}
-                if (IsCreatedReport(now) == false)
+                if (IsCreatedReport(now.AddMonths(-1)) == false)
                 {
-                    CreateInvReport(now);
-                    CreateDebtReport(now);
+                    CreateInvReport(now.AddMonths(-1));
+                    CreateDebtReport(now.AddMonths(-1));
                     MyMessageQueue.Enqueue("Đã tạo báo cáo");
                 }
+                //if (IsCreatedReport(now) == false)
+                //{
+                //    CreateInvReport(now);
+                //    CreateDebtReport(now);
+                //    MyMessageQueue.Enqueue("Đã tạo báo cáo");
+                //}
 
             }
             else

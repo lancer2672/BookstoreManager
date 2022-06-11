@@ -91,6 +91,7 @@ namespace BookstoreManager.ViewModels.ReportAndStatistic
             Title = "Báo Cáo Tồn";
             ListYear = new List<int>();
             DataListView = new ObservableCollection<InventoryReportItem>();
+            DataListViewBookType = new ObservableCollection<InventoryReportItem>();
             DataChart = new ObservableCollection<InventoryReportChartModel>();
 
             CLoadData = new RelayCommand<object>((p) => { return true; }, (p) => { LoadDataListView(true); });
