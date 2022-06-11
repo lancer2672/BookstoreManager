@@ -109,6 +109,20 @@ namespace BookstoreManager.ViewModels.BookViewModels
             return result;
         }
 
+        public int FindThamSo(string tenthamso)
+        {
+            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
+            int i;
+            for (i = 0; i < ListTHAMSO.Count; i++)
+            {
+                if (ListTHAMSO[i].TenThamSo == tenthamso)
+                {
+                    break;
+                }
+            }
+            return i;
+        }
+
         public void ClearUpdateBookWindow()
         {
             BookId = BookInventory = BookPublishYear = 0;
@@ -118,6 +132,14 @@ namespace BookstoreManager.ViewModels.BookViewModels
 
         public void UpdateBook(StackPanel p)
         {
+            List<THAMSO> ListTHAMSO = DataProvider.Ins.DB.THAMSOes.ToList();
+            if (BookInventory < ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri)
+            {
+                string message = "Số lượng nhập phải lớn hơn " + Convert.ToString(ListTHAMSO[FindThamSo("SoLuongNhapToiThieu")].GiaTri) + "!";
+                _manageBookViewModel.MyMessageQueue.Clear();
+                _manageBookViewModel.MyMessageQueue.Enqueue(message);
+                return;
+            }
             if (Validator.IsValid(p))
             {
                 SACH newBook = DataProvider.Ins.DB.SACHes.Where(t => t.MaSach == BookId).FirstOrDefault();
