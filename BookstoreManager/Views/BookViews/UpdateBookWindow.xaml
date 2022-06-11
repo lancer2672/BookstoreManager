@@ -111,8 +111,8 @@
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBox
+                <StackPanel Orientation="Horizontal" Height="48">
+                    <!--<TextBox
                       Name="BookInventory"
                          materialDesign:HintAssist.Hint="Số lượng tồn" >
                         <TextBox.Text>
@@ -123,10 +123,24 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </TextBox>
+                    </TextBox>-->
+                    <Label Content="Số lượng tồn: " 
+                               Width="64" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="16,0,0,0"
+                           FontSize="14"/>
+                    <Label x:Name="Inventory" 
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,1" 
+                               Width="295" 
+                               VerticalContentAlignment="Bottom"
+                               FontSize="14"
+                               Content="{Binding BookInventory, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" >
+                    </Label>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBox
+                <StackPanel Orientation="Horizontal" Height="48" Width="400">
+                    <!--<TextBox
                     Name="BookPrice"
                          materialDesign:HintAssist.Hint="Đơn giá nhập" >
                         <TextBox.Text>
@@ -140,7 +154,27 @@
                                 </Binding.Converter>
                             </Binding>
                         </TextBox.Text>
-                    </TextBox>
+                    </TextBox>-->
+                    <Label Content="Đơn giá: " 
+                               Width="64" 
+                               VerticalContentAlignment="Bottom" 
+                               Margin="16,0,0,0"
+                           FontSize="14"/>
+                    <Label x:Name="Price" 
+                               BorderBrush="Black" 
+                               ClipToBounds="True" 
+                               BorderThickness="0,0,0,1" 
+                               Width="295"                            FontSize="14"
+                               VerticalContentAlignment="Bottom">
+                        <Label.Content>
+                            <Binding Path="BookPrice" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"
+                                         NotifyOnValidationError="True">
+                                <Binding.Converter>
+                                    <rules:UIMoneyConverter></rules:UIMoneyConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </Label.Content>
+                    </Label>
                 </StackPanel>
             </WrapPanel>
         </Grid>
