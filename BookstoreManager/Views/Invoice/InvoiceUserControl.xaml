@@ -314,7 +314,7 @@
                                 ToolTip="Xóa"
                                 Command="{Binding DeleteCommand}">
                                 <DockPanel>
-                                    <materialDesign:PackIcon Kind="SquareEditOutline" />
+                                    <materialDesign:PackIcon Kind="Delete" />
                                     <TextBlock Text="Xóa"/>
                                 </DockPanel>
                             </Button>

@@ -20,10 +20,10 @@ namespace BookstoreManager.Models
             }
             set => _ins = value;
         }
-        public BookstoreManagerEntities DB { get; set; }
+        public BookstoreManagerEntities1 DB { get; set; }
         private DataProvider()
         {
-            DB = new BookstoreManagerEntities();
+            DB = new BookstoreManagerEntities1();
            
         }
     }

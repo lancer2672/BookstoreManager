@@ -78,7 +78,7 @@
                                     <TextBlock Text="Sửa"/>
                                 </DockPanel>
                             </Button>
-                            <Button 
+                            <!--<Button 
                     ToolTip="Xóa khách hàng"
                     Width="70"
                     Style="{StaticResource DeleteBtn}"
@@ -88,7 +88,7 @@
                                     <materialDesign:PackIcon Kind="TrashCanOutline" />
                                     <TextBlock Text="Xóa"/>
                                 </DockPanel>
-                            </Button>
+                            </Button>-->
                         </StackPanel>
                         <ListView Grid.Row="1" 
                   x:Name="lv"
