@@ -9,6 +9,7 @@
         xmlns:rules ="clr-namespace:BookstoreManager.Resources.Utils" 
         mc:Ignorable="d"
         x:Name="mainWindow"
+        xmlns:UC2="clr-namespace:BookstoreManager.Views.SharedControls"
         xmlns:receipt ="clr-namespace:BookstoreManager.Views.Receipts"
         xmlns:invoice="clr-namespace:BookstoreManager.Views.Invoice"
         xmlns:SharedUC="clr-namespace:BookstoreManager.Views.SharedControl"
@@ -16,6 +17,87 @@
         Title="Quản lý nhà sách" Height="600" Width="1150">
     <Grid>
         <TabControl>
+            <TabItem   DataContext="{StaticResource BookVM}" Header="Tìm kiếm sách">
+                <TabItem.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="Views/Style/Button.xaml"></ResourceDictionary>
+                            <ResourceDictionary Source="Views/Style/ListView.xaml"></ResourceDictionary>
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </TabItem.Resources>
+                            <Grid Margin="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Style="{StaticResource PageTitle}" HorizontalAlignment="Center" Text="TÌM KIẾM SÁCH"></TextBlock>
+                                <Grid Grid.Row="1">
+                                    <Grid.Resources>
+                                        <Style BasedOn="{StaticResource IconTextBtn}" TargetType="Button">
+                                            <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                            <Setter Property="MinWidth" Value="80"></Setter>
+                                        </Style>
+                                        <Style BasedOn="{StaticResource IconDeleteBtn}" x:Key="DeleteBtn" TargetType="Button">
+                                            <Setter Property="Margin" Value="30 0 0 0"></Setter>
+                                            <Setter Property="MinWidth" Value="80"></Setter>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.RowDefinitions>
+
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel  Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <UC2:SearchBarCombobox x:Name="SearchBarCombobox" ></UC2:SearchBarCombobox>
+                                        <Button ToolTip="Làm mới "  
+                    Name="RefreshBtn"
+                    Command="{Binding CRefreshData}">
+                                            <DockPanel>
+                                                <materialDesign:PackIcon Kind="Refresh" />
+                                                <TextBlock Text="Làm mới"/>
+                                            </DockPanel>
+                                        </Button>
+
+
+
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="0 2 0 0 ">
+                                        <ScrollViewer  ScrollViewer.HorizontalScrollBarVisibility="Auto"  Width="auto">
+                                            <ListView x:Name="listbook"
+                          ItemContainerStyle="{StaticResource  ListItemContainer}"
+                          ItemsSource="{Binding ListBook}"  
+                          
+                          HorizontalAlignment="Stretch"
+                          SelectedItem="{Binding SelectedBook}">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header=" STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem},Converter={StaticResource  IndexConverter}}">
+
+                                                        </GridViewColumn>
+                                                        <GridViewColumn Header="Tên sách" DisplayMemberBinding="{Binding TitleBook}"/>
+                                                        <GridViewColumn Header="Thể loại" DisplayMemberBinding="{Binding Category}"/>
+                                                        <GridViewColumn Header="Tên tác giả" DisplayMemberBinding="{Binding NameAuthor}"/>
+                                                        <GridViewColumn Header="Nhà xuất bản" DisplayMemberBinding="{Binding PublishCompany}"/>
+                                                        <GridViewColumn Header="Năm xuất bản" DisplayMemberBinding="{Binding PublishYear}" />
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </ScrollViewer>
+                                    </Grid>
+
+                                </Grid>
+
+                                <materialDesign:Snackbar Grid.Row="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MyMessageQueue}">
+                                </materialDesign:Snackbar>
+
+                            </Grid>
+                        </TabItem>
             <TabItem Header="Hóa Đơn">
                 <invoice:InvoiceUserControl></invoice:InvoiceUserControl>
             </TabItem>

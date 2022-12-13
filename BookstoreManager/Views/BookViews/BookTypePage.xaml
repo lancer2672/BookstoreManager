@@ -120,7 +120,7 @@
                                     <TextBlock Text="Sửa"/>
                                 </DockPanel>
                             </Button>
-                            <Button ToolTip="Xóa khách hàng"
+                            <!--<Button ToolTip="Xóa khách hàng"
                             Width="51"
                             Style="{StaticResource DeleteBtn}"
                             Command="{Binding CDeleteTypeBook}" >
@@ -128,7 +128,7 @@
                                     <materialDesign:PackIcon Kind="TrashCanOutline" />
                                     <TextBlock Text="Xóa"/>
                                 </DockPanel>
-                            </Button>
+                            </Button>-->
                         </StackPanel>
                     </StackPanel>
                     <materialDesign:Snackbar Grid.Row="1"

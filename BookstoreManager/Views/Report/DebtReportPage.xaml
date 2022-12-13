@@ -106,7 +106,7 @@
                         </Grid>
                     </Border>
                 </DockPanel>
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!--<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <StackPanel.Resources>
                         <Style TargetType="Button" BasedOn="{StaticResource IconTextBtn}">
                             <Setter Property="Margin" Value="20 0 0 0"></Setter>
@@ -124,7 +124,7 @@
                             <TextBlock Text="Export Excel"/>
                         </DockPanel>
                     </Button>
-                </StackPanel>
+                </StackPanel>-->
                 <materialDesign:Snackbar Grid.Row="2"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
